@@ -7,7 +7,7 @@ public class mobileMovement : MonoBehaviour
 
     Rigidbody rbPlayer;
     [SerializeField]float speed = 10f;
-    Joystick joystick;
+    FixedJoystick joystick;
     [SerializeField] GameObject joyStickImage;
     
    
@@ -19,7 +19,7 @@ public class mobileMovement : MonoBehaviour
        if(Application.platform== RuntimePlatform.Android /*|| Application.platform == RuntimePlatform.WindowsEditor*/)
         {
             joyStickImage.SetActive(true);
-            joystick = FindObjectOfType<Joystick>();
+            joystick = FindObjectOfType<FixedJoystick>();
         }
         
     }

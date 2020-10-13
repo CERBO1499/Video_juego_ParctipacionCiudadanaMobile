@@ -22,6 +22,8 @@ public class character_01 : MonoBehaviour
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
 
+        
+
         if (h != 0 || v != 0)
         {
             //anim.SetTrigger("walk");

@@ -5,14 +5,22 @@ using UnityEngine;
 public class character_01 : MonoBehaviour
 {
     Animator anim;
+    FixedJoystick joystick;
+
 
     float h;
     float v;
 
+    float hmobile;
+    float vmobile;
+
     void Start()
     {
         anim = GetComponent<Animator>();
-       
+         if(Application.platform== RuntimePlatform.Android /*|| Application.platform == RuntimePlatform.WindowsEditor*/)
+        {
+            joystick = FindObjectOfType<FixedJoystick>();
+        }
       
     }
 
@@ -22,9 +30,11 @@ public class character_01 : MonoBehaviour
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
 
+       
+
         
 
-        if (h != 0 || v != 0)
+        if (h != 0 || v != 0 )
         {
             //anim.SetTrigger("walk");
             anim.SetBool("walking",true);
@@ -34,6 +44,21 @@ public class character_01 : MonoBehaviour
             //anim.SetTrigger("stop");
             anim.SetBool("walking",false);
         }
+
+
+         if(Application.platform== RuntimePlatform.Android)
+         {
+            hmobile=joystick.Horizontal;
+            vmobile=joystick.Vertical;
+             if( hmobile!=0||vmobile!=0)
+             {
+                  anim.SetBool("walking",true);
+             }
+             else
+             {
+                  anim.SetBool("walking",false);
+             }
+         }
                   
     }
 }

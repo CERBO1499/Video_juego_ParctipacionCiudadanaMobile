@@ -165,13 +165,14 @@ public class logrosManager : MonoBehaviour
             {
                 conteoLugares[i] = false;
 
-                lugaresEspeciales=conteoLugares.Count;
+                lugaresEspeciales++;
                 lugaresUi.GetComponent<TMP_Text>().text = "Lugares descubiertos: "+lugaresEspeciales+"/"+lugaresEspecialesObject.Count;
 
             }
 
             if (lugaresEspeciales >= 125)
             {
+                lugaresEspeciales = conteoLugares.Count;
                 chuloPos[2].SetActive(true);
                 candadoPos[2].SetActive(false);
             }

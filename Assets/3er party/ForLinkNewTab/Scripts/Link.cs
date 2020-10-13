@@ -6,15 +6,22 @@ public class Link : MonoBehaviour
 {
 
 	public string Field;
+	public string Field2;
 
 	public void OpenLink()
 	{
-		Application.OpenURL(Field);
+		Application.OpenURL(Field2);
 	}
 
 	public void OpenLinkJS()
 	{
-		Application.ExternalEval("window.open('//"+Field+"');");
+		if(Application.platform==RuntimePlatform.WebGLPlayer){
+			Application.ExternalEval("window.open('//"+Field+"');");
+		}
+		if(Application.platform==RuntimePlatform.WindowsEditor || Application.platform==RuntimePlatform.Android){
+			OpenLink();
+		}
+		
 	}
 
 	public void OpenLinkJSPlugin()

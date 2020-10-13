@@ -3152,6 +3152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego3
+  Field2: https://www.polygon.us/escuelaspp/juego3
 --- !u!114 &105141632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8325,6 +8326,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a6fe950b1b737734796fd9512e2acde6, type: 2}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ad75c30750ed354eba250aadba59744, type: 3}
 --- !u!4 &302681615 stripped
@@ -8635,6 +8651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego1
+  Field2: 
 --- !u!4 &312522965 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 441798, guid: 06a9858b4309bcf4cbe7ef09ae436c1d,
@@ -12163,6 +12180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego3
+  Field2: 
 --- !u!1001 &472795902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20316,6 +20334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego5
+  Field2: https://www.polygon.us/escuelaspp/juego5
 --- !u!114 &801160511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22868,6 +22887,21 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ad75c30750ed354eba250aadba59744, type: 3}
 --- !u!4 &907828576 stripped
@@ -22895,6 +22929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego4
+  Field2: 
 --- !u!1001 &909325761
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25302,7 +25337,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.05749999, y: 0}
   m_AnchorMax: {x: 0.68, y: 1}
-  m_AnchoredPosition: {x: -153, y: -4.688904}
+  m_AnchoredPosition: {x: -153, y: -4.688843}
   m_SizeDelta: {x: 105.96716, y: 67.697784}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &985243672
@@ -25318,6 +25353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego4
+  Field2: https://www.polygon.us/escuelaspp/juego4
 --- !u!114 &985243673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26853,6 +26889,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a6fe950b1b737734796fd9512e2acde6, type: 2}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ad75c30750ed354eba250aadba59744, type: 3}
 --- !u!4 &1022558074 stripped
@@ -26880,6 +26931,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego5
+  Field2: 
 --- !u!4 &1022967819 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 423272, guid: d93817f79a1e01242b20f7081cbfa384,
@@ -29505,7 +29557,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -0.00012207031, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 253, y: 50}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1106797788
@@ -32778,7 +32830,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: 10.4}
+  m_AnchoredPosition: {x: 0, y: 10.400024}
   m_SizeDelta: {x: 355.08606, y: 112.39844}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1228138225
@@ -35927,12 +35979,12 @@ PrefabInstance:
     - target: {fileID: 8715572312875176627, guid: eaa32db28d259a24c8a330880f8900ab,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -12.517944
+      value: -12.518066
       objectReference: {fileID: 0}
     - target: {fileID: 8715572312875176627, guid: eaa32db28d259a24c8a330880f8900ab,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -12.518005
+      value: -12.517944
       objectReference: {fileID: 0}
     - target: {fileID: 8715572312875176627, guid: eaa32db28d259a24c8a330880f8900ab,
         type: 3}
@@ -37385,6 +37437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego2
+  Field2: https://www.polygon.us/escuelaspp/juego2
 --- !u!4 &1403276016 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 441798, guid: 06a9858b4309bcf4cbe7ef09ae436c1d,
@@ -38999,6 +39052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego1
+  Field2: https://www.polygon.us/escuelaspp/juego1
 --- !u!1001 &1446086128
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41060,6 +41114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: www.polygon.us
+  Field2: 
 --- !u!1 &1521636532
 GameObject:
   m_ObjectHideFlags: 0
@@ -47746,7 +47801,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 208.6, y: -134}
+  m_AnchoredPosition: {x: 208.6, y: -112}
   m_SizeDelta: {x: 277.16473, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1616420674
@@ -48870,6 +48925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego2
+  Field2: 
 --- !u!1001 &1674002169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49420,6 +49476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us
+  Field2: 
 --- !u!114 &1688362761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62913,6 +62970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: www.polygon.us
+  Field2: 
 --- !u!4 &2092703361 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 441798, guid: 06a9858b4309bcf4cbe7ef09ae436c1d,
@@ -63918,6 +63976,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e5ec58bb6a1a825459db33f628215c7a, type: 2}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ad75c30750ed354eba250aadba59744, type: 3}
 --- !u!4 &2132132907 stripped
@@ -106410,6 +106483,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222025720054196524, guid: 0ad75c30750ed354eba250aadba59744,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ad75c30750ed354eba250aadba59744, type: 3}

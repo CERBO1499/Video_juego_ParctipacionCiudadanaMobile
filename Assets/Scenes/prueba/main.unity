@@ -31040,6 +31040,11 @@ PrefabInstance:
       propertyPath: textSemilla
       value: 
       objectReference: {fileID: 1660063731}
+    - target: {fileID: 4137513368429272486, guid: 1d2e46ce7cff32d4a9acfc9ffab58207,
+        type: 3}
+      propertyPath: miniJuegos
+      value: 
+      objectReference: {fileID: 1775515242}
     - target: {fileID: 4137513368429272487, guid: 1d2e46ce7cff32d4a9acfc9ffab58207,
         type: 3}
       propertyPath: m_LocalPosition.x

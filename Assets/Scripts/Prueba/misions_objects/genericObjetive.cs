@@ -12,6 +12,9 @@ public class genericObjetive : MonoBehaviour
     //[SerializeField] short linkNumber;
     //[SerializeField] string link;
     [SerializeField] GameObject imagenjuegoUi;
+    ControlSemilla controlSemilla;
+
+    
     bool ActividadRealizada = false;
    // controlProgreso ctrlProgress;
 
@@ -47,7 +50,11 @@ public class genericObjetive : MonoBehaviour
                 ActividadRealizada = true;
             }
             imagenjuegoUi.SetActive(true);
-            //gameObject.SetActive(false);
+            //gameObje0ct.SetActive(false);
+
+            controlSemilla=GameObject.Find("ControlSemilla").GetComponent<ControlSemilla>();
+            controlSemilla.SumarSemillaMinigame(gameObject,5);
+            
         }
     }
 

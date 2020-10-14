@@ -8696,7 +8696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego1
-  Field2: 
+  Field2: https://www.polygon.us/juego1
 --- !u!4 &312522965 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 441798, guid: 06a9858b4309bcf4cbe7ef09ae436c1d,
@@ -12237,7 +12237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego3
-  Field2: 
+  Field2: https://www.polygon.us/juego3
 --- !u!1001 &472795902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22986,7 +22986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego4
-  Field2: 
+  Field2: https://www.polygon.us/juego4
 --- !u!1001 &909325761
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25394,7 +25394,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.05749999, y: 0}
   m_AnchorMax: {x: 0.68, y: 1}
-  m_AnchoredPosition: {x: -153, y: -4.688843}
+  m_AnchoredPosition: {x: -153, y: -4.6888733}
   m_SizeDelta: {x: 105.96716, y: 67.697784}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &985243672
@@ -26988,7 +26988,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego5
-  Field2: 
+  Field2: https://www.polygon.us/juego5
 --- !u!4 &1022967819 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 423272, guid: d93817f79a1e01242b20f7081cbfa384,
@@ -48719,7 +48719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Field: //polygon.us/escuelaspp/juego2
-  Field2: 
+  Field2: https://www.polygon.us/juego2
 --- !u!1001 &1674002169
 PrefabInstance:
   m_ObjectHideFlags: 0

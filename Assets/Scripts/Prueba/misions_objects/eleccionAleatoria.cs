@@ -29,9 +29,9 @@ public class eleccionAleatoria : MonoBehaviour
         {
             children[i].SetActive(false);
         }
-        if (gameObject.name == "fondos")
+        if (gameObject.name == "Panel_Fondos")      
         {
-            children[Random.Range(0, children.Count)].SetActive(true) ; //elija uno aleatorio y activelo
+            children[Random.Range(0, children.Count)].SetActive(true); //elija uno aleatorio y activelo --- esto es de sceneDraw.
         }
         else
         {

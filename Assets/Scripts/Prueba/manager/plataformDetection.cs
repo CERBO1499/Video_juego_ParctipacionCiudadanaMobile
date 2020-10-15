@@ -20,7 +20,15 @@ public class plataformDetection : MonoBehaviour
             }
 
         }
-       // gameObject.transform.position += new Vector3(180f, 0f, 0f);
+        else
+        {
+            if (gameObject.name == "Image_Geoguess")
+            {
+                gameObject.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+                gameObject.transform.position += new Vector3(0f, 44f, 0f);
+            }
+        }
+       
     }
 
 

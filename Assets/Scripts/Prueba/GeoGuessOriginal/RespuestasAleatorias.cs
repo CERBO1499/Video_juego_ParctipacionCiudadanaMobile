@@ -22,7 +22,7 @@ private void Start() {
                 Rand = Random.Range(0,5);
             }
             listNumbers[j] = Rand;
-            print(listNumbers[j]);
+           // print(listNumbers[j]);
         }
         botons[0].transform.position=responsesPos[listNumbers[0]-1].transform.position;
         botons[1].transform.position=responsesPos[listNumbers[1]-1].transform.position;

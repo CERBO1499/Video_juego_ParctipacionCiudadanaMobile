@@ -29,7 +29,7 @@ public class logrosManager : MonoBehaviour
 
     //  [SerializeField] GameObject textoUi;
 
-
+    
 
 
     private static logrosManager _instance;
@@ -47,19 +47,10 @@ public class logrosManager : MonoBehaviour
     }
 
 
-    //FIN DE PRUEBA
-
-    /*
-    
-
-
-
-
-
-     */
     private void Awake()
     {
-        Debug.Log(entroPrimeraVez);
+       
+       // Debug.Log(entroPrimeraVez);
         //leer cantidad de la lista de cubos y pin y lugaresEspeciales
         foreach (Transform child in pinesEscenario.transform)           //me va a crear un booleano en la lista ... la misma cantidad de pines de mision en el escenario.
         {
@@ -75,19 +66,16 @@ public class logrosManager : MonoBehaviour
             {
                 conteoLugares.Add(true);
                 lugaresEspecialesObject.Add(child.gameObject);
-
+            
             }
-        
-       
-      //  Debug.Log("count lugares list:"+conteoLugares.Count);
 
-      //  DontDestroyOnLoad(gameObject);
-       // DontDestroyOnLoad(gameObject.GetComponent<logrosManager>());
+       
+
     }
     private void Start()
     {
         
-        Debug.Log("entro en este start");
+       // Debug.Log("entro en este start");
         misionesPinUi.GetComponent<TMP_Text>().text = "Misiones pin: "+ (misionesPin* 100)/cantidadPin.Count+"%"; //me da el porcentaje de cuantas misiones pin que llevo
         misionesCuboUi.GetComponent<TMP_Text>().text = "Misiones cubo: " + (misionesCubo * 100) / cantidadCubo.Count + "%";//me da el porcentaje de cuantas misiones cubo que llevo
 
@@ -111,14 +99,14 @@ public class logrosManager : MonoBehaviour
             chuloPin[0].SetActive(true);    //activa el chulo del Ui de la mision completa 3 juego pin
             candadoPin[0].SetActive(false);
             chuloPin[1].SetActive(true);    //activa el chulo del Ui de la mision completa 3 juego pin
-            candadoPin[1].SetActive(false);
+            candadoPin[1].SetActive(false); 
 
             //activa el chulo y desactiva el candado
         }
         else if (misionesPin >= 1)
         {
             chuloPin[0].SetActive(true);   
-            candadoPin[0].SetActive(false);
+            candadoPin[0].SetActive(false); 
         }
 
     }
@@ -138,8 +126,9 @@ public class logrosManager : MonoBehaviour
     }
     void LugarUi()
     {
+        lugaresEspeciales = PlayerPrefs.GetInt("lugaresEspeciales");
         lugaresUi.GetComponent<TMP_Text>().text = "Lugares descubiertos: " + lugaresEspeciales + "/" + lugaresEspecialesObject.Count;
-        Debug.Log(lugaresEspeciales);
+       // Debug.Log(lugaresEspeciales);
         if (lugaresEspeciales >= 125)
         {
             chuloPos[2].SetActive(true);
@@ -164,9 +153,11 @@ public class logrosManager : MonoBehaviour
             if (lugar.name == lugaresEspecialesObject[i].name&& conteoLugares[i] == true)
             {
                 conteoLugares[i] = false;
+                
 
                 lugaresEspeciales++;
                 lugaresUi.GetComponent<TMP_Text>().text = "Lugares descubiertos: "+lugaresEspeciales+"/"+lugaresEspecialesObject.Count;
+                PlayerPrefs.SetInt("lugaresEspeciales", lugaresEspeciales);
 
             }
 
@@ -199,12 +190,12 @@ public class logrosManager : MonoBehaviour
         if (tipo == 1)          //si es tipo CUBO
         {
             misionesCubo+= cantidad;
-            Debug.Log("entró por metodo a cubo");
+          //  Debug.Log("entró por metodo a cubo");
         } else if (tipo == 2)   //si es tipo PIN 
         {
             misionesPin+=cantidad;
             
-            Debug.Log("entró por metodo a pin");
+           // Debug.Log("entró por metodo a pin");
         }
 
     }

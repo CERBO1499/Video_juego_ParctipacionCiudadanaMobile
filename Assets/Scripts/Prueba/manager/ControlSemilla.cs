@@ -13,7 +13,9 @@ public class ControlSemilla : MonoBehaviour
     List<GameObject> miniJuegosList = new List<GameObject>();
  
     static int semillas = 0;
-    
+
+    public static int Semillas { get => semillas; set => semillas = value; }
+
     void Awake()
     {
         foreach(Transform child in miniJuegos.transform)
@@ -23,18 +25,20 @@ public class ControlSemilla : MonoBehaviour
             
 
         }
+        //PlayerPrefs de semillas
+       semillas= PlayerPrefs.GetInt("semillas");
     }
 
     private void Start() 
     {        
-        textSemilla.GetComponent<TMP_Text>().text="="+ semillas;
+        textSemilla.GetComponent<TMP_Text>().text="="+ Semillas;
         ActualizarUI();
     }
 
     public static void SumarSemilla(int _cantSumarSemilla)
     {
-        semillas += _cantSumarSemilla;
-       
+        Semillas += _cantSumarSemilla;
+        PlayerPrefs.SetInt("semillas", semillas);
 
     }
 
@@ -45,7 +49,8 @@ public class ControlSemilla : MonoBehaviour
             if(miniGame.name==miniJuegosList[i].name && conteoMiniJuegos[i]==true)
             {
                 conteoMiniJuegos[i]=false;                
-                semillas+=cantASumar;
+                Semillas+=cantASumar;
+                PlayerPrefs.SetInt("semillas", semillas);
                 ActualizarUI();
                
             }
@@ -57,7 +62,7 @@ public class ControlSemilla : MonoBehaviour
     {
         if(textSemilla != null)
         {          
-            textSemilla.GetComponent<TMP_Text>().text="="+semillas;
+            textSemilla.GetComponent<TMP_Text>().text="="+Semillas;
         }
 
     }

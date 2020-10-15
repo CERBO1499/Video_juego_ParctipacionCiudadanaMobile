@@ -669,8 +669,7 @@ MonoBehaviour:
     RespuestaD: "Ausencia de guerra entre pa\xEDses"
   - fact: 'Ser exitoso es:'
     correctAns: 2
-    respuestaA: "Saber qui\xE9n eres y valorarte, sirviendo a los dem\xE1s y generando
-      prosperidad"
+    respuestaA: "Conseguir muchos estudios y t\xEDtulos universitarios ;"
     RespuestaB: Demostrar que puedes comprarte todo lo que quieras
     RespuestaC: "Saber qui\xE9n eres y valorarte, sirviendo a los dem\xE1s y generando
       prosperidad"
@@ -711,7 +710,7 @@ MonoBehaviour:
     correctAns: 2
     respuestaA: Le pueden maltratar
     RespuestaB: "Le pueden poner una sanci\xF3n"
-    RespuestaC: "Le pueden poner una sanci\xF3n"
+    RespuestaC: Le pueden llevar preso
     RespuestaD: Le pueden perdonar
   - fact: "Batman es un superh\xE9roe resiliente porque:"
     correctAns: 1
@@ -950,13 +949,13 @@ MonoBehaviour:
     respuestaA: 16 comunas y 5 corregimientos
     RespuestaB: 16 comunas y 1 corregimiento
     RespuestaC: 3 comunas y el resto son barrios
-    RespuestaD: 16 comunas y 5 corregimientos
+    RespuestaD: "20 comunas, ning\xFAn corregimiento ;"
   - fact: 'Habilidad que me ayuda a tramitar conflictos '
     correctAns: 3
     respuestaA: La terquedad
     RespuestaB: "La manipulaci\xF3n"
     RespuestaC: El orgullo
-    RespuestaD: El orgullo ; La creatividad
+    RespuestaD: La creatividad
   - fact: ' Me hago mas fuerte emocionalmente cuando'
     correctAns: 0
     respuestaA: 'Reconozco y acepto mis debilidades '

@@ -34,6 +34,7 @@ public class gameManagerGeoguessOriginal : MonoBehaviour
     private string loadQuestion;
     private int countContestadas;
     private int countAcertadas;
+    private RespuestasAleatorias respuestasAleatorias;
 
 
     [SerializeField] private RawImage _factText;
@@ -74,7 +75,7 @@ public class gameManagerGeoguessOriginal : MonoBehaviour
     // }
     private void Awake()
     {
-
+        respuestasAleatorias=GetComponent<RespuestasAleatorias>();
     }
 
     private void Start() {
@@ -266,6 +267,8 @@ public class gameManagerGeoguessOriginal : MonoBehaviour
     }
 
     public void NextQuestion(){
+
+        respuestasAleatorias.SetrandomNumber();
         CorrectAnsfeedBack.SetActive(false);
         Good.SetActive(false);
         Bad.SetActive(false);

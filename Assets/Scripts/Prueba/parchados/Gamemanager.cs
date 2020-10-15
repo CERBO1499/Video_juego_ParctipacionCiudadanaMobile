@@ -34,7 +34,7 @@ public class Gamemanager : MonoBehaviour
     private string loadQuestion;
     private int countContestadas;
     private int countAcertadas;
-
+    private RespuestasAleatorias respuestasAleatorias;
 
     [SerializeField] private TMP_Text _factText;
     [SerializeField] private TMP_Text [] Respuesta;
@@ -75,6 +75,8 @@ public class Gamemanager : MonoBehaviour
 
 
     private void Start() {
+        respuestasAleatorias=GetComponent<RespuestasAleatorias>();
+
         tmQ= Timer.GetComponent<TimerQuestions>();  //para el conteo del tiempo
         pantallaResultados.SetActive(false);
         PanelRespuestas.SetActive(true);
@@ -259,6 +261,9 @@ public class Gamemanager : MonoBehaviour
     }
 
     public void NextQuestion(){
+
+        respuestasAleatorias.SetrandomNumber();
+
         Good.SetActive(false);
         Bad.SetActive(false);
         SetRandomQuestions();

@@ -26,6 +26,9 @@ public class plataformDetection : MonoBehaviour
             {
                 gameObject.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
                 gameObject.transform.position += new Vector3(0f, 44f, 0f);
+            }else if(gameObject.name== "Button_Exit")
+            {
+                Destroy(gameObject);
             }
         }
        

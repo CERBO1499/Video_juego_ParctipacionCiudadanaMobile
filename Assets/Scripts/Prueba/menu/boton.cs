@@ -26,6 +26,10 @@ public class boton : MonoBehaviour
         bruj.GetComponent<brujula>().NewObjetivo(objetive);   //va a darle la nueva ubicacion a la cual mirar (la brujula)
         bruj.GetComponentInChildren<ParticleSystem>().Play();
     }
+    public void CloseApp()
+    {
+        Application.Quit();
+    }
 
 
     

@@ -48,12 +48,15 @@ public class genericObjetive : MonoBehaviour
             {
                // ctrlProgress.Actividadesrealizadas++;
                 ActividadRealizada = true;
+                controlSemilla = GameObject.Find("ControlSemilla").GetComponent<ControlSemilla>();
+                controlSemilla.SumarSemillaMinigame(gameObject, 5);
+                logrosManager.LogrosSuma(1, 1);
+                GameObject.FindObjectOfType<logrosManager>().CuboUi();
             }
             imagenjuegoUi.SetActive(true);
             //gameObje0ct.SetActive(false);
 
-            controlSemilla=GameObject.Find("ControlSemilla").GetComponent<ControlSemilla>();
-            controlSemilla.SumarSemillaMinigame(gameObject,5);
+            
             
         }
     }

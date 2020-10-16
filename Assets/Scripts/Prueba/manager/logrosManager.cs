@@ -69,15 +69,16 @@ public class logrosManager : MonoBehaviour
             
             }
 
-       
+        misionesCubo = PlayerPrefs.GetInt("misionesCubo");
+        misionesPin = PlayerPrefs.GetInt("misionesPin");
 
     }
     private void Start()
     {
         
        // Debug.Log("entro en este start");
-        misionesPinUi.GetComponent<TMP_Text>().text = "Misiones pin: "+ (misionesPin* 100)/cantidadPin.Count+"%"; //me da el porcentaje de cuantas misiones pin que llevo
-        misionesCuboUi.GetComponent<TMP_Text>().text = "Misiones cubo: " + (misionesCubo * 100) / cantidadCubo.Count + "%";//me da el porcentaje de cuantas misiones cubo que llevo
+        misionesPinUi.GetComponent<TMP_Text>().text = "Misiones pin: "+ misionesPin; //me da el porcentaje de cuantas misiones pin que llevo
+        misionesCuboUi.GetComponent<TMP_Text>().text = "Misiones cubo: " + misionesCubo;//me da el porcentaje de cuantas misiones cubo que llevo
 
         PinUi();
         CuboUi();
@@ -111,8 +112,9 @@ public class logrosManager : MonoBehaviour
 
     }
 
-    void CuboUi()
+    public void CuboUi()
     {
+        misionesCuboUi.GetComponent<TMP_Text>().text = "Misiones cubo: " + misionesCubo;
         if (misionesCubo >= 1)
         {
             chuloCubo[0].SetActive(true);    
@@ -190,12 +192,14 @@ public class logrosManager : MonoBehaviour
         if (tipo == 1)          //si es tipo CUBO
         {
             misionesCubo+= cantidad;
+            PlayerPrefs.SetInt("misionesCubo",misionesCubo);
           //  Debug.Log("entró por metodo a cubo");
         } else if (tipo == 2)   //si es tipo PIN 
         {
             misionesPin+=cantidad;
-            
-           // Debug.Log("entró por metodo a pin");
+            PlayerPrefs.SetInt("misionesPin", misionesPin);
+            //CuboUi();
+            // Debug.Log("entró por metodo a pin");
         }
 
     }

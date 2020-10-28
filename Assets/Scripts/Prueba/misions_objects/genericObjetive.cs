@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class genericObjetive : MonoBehaviour
 {
-
     Vector3 rotationDir;
 
     bool esObjetivo;
@@ -13,11 +12,9 @@ public class genericObjetive : MonoBehaviour
     //[SerializeField] string link;
     [SerializeField] GameObject imagenjuegoUi;
     ControlSemilla controlSemilla;
-
-    
+   
     bool ActividadRealizada = false;
    // controlProgreso ctrlProgress;
-
 
     private void Awake()
     {
@@ -34,12 +31,10 @@ public class genericObjetive : MonoBehaviour
         }
         imagenjuegoUi.SetActive(false);
     }
-
     void Update()
     {
         transform.Rotate(rotationDir*Time.deltaTime);
     }
-
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -54,13 +49,9 @@ public class genericObjetive : MonoBehaviour
                 GameObject.FindObjectOfType<logrosManager>().CuboUi();
             }
             imagenjuegoUi.SetActive(true);
-            //gameObje0ct.SetActive(false);
-
-            
-            
+            //gameObje0ct.SetActive(false);                    
         }
     }
-
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")

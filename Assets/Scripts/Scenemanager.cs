@@ -32,6 +32,10 @@ public class Scenemanager : MonoBehaviour
     {
         SceneManager.LoadScene("GeoGuesOriginal", LoadSceneMode.Single);
     }
+    public void ToMelodias()
+    {
+        SceneManager.LoadScene("nuestrasMelodias", LoadSceneMode.Single);
+    }
 
     public void ToMainMenuWithSemilla()
     {

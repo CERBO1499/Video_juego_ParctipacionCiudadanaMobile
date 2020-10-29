@@ -135,11 +135,17 @@ public class logrosManager : MonoBehaviour
         {
             chuloPos[2].SetActive(true);
             candadoPos[2].SetActive(false);
+            chuloPos[1].SetActive(true);
+            candadoPos[1].SetActive(false);
+            chuloPos[0].SetActive(true);
+            candadoPos[0].SetActive(false);
         }
         else if (lugaresEspeciales >= 25)
         {
             chuloPos[1].SetActive(true);
             candadoPos[1].SetActive(false);
+            chuloPos[0].SetActive(true);
+            candadoPos[0].SetActive(false);
         }
         else if (lugaresEspeciales >= 5)
         {

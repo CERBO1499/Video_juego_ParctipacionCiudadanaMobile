@@ -66022,7 +66022,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4a58f13a7a0004e8660e4847c7ead5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  link: http://cgpeers.com
 --- !u!114 &2087325888
 MonoBehaviour:
   m_ObjectHideFlags: 0

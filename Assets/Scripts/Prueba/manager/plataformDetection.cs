@@ -29,6 +29,9 @@ public class plataformDetection : MonoBehaviour
             }else if(gameObject.name== "Button_Exit")
             {
                 Destroy(gameObject);
+            } else if (gameObject.name == "Button_Link_nuestrasM")
+            {
+                gameObject.transform.position += new Vector3(0f, 231f, 0f);
             }
         }
        

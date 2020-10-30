@@ -537,8 +537,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Field: //polygon.us/foro/melodias
-  Field2: http://polygon.us/foro/melodias
+  Field: //polygon.us/escuelaspp/foro
+  Field2: http://polygon.us/escuelaspp/foro
 --- !u!1 &988809732
 GameObject:
   m_ObjectHideFlags: 0

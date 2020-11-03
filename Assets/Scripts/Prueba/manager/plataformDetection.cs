@@ -17,6 +17,10 @@ public class plataformDetection : MonoBehaviour
             {
                 gameObject.transform.localScale = new Vector3(0.65f,0.65f,0.65f);
                 gameObject.transform.position += new Vector3(180f, 0f, 0f);
+            } else if (gameObject.name == "Button_continuar") //boton continuar -- escena: nuestrasMelodias
+            {
+                gameObject.transform.localScale = new Vector3(2f, 2f, 2f);
+                gameObject.transform.position += new Vector3(-50.5f, 60.5f, 0f);
             }
 
         }
@@ -29,9 +33,15 @@ public class plataformDetection : MonoBehaviour
             }else if(gameObject.name== "Button_Exit")
             {
                 Destroy(gameObject);
-            } else if (gameObject.name == "Button_Link_nuestrasM")
+            } 
+            else if (gameObject.name == "btnclose_scene")  //boton cerrar actividad de "nuestrasMelodias"
             {
-                gameObject.transform.position += new Vector3(0f, 231f, 0f);
+                gameObject.transform.localScale = new Vector3(1f,1f,1f);
+                gameObject.transform.position += new Vector3(67.5f,68.5f,0f);
+            }else if (gameObject.name == "ButtonFinalizado")    //escena nuestrasMelodias
+            {
+                gameObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                gameObject.transform.localPosition += new Vector3(190f, -150f, 0f);
             }
         }
        

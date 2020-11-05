@@ -171,7 +171,7 @@ public class logrosManager : MonoBehaviour
 
             if (lugaresEspeciales >= 125)
             {
-                lugaresEspeciales = conteoLugares.Count;
+                lugaresEspeciales = conteoLugares.Count-1;
                 chuloPos[2].SetActive(true);
                 candadoPos[2].SetActive(false);
             }

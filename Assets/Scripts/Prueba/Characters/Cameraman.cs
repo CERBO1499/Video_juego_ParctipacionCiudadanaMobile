@@ -84,7 +84,7 @@ public class Cameraman : MonoBehaviour
 
     IEnumerator SendPhotoCoroutine(Action output = null)
     {
-        if (url != null)
+        if (url != "")
         {
             UnityWebRequest request = new UnityWebRequest(url, "POST");
 

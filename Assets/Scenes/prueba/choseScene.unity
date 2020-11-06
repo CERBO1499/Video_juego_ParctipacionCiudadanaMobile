@@ -11379,16 +11379,61 @@ PrefabInstance:
     - target: {fileID: 6176012963656137099, guid: e789faca17cc3bf4c805af75d0d79e02,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6176012963773572934, guid: e789faca17cc3bf4c805af75d0d79e02,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6176012963773572953, guid: e789faca17cc3bf4c805af75d0d79e02,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6176012963773572953, guid: e789faca17cc3bf4c805af75d0d79e02,
+        type: 3}
+      propertyPath: m_TargetDisplay
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6176012965352754926, guid: e789faca17cc3bf4c805af75d0d79e02,
         type: 3}
       propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6176012965424888257, guid: e789faca17cc3bf4c805af75d0d79e02,
+        type: 3}
+      propertyPath: m_RenderingPath
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6176012965424888257, guid: e789faca17cc3bf4c805af75d0d79e02,
+        type: 3}
+      propertyPath: m_OcclusionCulling
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6176012965424888257, guid: e789faca17cc3bf4c805af75d0d79e02,
+        type: 3}
+      propertyPath: m_HDR
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6176012965424888257, guid: e789faca17cc3bf4c805af75d0d79e02,
+        type: 3}
+      propertyPath: m_AllowMSAA
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6176012965424888257, guid: e789faca17cc3bf4c805af75d0d79e02,
+        type: 3}
+      propertyPath: m_TargetEye
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6176012965424888257, guid: e789faca17cc3bf4c805af75d0d79e02,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6176012965424888257, guid: e789faca17cc3bf4c805af75d0d79e02,
+        type: 3}
+      propertyPath: m_Depth
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6176012965424888258, guid: e789faca17cc3bf4c805af75d0d79e02,
@@ -11454,8 +11499,13 @@ PrefabInstance:
     - target: {fileID: 8134583531514496174, guid: e789faca17cc3bf4c805af75d0d79e02,
         type: 3}
       propertyPath: showPhoto
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8134583531514496174, guid: e789faca17cc3bf4c805af75d0d79e02,
+        type: 3}
+      propertyPath: sceneManager
+      value: 
+      objectReference: {fileID: 1212192461}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e789faca17cc3bf4c805af75d0d79e02, type: 3}
 --- !u!4 &6245976892784179975

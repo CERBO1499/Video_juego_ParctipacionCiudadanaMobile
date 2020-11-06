@@ -30,9 +30,4 @@ public class boton : MonoBehaviour
     {
         Application.Quit();
     }
-
-
-    
-
-
 }

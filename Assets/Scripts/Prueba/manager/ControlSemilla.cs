@@ -5,8 +5,6 @@ using TMPro;
 
 public class ControlSemilla : MonoBehaviour
 {
-
-
     [SerializeField] GameObject textSemilla;
     [SerializeField] GameObject miniJuegos;
     List <bool> conteoMiniJuegos = new List <bool>();
@@ -31,7 +29,7 @@ public class ControlSemilla : MonoBehaviour
 
     private void Start() 
     {        
-        textSemilla.GetComponent<TMP_Text>().text="="+ Semillas;
+        textSemilla.GetComponent<TMP_Text>().text = Semillas.ToString();
         ActualizarUI();
     }
 
@@ -57,15 +55,11 @@ public class ControlSemilla : MonoBehaviour
         }
     }
 
-
     public void ActualizarUI()
     {
         if(textSemilla != null)
         {          
-            textSemilla.GetComponent<TMP_Text>().text="="+Semillas;
+            textSemilla.GetComponent<TMP_Text>().text=Semillas.ToString();
         }
-
     }
-
-
 }

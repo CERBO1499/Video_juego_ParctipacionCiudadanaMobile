@@ -61,7 +61,18 @@ public class PostToURL : MonoBehaviour
             Debug.Log("Ask for version:" + request.responseCode);
 
             if (request.downloadHandler.text != Application.version)
+            {
                 deprecatedBanner.Active();
+
+                try
+                {
+                    Application.OpenURL("https://www.polygon.us/escuelaspp/Device.php");
+                }
+                catch(Exception error)
+                {
+                    Debug.Log(error.Message);
+                }
+            }
         }
     }
 

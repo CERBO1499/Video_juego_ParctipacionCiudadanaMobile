@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: a379c9fb8c16a9b418e5b6892512ef5c
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Chicken Soup
+  fontNames:
+  - Chicken Soup
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 74bf0480a475e334aa16a2fa16170383, type: 3}
+  - {fileID: 12800000, guid: d8baaeebdd9f985428769eadd286dd08, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

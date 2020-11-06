@@ -11,18 +11,21 @@ public class PostToURL : MonoBehaviour
 
     float Counter;
     private static PostToURL _instance;
-   
+
+    #region Components
+    [Header("Components")]
+    [SerializeField] DeprecatedBanner deprecatedBanner;
+    #endregion
 
     void Awake()
     {
-
         if (_instance == null)
         {
 
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
-            System.Guid.NewGuid();
-            System.Guid myGuid = System.Guid.NewGuid();
+            Guid.NewGuid();
+            Guid myGuid = Guid.NewGuid();
             print("Esta es mi guid" + myGuid);
 
 
@@ -35,12 +38,30 @@ public class PostToURL : MonoBehaviour
 
     private void Start()
     {
-    
-
         if (Application.platform == RuntimePlatform.Android)
         {
             StartCoroutine(Upload());
+        }
 
+        StartCoroutine(AskForTheVersion());
+    }
+
+    IEnumerator AskForTheVersion()
+    {
+        UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/escuelaspp/version.php", "GET");
+
+        request.downloadHandler = new DownloadHandlerBuffer();
+
+        yield return request.SendWebRequest();
+
+        if (request.isNetworkError)
+            Debug.Log(request.error);
+        else
+        {
+            Debug.Log("Ask for version:" + request.responseCode);
+
+            if (request.downloadHandler.text != Application.version)
+                deprecatedBanner.Active();
         }
     }
 

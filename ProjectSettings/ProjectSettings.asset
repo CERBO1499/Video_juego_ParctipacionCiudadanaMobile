@@ -78,7 +78,7 @@ PlayerSettings:
   hideHomeButton: 0
   submitAnalytics: 1
   usePlayerLog: 1
-  bakeCollisionMeshes: 0
+  bakeCollisionMeshes: 1
   forceSingleInstance: 0
   useFlipModelSwapchain: 1
   resizableWindow: 0
@@ -126,7 +126,32 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 0.2
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 2800000, guid: 780828bbe5de8cb49817e2c25d746564, type: 3}
+  - {fileID: 2800000, guid: 06994ee232bddf647ae0624c3a32fee5, type: 3}
+  - {fileID: 2800000, guid: 7e5dba6f05aa2b44fa6c6536e057510b, type: 3}
+  - {fileID: 2800000, guid: c5455ee49b63487439b8271f77d7c761, type: 3}
+  - {fileID: 2800000, guid: cc54df08aebf77e4f896e2d6aa1e6697, type: 3}
+  - {fileID: 2800000, guid: e537f793d4f041b4bb9b46067b1a2701, type: 3}
+  - {fileID: 2800000, guid: a98c4adb2746c5446bad5a54c8aed272, type: 3}
+  - {fileID: 2800000, guid: 25034af66ecec334ca05c3c229668568, type: 3}
+  - {fileID: 2800000, guid: 21ee16ddbe6e5f6498818e4c56cfccef, type: 3}
+  - {fileID: 2800000, guid: 5cf922901c7177942a2503dc8d2c6260, type: 3}
+  - {fileID: 2800000, guid: f0f57761d0cb6774abbd51657034426f, type: 3}
+  - {fileID: 2800000, guid: 31c29a4aeb43df94285b193b6ab13073, type: 3}
+  - {fileID: 2800000, guid: 8a0cc4f18fd8feb4f9907ffffa7c3c2c, type: 3}
+  - {fileID: 2800000, guid: f53311bc96498064ea9f061c7cacbfcf, type: 3}
+  - {fileID: 2800000, guid: c27cda575fe2a3b4ab8ec5be58581e85, type: 3}
+  - {fileID: 2800000, guid: 91bfdb2be1bf1a84ab4fef9248854c79, type: 3}
+  - {fileID: 2800000, guid: 846009c5c7545834ba93d7748744bef5, type: 3}
+  - {fileID: 2800000, guid: 8bb5e7b7a03364243b13d63c4fbb2dcd, type: 3}
+  - {fileID: 2800000, guid: ca22238b698d12a4aa484864040129ba, type: 3}
+  - {fileID: 2800000, guid: 3b2625abb0b8af8489396303df904cb9, type: 3}
+  - {fileID: 2800000, guid: 38ff5ad0a9f4a67498b03ee0c2310cde, type: 3}
+  - {fileID: 2800000, guid: f1856e9091a2f6d4fbb1eb650b0022e1, type: 3}
+  - {fileID: 2800000, guid: 8fd22726defae2e4ca18beef09d0a5eb, type: 3}
+  - {fileID: 2800000, guid: 2a4bebf343310cd4387081086cfcc618, type: 3}
+  - {fileID: 2800000, guid: 931dd8d5838690f4c91e8d1c3f8d9f1e, type: 3}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -378,7 +403,7 @@ PlayerSettings:
     m_StaticBatching: 1
     m_DynamicBatching: 0
   - m_BuildTarget: WebGL
-    m_StaticBatching: 0
+    m_StaticBatching: 1
     m_DynamicBatching: 0
   m_BuildTargetGraphicsJobs:
   - m_BuildTarget: MacStandaloneSupport
@@ -440,7 +465,10 @@ PlayerSettings:
     iPhone: 1
     tvOS: 1
   m_BuildTargetGroupLightmapEncodingQuality: []
-  m_BuildTargetGroupLightmapSettings: []
+  m_BuildTargetGroupLightmapSettings:
+  - m_BuildTarget: WebGL
+    m_TextureStreamingEnabled: 0
+    m_TextureStreamingPriority: 0
   playModeTestRunnerEnabled: 0
   runPlayModeTestAsEditModeTest: 0
   actionOnDotNetUnhandledException: 1

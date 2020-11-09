@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class sexElection : MonoBehaviour
 {
-   [SerializeField] GameObject hombre,mujer;
-    static short sexo = 0;  //0 = hombre, 1=mujer
-    static bool inicio=true;
+    [SerializeField] GameObject hombre,mujer;
+    public static short sexo = 0;  //0 = hombre, 1=mujer
+    public static bool inicio=true;
 
 
     private void Awake()

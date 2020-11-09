@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 public class boton : MonoBehaviour
 {
 
     [SerializeField] Transform objetive; //el transform del Pin para que la brujula lo mire.
 
-   
-    
     public void PressScript()
     {        
         

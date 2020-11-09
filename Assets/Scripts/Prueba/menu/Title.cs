@@ -6,8 +6,20 @@ public class Title : MonoBehaviour
 {
     #region Information
     [Header("Information")]
-    [SerializeField] GameObject play;
     [SerializeField] GameObject logo;
+    [SerializeField] GameObject userTxt;
+    [SerializeField] GameObject passwordTxt;
+    [SerializeField] GameObject userIf;
+    public string getUser
+    {
+        get { return userIf.GetComponent<TMPro.TMP_InputField>().text; }
+    }
+    [SerializeField] GameObject passwordIf;
+    public string getPassword
+    {
+        get { return passwordIf.GetComponent<TMPro.TMP_InputField>().text; }
+    }
+    [SerializeField] GameObject play;  
     [SerializeField] AnimationCurve curve;
     #endregion
 
@@ -36,10 +48,18 @@ public class Title : MonoBehaviour
             yield return null;
         }
 
+        logo.SetActive(true);
+
         titleImg.color = finalColor;
 
-        play.SetActive(true);
+        userTxt.SetActive(true);
 
-        logo.SetActive(true);
+        passwordTxt.SetActive(true);
+
+        userIf.SetActive(true);
+
+        passwordIf.SetActive(true);
+
+        play.SetActive(true);
     }
 }

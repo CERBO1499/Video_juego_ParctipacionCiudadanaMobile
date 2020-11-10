@@ -35,9 +35,11 @@ public class Puzzle : MonoBehaviour
             {
                 if (PlayerPrefs.HasKey("Puzzle Piece " + (i + 1).ToString()))
                 {
-                    Debug.Log("Puzzle Piece " + (i + 1).ToString() + " :Existe");
+                    Debug.Log("Puzzle Piece " + (i + 1).ToString() + " " + PlayerPrefs.GetString("Puzzle Piece " + (i + 1).ToString()));
 
                     pieces[i].gameObject.SetActive(PlayerPrefs.GetString("Puzzle Piece " + (i + 1).ToString()) == "true");
+
+                    pieces[i].localScale = Vector3.one;
                 }
                 else
                     Debug.LogWarning("Puzzle Piece " + (i + 1).ToString() + " :No existe");

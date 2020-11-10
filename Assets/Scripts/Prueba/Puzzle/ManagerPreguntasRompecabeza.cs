@@ -29,7 +29,6 @@ public class ManagerPreguntasRompecabeza : MonoBehaviour
             puzzle.Add(idObject.Id);
             PlayerPrefs.SetString("Puzzle Piece " + idObject.Id, "true");
         }
-
     }
 
     public void UserResponse(int response)
@@ -46,7 +45,4 @@ public class ManagerPreguntasRompecabeza : MonoBehaviour
         }
         CheckCorrectAns();
     }
-
-
-
 }

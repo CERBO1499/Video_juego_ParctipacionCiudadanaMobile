@@ -70,11 +70,17 @@ public class GetCharacter : MonoBehaviour
             {
                 jsonId = JsonConvert.DeserializeObject<JsonId>(request.downloadHandler.text);
 
+                PlayerPrefs.SetString("User Name", title.getUser);
+                PlayerPrefs.SetString("Password", title.getPassword);
+
                 currentBtn.ChooseScene();
             }
             else
             {
                 jsonCharacter = JsonConvert.DeserializeObject<JsonCharacter>(request.downloadHandler.text);
+
+                PlayerPrefs.SetString("User Name", title.getUser);
+                PlayerPrefs.SetString("Password", title.getPassword);
 
                 if (jsonCharacter.Genero == "0")
                 {

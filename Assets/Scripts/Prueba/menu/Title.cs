@@ -27,6 +27,7 @@ public class Title : MonoBehaviour
     [Header("Components")]
     [SerializeField] Image titleImg;
     [SerializeField] DeprecatedBanner deprecatedBanner;
+    [SerializeField] GetCharacter getCharacter;
     #endregion
 
     void Awake()
@@ -65,5 +66,19 @@ public class Title : MonoBehaviour
 
         if (deprecatedBanner.PactiveCoroutine)
             play.GetComponent<Button>().interactable = false;
+
+        if (PlayerPrefs.HasKey("User Name"))
+        {
+            if (PlayerPrefs.GetString("User Name") != "")
+            {
+                play.GetComponent<Button>().interactable = false;
+
+                userIf.GetComponent<TMPro.TMP_InputField>().text = PlayerPrefs.GetString("User Name");
+
+                passwordIf.GetComponent<TMPro.TMP_InputField>().text = PlayerPrefs.GetString("Password");
+
+                getCharacter.Get();
+            }
+        }
     }
 }

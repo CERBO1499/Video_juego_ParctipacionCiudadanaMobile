@@ -28,6 +28,7 @@ public class ManagerPreguntasRompecabeza : MonoBehaviour
         {
             puzzle.Add(idObject.Id);
             PlayerPrefs.SetString("Puzzle Piece " + idObject.Id, "true");
+            idObject.gameObject.SetActive(false);
         }
     }
 
@@ -43,6 +44,7 @@ public class ManagerPreguntasRompecabeza : MonoBehaviour
             FeedBackBad.SetActive(true);
             responseGood = false;
         }
+
         CheckCorrectAns();
     }
 }

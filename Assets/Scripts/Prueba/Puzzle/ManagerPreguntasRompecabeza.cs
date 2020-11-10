@@ -13,6 +13,7 @@ public class ManagerPreguntasRompecabeza : MonoBehaviour
     bool responseGood=false;
     #endregion
     #region Components
+    [SerializeField]
     Puzzle puzzle;
     #endregion
 
@@ -26,7 +27,7 @@ public class ManagerPreguntasRompecabeza : MonoBehaviour
         if (responseGood)
         {
             puzzle.Add(idObject.Id);
-            PlayerPrefs.SetString("Puzzle Piece " + idObject.Id, "false");
+            PlayerPrefs.SetString("Puzzle Piece " + idObject.Id, "true");
         }
 
     }

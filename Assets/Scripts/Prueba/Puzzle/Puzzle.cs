@@ -56,15 +56,17 @@ public class Puzzle : MonoBehaviour
 
     IEnumerator ActivePieceCorotuine(RectTransform piece)
     {
+        piece.gameObject.SetActive(true);
+
         Vector3 initialLocalScale = Vector3.zero;
 
-        Vector3 finalLocalScale = piece.localScale;
+        Vector3 finalLocalScale = Vector3.one;
 
         float t = Time.time;
 
-        while (t <= Time.time + 0.5f)
+        while (Time.time <= t + 0.5f)
         {
-            piece.localScale = initialLocalScale + ((finalLocalScale - initialLocalScale) * curve.Evaluate((Time.time - t) * 0.5f));
+            piece.localScale = initialLocalScale + ((finalLocalScale - initialLocalScale) * curve.Evaluate((Time.time - t) / 0.5f));
 
             yield return null;
         }

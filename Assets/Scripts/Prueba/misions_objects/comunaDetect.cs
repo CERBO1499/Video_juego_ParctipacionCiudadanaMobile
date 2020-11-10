@@ -23,8 +23,7 @@ public class comunaDetect : MonoBehaviour
         text = GameObject.FindGameObjectWithTag("comuna").GetComponent<TextMeshProUGUI>();//Tag corresponde al UI
         comuna = "Comuna";
     }
-
-    
+ 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag=="Player")

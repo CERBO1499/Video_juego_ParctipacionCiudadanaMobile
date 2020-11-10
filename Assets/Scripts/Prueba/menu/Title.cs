@@ -19,13 +19,14 @@ public class Title : MonoBehaviour
     {
         get { return passwordIf.GetComponent<TMPro.TMP_InputField>().text; }
     }
-    [SerializeField] GameObject play;  
+    [SerializeField] GameObject play;
     [SerializeField] AnimationCurve curve;
     #endregion
 
     #region Components
     [Header("Components")]
-    [SerializeField] Image titleImg;  
+    [SerializeField] Image titleImg;
+    [SerializeField] DeprecatedBanner deprecatedBanner;
     #endregion
 
     void Awake()
@@ -61,5 +62,8 @@ public class Title : MonoBehaviour
         passwordIf.SetActive(true);
 
         play.SetActive(true);
+
+        if (deprecatedBanner.PactiveCoroutine)
+            play.GetComponent<Button>().interactable = false;
     }
 }

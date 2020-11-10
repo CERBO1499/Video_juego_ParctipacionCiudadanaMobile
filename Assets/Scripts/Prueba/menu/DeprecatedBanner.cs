@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class DeprecatedBanner : MonoBehaviour
 {
@@ -9,10 +10,16 @@ public class DeprecatedBanner : MonoBehaviour
     [SerializeField] AnimationCurve curveToSpwan;
     WaitForSeconds waitForSeconds;
     Coroutine activeCoroutine;
+    public bool PactiveCoroutine
+    {
+        get { return activeCoroutine != null; }
+    }
     #endregion
 
     #region Components
     RectTransform rect;
+    [Header("Components")]
+    [SerializeField] TMP_Text text;
     #endregion
 
     public virtual void Awake()
@@ -28,24 +35,35 @@ public class DeprecatedBanner : MonoBehaviour
     {
         if (rect != null)
         {
+            activeCoroutine = StartCoroutine(ActiveCoroutine(true));
+        }
+    }
+
+    public void Active(string message)
+    {
+        text.text = message;
+
+        if (rect != null)
+        {
             if (activeCoroutine == null)
-                activeCoroutine = StartCoroutine(ActiveCoroutine());
+                activeCoroutine = StartCoroutine(ActiveCoroutine(false));
             else
             {
                 StopCoroutine(activeCoroutine);
 
-                rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, -13f);
+                activeCoroutine = StartCoroutine(ActiveCoroutine(false));
             }
         }
     }
 
-    IEnumerator ActiveCoroutine()
+
+    IEnumerator ActiveCoroutine(bool loop)
     {
-        Vector2 initialPosition = rect.anchoredPosition;
+        Vector2 initialPosition = new Vector3(0f, -12.5f, 0f);
 
-        Vector2 finalPosition = rect.anchoredPosition + new Vector2(0f, rect.sizeDelta.y);
+        Vector2 finalPosition = new Vector3(0f, 12.5f, 0f);
 
-        while (true)
+        do
         {
             float t = Time.time;
 
@@ -77,5 +95,6 @@ public class DeprecatedBanner : MonoBehaviour
 
             yield return waitForSeconds;
         }
+        while (loop);
     }
 }

@@ -15,7 +15,7 @@ public class DeprecatedBanner : MonoBehaviour
     RectTransform rect;
     #endregion
 
-    void Awake()
+    public virtual void Awake()
     {
         rect = GetComponent<RectTransform>();
 

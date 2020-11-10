@@ -10,6 +10,8 @@ public class PuzzlePieceId : MonoBehaviour
     int id;
     [SerializeField]
     bool get;
+
+    public int Id { get => id; set => id = value; }
     #endregion
 
     void Start()

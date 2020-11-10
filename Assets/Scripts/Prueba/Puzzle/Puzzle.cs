@@ -9,6 +9,9 @@ public class Puzzle : MonoBehaviour
     [SerializeField]
     List<RectTransform> pieces;
     List<int> get;
+    [SerializeField]
+    List<PuzzlePieceId> ObjToActiveCuestion;
+
     public void Add(int id)
     {
         get.Add(id);
@@ -42,6 +45,16 @@ public class Puzzle : MonoBehaviour
         }
 
         get.Clear();
+
+        for(int i = 0; i < ObjToActiveCuestion.Count; i++)
+        {
+            if (PlayerPrefs.GetString("Puzzle Piece " + (ObjToActiveCuestion[i].Id).ToString())=="true")
+            {
+                ObjToActiveCuestion[i].gameObject.SetActive(false);
+            }
+            else ObjToActiveCuestion[i].gameObject.SetActive(true);
+        }
+
     }
 
     public void ActivePiece(int piece)

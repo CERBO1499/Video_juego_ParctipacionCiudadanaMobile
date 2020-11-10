@@ -2032,6 +2032,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   title: {fileID: 907072366}
+  currentBtn: {fileID: 914385642}
+  ignore: 1
 --- !u!1 &1522409688
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,11 +17,16 @@ public class GetCharacter : MonoBehaviour
     boton currentBtn;
     private static JsonId jsonId;
     public static JsonCharacter jsonCharacter;
+    [Space]
+    public bool ignore;
     #endregion
 
     public void Get()
     {
-        StartCoroutine(AskForTheCharacter());
+        if(ignore)
+            currentBtn.ChooseScene();
+        else
+            StartCoroutine(AskForTheCharacter());
     }
 
     IEnumerator AskForTheCharacter()

@@ -23,4 +23,9 @@ public class CloseBotton : MonoBehaviour
 
         SceneManager.LoadScene("menu");
     }
+
+    public void ClosePanel()
+    {
+        objetoAActivar.SetActive(false);
+    }
 }

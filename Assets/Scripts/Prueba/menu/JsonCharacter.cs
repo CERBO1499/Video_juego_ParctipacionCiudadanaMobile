@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 
-public class JsonCharacter : MonoBehaviour
+[System.Serializable]
+public class JsonCharacter
 {
     public string IdPersonaje { get; set; }
     public string Cabello { get; set; }
     public string Cara { get; set; }
     public string Accesorios { get; set; }
+    public string Camisa { get; set; }
     public string Pantalon { get; set; }
     public string Zapatos { get; set; }
     public string Genero { get; set; }

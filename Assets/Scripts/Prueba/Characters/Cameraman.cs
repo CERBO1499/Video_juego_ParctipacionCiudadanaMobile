@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Text;
 using UnityEngine;
@@ -10,11 +11,8 @@ public class Cameraman : MonoBehaviour
     #region Singleton
     public static Cameraman instance;
     #endregion
-    #pragma warning disable CS0414
-    #region Information
-    [Header("Information", order = 0)]
-    [SerializeField] string url;
-    #endregion
+#pragma warning disable CS0414
+
     [Space(order = 1)]
     #region Components
     [Header("Components", order = 2)]
@@ -22,6 +20,7 @@ public class Cameraman : MonoBehaviour
     [SerializeField] Photo photo;
     #region
     [SerializeField] bool showPhoto;
+    [SerializeField] 
     #endregion
     #endregion
 
@@ -52,6 +51,7 @@ public class Cameraman : MonoBehaviour
                     Debug.LogWarning("No se encontro el jugdor, revisa si este tiene el tag de player");
                 else
                 {
+                    /*
                     Animator animator = player.GetComponent<Animator>();
 
                     if (animator != null)
@@ -65,6 +65,12 @@ public class Cameraman : MonoBehaviour
                             SceneManager.LoadScene("main", LoadSceneMode.Single);
                         });
                     }
+                    */
+
+                    SendPhoto(() =>
+                    {
+                        SceneManager.LoadScene("main", LoadSceneMode.Single);
+                    });
                 }
             };
 
@@ -74,7 +80,7 @@ public class Cameraman : MonoBehaviour
 
     public Texture TakePhoto()
     {
-        return photo.Ptexture;
+        return photo.PrenderTexture;
     }
 
     public void SendPhoto(Action output = null)
@@ -84,30 +90,61 @@ public class Cameraman : MonoBehaviour
 
     IEnumerator SendPhotoCoroutine(Action output = null)
     {
-        if (url != "")
-        {
-            UnityWebRequest request = new UnityWebRequest(url, "POST");
+        UnityWebRequest request = new UnityWebRequest("http://192.168.2.87/apiEscuelaspp/public/Personaje", "POST");
 
-            byte[] body = Encoding.UTF8.GetBytes("{\"userImage\":\"" + Convert.ToBase64String(((Texture2D)(photo.Ptexture)).EncodeToPNG()) + "\"}");
+        JsonContainer.instance.Pcharacter = new JsonCharacter();
 
-            request.uploadHandler = new UploadHandlerRaw(body);
+        JsonContainer.instance.Pcharacter.IdPersonaje = "0";
 
-            request.downloadHandler = new DownloadHandlerBuffer();
+        JsonContainer.instance.Pcharacter.IdUsuaio = JsonContainer.instance.Pid.IdUsuaio;
 
-            request.SetRequestHeader("Content-Type", "application/json");
+        JsonContainer.instance.Pcharacter.Genero = (sexElection.sexo == 0) ? "1" : "0";
 
-            yield return request.SendWebRequest();
+        JsonContainer.instance.Pcharacter.Cabello = (sexElection.sexo == 1) ? selectionFemeleC.NumeroPeloM.ToString() : selectionCharacter.NumeroPelo.ToString();
 
-            if (request.isNetworkError)
-                Debug.Log(request.error);
-            else
-            {
-                Debug.Log(request.responseCode);
+        JsonContainer.instance.Pcharacter.Cara = (sexElection.sexo == 1) ? selectionFemeleC.NumeroCaraM.ToString() : selectionCharacter.NumeroCara.ToString();
 
-                output?.Invoke();
-            }
-        }
+        JsonContainer.instance.Pcharacter.Accesorios = (sexElection.sexo == 1) ? selectionFemeleC.NumeroAccesorioM.ToString() : selectionCharacter.NumeroAccesorio.ToString();
+
+        JsonContainer.instance.Pcharacter.Camisa = (sexElection.sexo == 1) ? selectionFemeleC.NumeroCamisaM.ToString() : selectionCharacter.NumeroCamisa.ToString();
+
+        JsonContainer.instance.Pcharacter.Pantalon = (sexElection.sexo == 1) ? selectionFemeleC.NumeroPantalonM.ToString() : selectionCharacter.NumeroPantalon.ToString();
+
+        JsonContainer.instance.Pcharacter.Zapatos = (sexElection.sexo == 1) ? selectionFemeleC.NumeroZapatoM.ToString() : selectionCharacter.NumeroZapato.ToString();
+
+        Texture2D texture = new Texture2D(256, 256, TextureFormat.RGB24, false);
+
+        RenderTexture.active = photo.PrenderTexture;
+
+        texture.ReadPixels(new Rect(0, 0, photo.PrenderTexture.width, photo.PrenderTexture.height), 0, 0);
+
+        texture.Apply();
+
+        JsonContainer.instance.Pcharacter.FotoPerfil = Convert.ToBase64String(texture.EncodeToPNG());
+
+        JsonContainer.instance.Pcharacter.Semillas = "0";
+
+        byte[] body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(JsonContainer.instance.Pcharacter));
+
+        Debug.Log(JsonConvert.SerializeObject(JsonContainer.instance.Pcharacter));
+
+        request.uploadHandler = new UploadHandlerRaw(body);
+
+        request.downloadHandler = new DownloadHandlerBuffer();
+
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.isNetworkError)
+            Debug.Log(request.error);
         else
+        {
+            Debug.Log(request.responseCode);
+
+            Debug.Log(request.downloadHandler.text);
+
             output?.Invoke();
+        }
     }
 }

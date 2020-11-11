@@ -17,8 +17,6 @@ public class Background : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log(DateTime.Now.Hour);
-
         if (DateTime.Now.Hour >= 6 && DateTime.Now.Hour < 18)
             background.sprite = dayBackground;
         else

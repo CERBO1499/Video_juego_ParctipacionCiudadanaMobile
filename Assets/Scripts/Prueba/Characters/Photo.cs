@@ -7,7 +7,7 @@ public class Photo : MonoBehaviour
     #region Information
     [Header("Information", order = 0)]
     [SerializeField] RenderTexture texture;
-    public Texture Ptexture
+    public RenderTexture PrenderTexture
     {
         get { return texture; }
     }

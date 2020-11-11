@@ -9,6 +9,7 @@ public class ManagerPreguntasRompecabeza : MonoBehaviour
     [SerializeField] GameObject FeedBackGood;
     [SerializeField] GameObject FeedBackBad;
     [SerializeField] PuzzlePieceId idObject;
+    [SerializeField] GameObject CloseQuestion;
 
     bool responseGood=false;
     #endregion
@@ -37,14 +38,26 @@ public class ManagerPreguntasRompecabeza : MonoBehaviour
         if (response == CorrectAns)
         {
             FeedBackGood.SetActive(true);
-            responseGood = true;           
+            responseGood = true;
+            StartCoroutine(waitForClose());
+            
         }
         else 
         {
             FeedBackBad.SetActive(true);
             responseGood = false;
+            StartCoroutine(waitForClose());
         }
 
         CheckCorrectAns();
+    }
+
+
+    IEnumerator waitForClose()
+    {
+        yield return new WaitForSeconds(0.4f);
+        CloseQuestion.SetActive(false);
+        FeedBackBad.SetActive(false);
+        FeedBackGood.SetActive(false);
     }
 }

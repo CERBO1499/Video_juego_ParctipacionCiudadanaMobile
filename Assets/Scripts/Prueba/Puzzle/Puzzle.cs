@@ -11,7 +11,12 @@ public class Puzzle : MonoBehaviour
     List<int> get;
     [SerializeField]
     List<PuzzlePieceId> ObjToActiveCuestion;
+    [SerializeField]
+    GameObject
+    CompleteImage;
 
+    int Counter;
+   
     public void Add(int id)
     {
         get.Add(id);
@@ -20,13 +25,18 @@ public class Puzzle : MonoBehaviour
     AnimationCurve curve;
     #endregion
 
+
+
+
     void Awake()
     {
         get = new List<int>();
+        CompleteImage.SetActive(false);
     }
 
     void OnEnable()
     {
+        bool ActiveimageFinal=true;
         for (int i = 0; i < pieces.Count; i++)
         {
             if (get.Contains(i + 1))
@@ -40,11 +50,21 @@ public class Puzzle : MonoBehaviour
                     pieces[i].gameObject.SetActive(PlayerPrefs.GetString("Puzzle Piece " + (i + 1).ToString()) == "true");
 
                     pieces[i].localScale = Vector3.one;
+
+                    
                 }
                 else
                     Debug.LogWarning("Puzzle Piece " + (i + 1).ToString() + " :No existe");
             }
+            if (PlayerPrefs.GetString("Puzzle Piece " + (i + 1).ToString()) == "true")
+            {
+                Counter++;
+                print("Counter = " + Counter);
+                ActiveimageFinal = false;
+            }
         }
+
+        if (ActiveimageFinal) CompleteImage.SetActive(true);
 
         get.Clear();
 
@@ -53,6 +73,7 @@ public class Puzzle : MonoBehaviour
             if (PlayerPrefs.GetString("Puzzle Piece " + (ObjToActiveCuestion[i].Id).ToString())=="true")
             {
                 ObjToActiveCuestion[i].gameObject.SetActive(false);
+                
             }
             else ObjToActiveCuestion[i].gameObject.SetActive(true);
         }
@@ -88,4 +109,6 @@ public class Puzzle : MonoBehaviour
 
         piece.localScale = finalLocalScale;
     }
+
+
 }

@@ -3,5 +3,5 @@
 [System.Serializable]
 public class JsonId
 {
-    public string IdUsuaio { get; set; }
+    public string IdUsuaio;
 }

@@ -20,11 +20,10 @@ public class ControlSemilla : MonoBehaviour
         {
             conteoMiniJuegos.Add(true);
             miniJuegosList.Add(child.gameObject);
-            
-
         }
+
         //PlayerPrefs de semillas
-       semillas= PlayerPrefs.GetInt("semillas");
+        semillas= PlayerPrefs.GetInt("semillas");
     }
 
     private void Start() 

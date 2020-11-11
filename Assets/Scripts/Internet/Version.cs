@@ -1,37 +1,15 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
 
-public class PostToURL : MonoBehaviour
+public class Version : MonoBehaviour
 {
-
-    float Counter = 300;
-    public static PostToURL _instance;
-
     #region Components
     [Header("Components")]
     [SerializeField] DeprecatedBanner deprecatedBanner;
     #endregion
-
-    void Awake()
-    {
-        if (_instance == null)
-        {
-
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-            Guid.NewGuid();
-            Guid myGuid = Guid.NewGuid();
-            print("Esta es mi guid" + myGuid);
-        }
-        else
-        {
-            Destroy(this);
-        }
-    }
 
     private void Start()
     {

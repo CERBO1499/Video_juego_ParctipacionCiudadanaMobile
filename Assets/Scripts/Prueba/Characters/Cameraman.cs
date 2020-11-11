@@ -51,22 +51,6 @@ public class Cameraman : MonoBehaviour
                     Debug.LogWarning("No se encontro el jugdor, revisa si este tiene el tag de player");
                 else
                 {
-                    /*
-                    Animator animator = player.GetComponent<Animator>();
-
-                    if (animator != null)
-                    {
-                        animator.Play("Happy Idle", 0, 0.0f);
-
-                        animator.speed = 0;
-
-                        SendPhoto(() =>
-                        {
-                            SceneManager.LoadScene("main", LoadSceneMode.Single);
-                        });
-                    }
-                    */
-
                     SendPhoto(() =>
                     {
                         SceneManager.LoadScene("main", LoadSceneMode.Single);
@@ -125,8 +109,6 @@ public class Cameraman : MonoBehaviour
         JsonContainer.instance.Pcharacter.Semillas = "0";
 
         byte[] body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(JsonContainer.instance.Pcharacter));
-
-        Debug.Log(JsonConvert.SerializeObject(JsonContainer.instance.Pcharacter));
 
         request.uploadHandler = new UploadHandlerRaw(body);
 

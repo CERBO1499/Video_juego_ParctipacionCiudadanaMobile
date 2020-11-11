@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Text;
+using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 public class boton : MonoBehaviour
 {

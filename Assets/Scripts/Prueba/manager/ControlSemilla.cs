@@ -48,8 +48,7 @@ public class ControlSemilla : MonoBehaviour
                 conteoMiniJuegos[i]=false;                
                 Semillas+=cantASumar;
                 PlayerPrefs.SetInt("semillas", semillas);
-                ActualizarUI();
-               
+                ActualizarUI();          
             }
         }
     }

@@ -20,6 +20,7 @@ public class Title : MonoBehaviour
         get { return passwordIf.GetComponent<TMPro.TMP_InputField>().text; }
     }
     [SerializeField] GameObject play;
+    [SerializeField] GameObject play2;
     [SerializeField] AnimationCurve curve;
     #endregion
 
@@ -62,7 +63,10 @@ public class Title : MonoBehaviour
 
         passwordIf.SetActive(true);
 
-        play.SetActive(true);
+        if (!getCharacter.ignore)
+            play.SetActive(true);
+        else
+            play2.SetActive(true);
 
         if (deprecatedBanner.PactiveCoroutine)
             play.GetComponent<Button>().interactable = false;

@@ -348,7 +348,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6275cc83e04394385049a7f45896ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: 
   sceneManager: {fileID: 0}
   photo: {fileID: 6176012963656137101}
   showPhoto: 1

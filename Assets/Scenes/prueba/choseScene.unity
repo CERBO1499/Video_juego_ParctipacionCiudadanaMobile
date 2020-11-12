@@ -11323,6 +11323,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: mini modular Mujer
       objectReference: {fileID: 0}
+    - target: {fileID: 6173183457562490765, guid: 0e6a8500e3f03794fb50b3ef966101e4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 6173183457562490767, guid: 0e6a8500e3f03794fb50b3ef966101e4,
         type: 3}
       propertyPath: m_LocalPosition.x

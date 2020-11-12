@@ -51,10 +51,13 @@ public class Cameraman : MonoBehaviour
                     Debug.LogWarning("No se encontro el jugdor, revisa si este tiene el tag de player");
                 else
                 {
-                    SendPhoto(() =>
-                    {
+                    if (JsonContainer.instance.Pid.IdUsuaio == "" && JsonContainer.instance.Pcharacter.IdUsuaio == "")
                         SceneManager.LoadScene("main", LoadSceneMode.Single);
-                    });
+                    else
+                        SendPhoto(() =>
+                        {
+                            SceneManager.LoadScene("main", LoadSceneMode.Single);
+                        });
                 }
             };
 

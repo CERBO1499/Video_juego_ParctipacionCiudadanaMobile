@@ -30,10 +30,24 @@ public class GetCharacter : MonoBehaviour
 
     public void Get()
     {
-        if(ignore)
-            currentBtn.ChooseScene();
-        else
+        if (!ignore)
             StartCoroutine(AskForTheCharacter());
+        else
+        {
+            playBtn.interactable = true;
+
+            playBtn.onClick.RemoveAllListeners();
+
+            playBtn.onClick.AddListener(new UnityEngine.Events.UnityAction(() =>
+            {
+                SceneManager.LoadScene("choseScene");
+            }));
+        }
+    }
+
+    public void Choose()
+    {
+        SceneManager.LoadScene("choseScene");
     }
 
     IEnumerator AskForTheCharacter()

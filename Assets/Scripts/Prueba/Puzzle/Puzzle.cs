@@ -15,8 +15,10 @@ public class Puzzle : MonoBehaviour
     GameObject
     CompleteImage;
 
-    int Counter;
-   
+    int Counter = 0;
+
+
+
     public void Add(int id)
     {
         get.Add(id);
@@ -37,6 +39,8 @@ public class Puzzle : MonoBehaviour
     void OnEnable()
     {
         bool ActiveimageFinal=true;
+        Counter++;
+
         for (int i = 0; i < pieces.Count; i++)
         {
             if (get.Contains(i + 1))
@@ -50,21 +54,24 @@ public class Puzzle : MonoBehaviour
                     pieces[i].gameObject.SetActive(PlayerPrefs.GetString("Puzzle Piece " + (i + 1).ToString()) == "true");
 
                     pieces[i].localScale = Vector3.one;
+                   
 
-                    
                 }
                 else
                     Debug.LogWarning("Puzzle Piece " + (i + 1).ToString() + " :No existe");
             }
-            if (PlayerPrefs.GetString("Puzzle Piece " + (i + 1).ToString()) == "true")
+            if (PlayerPrefs.GetString("Puzzle Piece " + (i + 1).ToString()) == "false")
             {
-                Counter++;
-                print("Counter = " + Counter);
                 ActiveimageFinal = false;
             }
         }
 
-        if (ActiveimageFinal) CompleteImage.SetActive(true);
+        if (ActiveimageFinal && Counter>1)
+        {
+            
+            print("Counter = " + Counter);
+            CompleteImage.SetActive(true);
+        }
 
         get.Clear();
 

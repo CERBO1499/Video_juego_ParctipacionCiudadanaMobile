@@ -7,7 +7,7 @@ public class ActiveQuestion : MonoBehaviour
     #region Information
     [SerializeField] 
     GameObject 
-    QuestionToActivate,Good,Bad;
+    QuestionToActivate,Good,Medium,Bad;
    
     #endregion
     private void Start()
@@ -28,5 +28,6 @@ public class ActiveQuestion : MonoBehaviour
         QuestionToActivate.SetActive(false);
         Good.SetActive(false);
         Bad.SetActive(false);
+        Medium.SetActive(false);
     }
 }

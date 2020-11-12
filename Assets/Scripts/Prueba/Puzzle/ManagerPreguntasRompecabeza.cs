@@ -1,63 +1,130 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.GameCenter;
 
 public class ManagerPreguntasRompecabeza : MonoBehaviour
 {
     #region Information
-    [SerializeField] int CorrectAns;
-    [SerializeField] GameObject FeedBackGood;
-    [SerializeField] GameObject FeedBackBad;
+    [Header("Numero respuesta correta a incorrecta", order = 0)]
+    [SerializeField]
+    int CorrectAns;
+    [SerializeField]
+    int mediumAns;
+    [SerializeField]
+    int LowAns;
+    [Space(order = 1)]
+
+    [Header("FeedBacks", order = 2)]
+    [SerializeField]
+    RectTransform FeedBackGood;
+    [SerializeField]
+    RectTransform MediumFeedBack;
+    [SerializeField]
+    RectTransform FeedBackBad;
+    [Space(order = 3)]
+
+    [Header("Other", order = 4)]
     [SerializeField] PuzzlePieceId idObject;
     [SerializeField] GameObject CloseQuestion;
+    [Space(order = 5)]
 
-    bool responseGood=false;
+    [Header("Botones de respuesta", order = 6)]
+    [SerializeField]
+    GameObject [] Botones;
+
+
+    Vector3 scaleFeedBackGood;
+    Vector3 scaleFeedBackMedium;
+    Vector3 scaleFeedBackBad;
+    [SerializeField]
+    AnimationCurve curve;
+
     #endregion
     #region Components
     [SerializeField]
     Puzzle puzzle;
+    [SerializeField]
+    ControlSemilla ctrlSemilla;
     #endregion
 
     private void Start()
     {
-        FeedBackGood.SetActive(false);
-        FeedBackBad.SetActive(false);
+
+        scaleFeedBackGood = FeedBackGood.localScale;
+        scaleFeedBackMedium = MediumFeedBack.localScale;
+        scaleFeedBackBad = FeedBackBad.localScale;
+            
+        FeedBackGood.gameObject.SetActive(false);
+        FeedBackBad.gameObject.SetActive(false);
+        MediumFeedBack.gameObject.SetActive(false);
     }
     void CheckCorrectAns()
     {
-        if (responseGood)
-        {
             puzzle.Add(idObject.Id);
             PlayerPrefs.SetString("Puzzle Piece " + idObject.Id, "true");
             idObject.gameObject.SetActive(false);
-        }
+        
     }
 
     public void UserResponse(int response)
     {
         if (response == CorrectAns)
         {
-            FeedBackGood.SetActive(true);
-            responseGood = true;
-            StartCoroutine(waitForClose());
-            
+
+            waitForClose();
+            // FeedBackGood.gameObject.SetActive(true);
+            StartCoroutine(ActiveFeedBack(FeedBackGood));
+            ctrlSemilla.SumarSemillaEnEscena(3);
         }
-        else 
+        else if(response==mediumAns)
         {
-            FeedBackBad.SetActive(true);
-            responseGood = false;
-            StartCoroutine(waitForClose());
+
+            waitForClose();
+            // MediumFeedBack.gameObject.SetActive(true);
+            StartCoroutine(ActiveFeedBack(MediumFeedBack));
+            ctrlSemilla.SumarSemillaEnEscena(2);
+           
+        }
+        else if (response==LowAns)
+        {
+
+            waitForClose();
+            //FeedBackBad.gameObject.SetActive(true);
+            StartCoroutine(ActiveFeedBack(FeedBackBad));
+            ctrlSemilla.SumarSemillaEnEscena(1);
         }
 
         CheckCorrectAns();
     }
 
 
-    IEnumerator waitForClose()
-    {
-        yield return new WaitForSeconds(0.4f);
-        CloseQuestion.SetActive(false);
-        FeedBackBad.SetActive(false);
-        FeedBackGood.SetActive(false);
+    void waitForClose()
+    {      
+
+        for (int i = 0; i < Botones.Length; i++)
+        {
+            Botones[i].SetActive(false);
+        }
+
     }
+    IEnumerator ActiveFeedBack(RectTransform txtFedback)
+    {
+        txtFedback.gameObject.SetActive(true);
+
+        Vector3 initialLocalScale = Vector3.zero;
+        Vector3 finalLocalScale = txtFedback.localScale;
+
+        float t = Time.time;
+
+        while (Time.time <= t + 0.5f)
+        {
+            txtFedback.localScale = initialLocalScale + ((finalLocalScale - initialLocalScale) * curve.Evaluate((Time.time - t)) / 0.5f);
+            yield return null;
+        }
+        txtFedback.localScale = finalLocalScale;
+    }
+
+   
+
 }

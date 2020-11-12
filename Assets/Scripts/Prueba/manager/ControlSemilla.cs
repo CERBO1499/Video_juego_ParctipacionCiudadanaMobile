@@ -36,9 +36,15 @@ public class ControlSemilla : MonoBehaviour
     {
         Semillas += _cantSumarSemilla;
         PlayerPrefs.SetInt("semillas", semillas);
+        
 
     }
-
+    public void SumarSemillaEnEscena(int _cantSumarSemilla)
+    {
+        Semillas += _cantSumarSemilla;
+        PlayerPrefs.SetInt("semillas", semillas);
+        ActualizarUI();
+    }
     public void SumarSemillaMinigame(GameObject miniGame, int cantASumar)
     {
         for(int i=0;i<conteoMiniJuegos.Count;i++)

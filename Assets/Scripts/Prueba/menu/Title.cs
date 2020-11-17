@@ -1,9 +1,17 @@
 ﻿using System.Collections;
+using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Title : MonoBehaviour
 {
+    [DllImport("__Internal")]
+    public static extern void getCooking();
+
+    [DllImport("__Internal")]
+    private static extern string StringReturnValueFunction();
+
     #region Information
     [Header("Information")]
     [SerializeField] GameObject logo;
@@ -20,7 +28,6 @@ public class Title : MonoBehaviour
         get { return passwordIf.GetComponent<TMPro.TMP_InputField>().text; }
     }
     [SerializeField] GameObject play;
-    [SerializeField] GameObject play2;
     [SerializeField] AnimationCurve curve;
     #endregion
 
@@ -34,6 +41,13 @@ public class Title : MonoBehaviour
     void Awake()
     {
         StartCoroutine(Show());
+    }
+
+    private void Start()
+    {
+        getCooking();
+
+        Debug.Log("String de prueba:" + StringReturnValueFunction().ToString());
     }
 
     IEnumerator Show()
@@ -63,10 +77,7 @@ public class Title : MonoBehaviour
 
         passwordIf.SetActive(true);
 
-        if (!getCharacter.ignore)
-            play.SetActive(true);
-        else
-            play2.SetActive(true);
+        play.SetActive(true);
 
         if (deprecatedBanner.PactiveCoroutine)
             play.GetComponent<Button>().interactable = false;

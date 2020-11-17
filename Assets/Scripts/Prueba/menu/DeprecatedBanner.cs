@@ -56,7 +56,6 @@ public class DeprecatedBanner : MonoBehaviour
         }
     }
 
-
     IEnumerator ActiveCoroutine(bool loop)
     {
         Vector2 initialPosition = new Vector3(0f, -12.5f, 0f);

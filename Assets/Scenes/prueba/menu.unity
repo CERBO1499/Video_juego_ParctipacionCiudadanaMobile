@@ -980,7 +980,6 @@ MonoBehaviour:
   userIf: {fileID: 1926544849}
   passwordIf: {fileID: 1253910715}
   play: {fileID: 914385637}
-  play2: {fileID: 2107901683}
   curve:
     serializedVersion: 2
     m_Curve:
@@ -1089,9 +1088,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1506339503}
-        m_MethodName: Get
-        m_Mode: 1
+      - m_Target: {fileID: 914385639}
+        m_MethodName: set_interactable
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1100,9 +1099,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 914385639}
-        m_MethodName: set_interactable
-        m_Mode: 6
+      - m_Target: {fileID: 1506339503}
+        m_MethodName: Get
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2066,6 +2065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c209413f647ea54abc6bbbf9ee0f03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playBtn: {fileID: 0}
   deprecatedBanner: {fileID: 1292429652}
 --- !u!114 &1506339503
 MonoBehaviour:
@@ -2079,9 +2079,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd110e7640c3710459764640d95ef2da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ignore: 0
   title: {fileID: 907072366}
   currentBtn: {fileID: 0}
-  ignore: 0
   playBtn: {fileID: 914385639}
   banner: {fileID: 1292429652}
 --- !u!1 &1522409688

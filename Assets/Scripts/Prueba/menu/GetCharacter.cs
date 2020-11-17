@@ -11,17 +11,13 @@ public class GetCharacter : MonoBehaviour
     public static GetCharacter instance;
     #endregion
 
-    #region Information
-    [Header("Components")]
+    public bool ignore;
+    [Space]
+    #region Components
     [SerializeField]
     Title title;
     [SerializeField]
     boton currentBtn;
-    [Space]
-    public bool ignore;
-    #endregion
-    [Space]
-    #region Components
     [SerializeField]
     Button playBtn;
     [SerializeField]
@@ -33,16 +29,7 @@ public class GetCharacter : MonoBehaviour
         if (!ignore)
             StartCoroutine(AskForTheCharacter());
         else
-        {
-            playBtn.interactable = true;
-
-            playBtn.onClick.RemoveAllListeners();
-
-            playBtn.onClick.AddListener(new UnityEngine.Events.UnityAction(() =>
-            {
-                SceneManager.LoadScene("choseScene");
-            }));
-        }
+            SceneManager.LoadScene("main");
     }
 
     public void Choose()
@@ -62,20 +49,11 @@ public class GetCharacter : MonoBehaviour
 
         if (request.isNetworkError)
         {
-            Debug.Log(request.error);
-
-            banner.Active("No tienes internet, si entras no se guardaron los cambios.");
-
             ignore = true;
 
             playBtn.interactable = true;
 
-            playBtn.onClick.RemoveAllListeners();
-
-            playBtn.onClick.AddListener(new UnityEngine.Events.UnityAction(() =>
-            {
-                SceneManager.LoadScene("main");
-            }));
+            banner.Active(request.error);
         }
         else
         {
@@ -83,17 +61,15 @@ public class GetCharacter : MonoBehaviour
 
             if (request.responseCode == 404)
             {
-                banner.Active("Te falta usuario y contraseña.");
-
                 playBtn.interactable = true;
+
+                banner.Active("Te falta usuario y contraseña.");
             }
             else if (request.downloadHandler.text == "null")
             {
-                banner.Active("Usuario no encontrado.");
-
-                Debug.Log("Character not found");
-
                 playBtn.interactable = true;
+
+                banner.Active("Usuario no encontrado.");
             }
             else if (request.responseCode != 500)
             {
@@ -145,9 +121,9 @@ public class GetCharacter : MonoBehaviour
             }
             else
             {
-                banner.Active("El servidor esta caido.");
-
                 playBtn.interactable = true;
+
+                banner.Active("El servidor esta caido.");
             }
         }
     }

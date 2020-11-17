@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 
 
@@ -8,6 +9,7 @@ public class Version : MonoBehaviour
 {
     #region Components
     [Header("Components")]
+    [SerializeField] Button playBtn;
     [SerializeField] DeprecatedBanner deprecatedBanner;
     #endregion
 
@@ -34,6 +36,8 @@ public class Version : MonoBehaviour
 
             if (request.downloadHandler.text != Application.version)
             {
+                playBtn.interactable = false;
+
                 deprecatedBanner.Active();
 
                 try

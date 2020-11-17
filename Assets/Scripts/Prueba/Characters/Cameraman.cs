@@ -83,7 +83,8 @@ public class Cameraman : MonoBehaviour
 
         JsonContainer.instance.Pcharacter.IdPersonaje = "0";
 
-        JsonContainer.instance.Pcharacter.IdUsuaio = JsonContainer.instance.Pid.IdUsuaio;
+        if(JsonContainer.instance.Pid.IdUsuaio != "")
+            JsonContainer.instance.Pcharacter.IdUsuaio = JsonContainer.instance.Pid.IdUsuaio;
 
         JsonContainer.instance.Pcharacter.Genero = (sexElection.sexo == 0) ? "1" : "0";
 
@@ -109,7 +110,8 @@ public class Cameraman : MonoBehaviour
 
         JsonContainer.instance.Pcharacter.FotoPerfil = Convert.ToBase64String(texture.EncodeToPNG());
 
-        JsonContainer.instance.Pcharacter.Semillas = "0";
+        if (JsonContainer.instance.Pid.IdUsuaio != "")
+            JsonContainer.instance.Pcharacter.Semillas = "0";
 
         byte[] body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(JsonContainer.instance.Pcharacter));
 
@@ -126,8 +128,6 @@ public class Cameraman : MonoBehaviour
         else
         {
             Debug.Log(request.responseCode);
-
-            Debug.Log(request.downloadHandler.text);
 
             output?.Invoke();
         }

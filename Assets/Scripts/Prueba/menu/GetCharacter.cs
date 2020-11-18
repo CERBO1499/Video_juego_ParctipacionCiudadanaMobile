@@ -29,7 +29,7 @@ public class GetCharacter : MonoBehaviour
         if (!ignore)
             StartCoroutine(AskForTheCharacter());
         else
-            SceneManager.LoadScene("main");
+            SceneManager.LoadScene("choseScene");
     }
 
     public void Choose()

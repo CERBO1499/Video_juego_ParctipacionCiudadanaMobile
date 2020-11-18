@@ -45,9 +45,9 @@ public class Title : MonoBehaviour
 
     private void Start()
     {
-        getCooking();
+        //getCooking();
 
-        Debug.Log("String de prueba:" + StringReturnValueFunction().ToString());
+       // Debug.Log("String de prueba:" + StringReturnValueFunction().ToString());
     }
 
     IEnumerator Show()
@@ -69,13 +69,13 @@ public class Title : MonoBehaviour
 
         titleImg.color = finalColor;
 
-        userTxt.SetActive(true);
+       // userTxt.SetActive(true);
 
-        passwordTxt.SetActive(true);
+       // passwordTxt.SetActive(true);
 
-        userIf.SetActive(true);
+        //userIf.SetActive(true);
 
-        passwordIf.SetActive(true);
+        //passwordIf.SetActive(true);
 
         play.SetActive(true);
 

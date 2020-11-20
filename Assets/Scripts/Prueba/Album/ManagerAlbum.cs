@@ -64,11 +64,15 @@ public class ManagerAlbum : MonoBehaviour
         responseFirstime = true;
     }
 
-    public void closeMultipleResponses()
+    public void ActivecloseMultipleResponses(GameObject buttonContinue)
     {
-
+        if (responseFirstime) buttonContinue.SetActive(true);
     }
-    
+    public void ResponseFinalMultiple(GameObject objToclose)
+    {
+        CheckCorrecAns();
+        objToclose.SetActive(false);
+    }
 
     void CloseBotones()
     {

@@ -17,8 +17,6 @@ public class GetCharacter : MonoBehaviour
     [SerializeField]
     Title title;
     [SerializeField]
-    boton currentBtn;
-    [SerializeField]
     Button playBtn;
     [SerializeField]
     DeprecatedBanner banner;
@@ -39,7 +37,7 @@ public class GetCharacter : MonoBehaviour
 
     IEnumerator AskForTheCharacter()
     {
-        UnityWebRequest request = new UnityWebRequest("http://192.168.2.87/apiEscuelaspp/public/Usuarios/" + title.getUser +"/" + title.getPassword, "GET");
+        UnityWebRequest request = new UnityWebRequest("https://192.168.2.87/apiEscuelaspp/public/Usuarios/" + title.getUser +"/" + title.getPassword, "GET");
 
         request.downloadHandler = new DownloadHandlerBuffer();
 
@@ -80,7 +78,7 @@ public class GetCharacter : MonoBehaviour
                     PlayerPrefs.SetString("User Name", title.getUser);
                     PlayerPrefs.SetString("Password", title.getPassword);
 
-                    currentBtn.ChooseScene();
+                    SceneManager.LoadScene("choseScene");
                 }
                 else
                 {

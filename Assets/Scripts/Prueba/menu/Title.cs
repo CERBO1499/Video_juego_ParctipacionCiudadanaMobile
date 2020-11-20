@@ -7,9 +7,6 @@ using UnityEngine.UI;
 public class Title : MonoBehaviour
 {
     [DllImport("__Internal")]
-    public static extern void getCooking();
-
-    [DllImport("__Internal")]
     private static extern string StringReturnValueFunction();
 
     #region Information
@@ -45,9 +42,7 @@ public class Title : MonoBehaviour
 
     private void Start()
     {
-        //getCooking();
-
-       // Debug.Log("String de prueba:" + StringReturnValueFunction().ToString());
+        Debug.Log("String de prueba:" + StringReturnValueFunction().ToString());
     }
 
     IEnumerator Show()
@@ -69,13 +64,13 @@ public class Title : MonoBehaviour
 
         titleImg.color = finalColor;
 
-       // userTxt.SetActive(true);
+        userTxt.SetActive(true);
 
-       // passwordTxt.SetActive(true);
+        passwordTxt.SetActive(true);
 
-        //userIf.SetActive(true);
+        userIf.SetActive(true);
 
-        //passwordIf.SetActive(true);
+        passwordIf.SetActive(true);
 
         play.SetActive(true);
 

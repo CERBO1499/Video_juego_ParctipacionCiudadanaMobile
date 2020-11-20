@@ -1,7 +1,7 @@
 mergeInto(LibraryManager.library, {
     getCooking: function()
     {    
-       alert("No Function");
+       
     },
     StringReturnValueFunction: function () {
     var string = "Test";

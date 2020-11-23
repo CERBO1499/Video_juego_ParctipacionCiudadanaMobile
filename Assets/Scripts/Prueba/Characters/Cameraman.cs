@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections;
+using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -8,10 +9,10 @@ using UnityEngine.SceneManagement;
 
 public class Cameraman : MonoBehaviour
 {
-    #region Singleton
-    public static Cameraman instance;
-    #endregion
-#pragma warning disable CS0414
+    [DllImport("__Internal")]
+    private static extern string setCharacter(string character);
+
+    #pragma warning disable CS0414
 
     [Space(order = 1)]
     #region Components
@@ -33,32 +34,16 @@ public class Cameraman : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-            Destroy(gameObject);
-
         if (sceneManager != null)
             sceneManager.onToMainGame = () =>
             {
-                GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-                if (player == null)
-                    Debug.LogWarning("No se encontro el jugdor, revisa si este tiene el tag de player");
+                if (JsonContainer.instance.Pid.IdUsuaio == "" && JsonContainer.instance.Pcharacter.IdUsuaio == "")
+                    SceneManager.LoadScene("main", LoadSceneMode.Single);
                 else
-                {
-                    if (JsonContainer.instance.Pid.IdUsuaio == "" && JsonContainer.instance.Pcharacter.IdUsuaio == "")
+                    SendPhoto(() =>
+                    {
                         SceneManager.LoadScene("main", LoadSceneMode.Single);
-                    else
-                        SendPhoto(() =>
-                        {
-                            SceneManager.LoadScene("main", LoadSceneMode.Single);
-                        });
-                }
+                    });
             };
 
         if(photo != null)
@@ -72,46 +57,32 @@ public class Cameraman : MonoBehaviour
 
     public void SendPhoto(Action output = null)
     {
-        StartCoroutine(SendPhotoCoroutine(output));
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
+            StartCoroutine(SendPhotoCoroutine(output));
+        else
+        {
+            GameObject receiver = new GameObject("Receiver");
+
+            receiver.AddComponent<Response>().output = (string data) =>
+            {
+                Debug.Log("Set Character: " + data);
+
+                SceneManager.LoadScene("main", LoadSceneMode.Single);
+
+                Destroy(receiver);
+            };
+
+            Debug.Log(JsonConvert.SerializeObject(CreateJsonCharacter()));
+
+            setCharacter(JsonConvert.SerializeObject(CreateJsonCharacter()));
+        }
     }
 
     IEnumerator SendPhotoCoroutine(Action output = null)
     {
         UnityWebRequest request = new UnityWebRequest("https://polygon.us/apiEscuelaspp/public/Personaje", "POST");
 
-        JsonContainer.instance.Pcharacter = new JsonCharacter();
-
-        JsonContainer.instance.Pcharacter.IdPersonaje = "0";
-
-        if(JsonContainer.instance.Pid.IdUsuaio != "")
-            JsonContainer.instance.Pcharacter.IdUsuaio = JsonContainer.instance.Pid.IdUsuaio;
-
-        JsonContainer.instance.Pcharacter.Genero = (sexElection.sexo == 0) ? "1" : "0";
-
-        JsonContainer.instance.Pcharacter.Cabello = (sexElection.sexo == 1) ? selectionFemeleC.NumeroPeloM.ToString() : selectionCharacter.NumeroPelo.ToString();
-
-        JsonContainer.instance.Pcharacter.Cara = (sexElection.sexo == 1) ? selectionFemeleC.NumeroCaraM.ToString() : selectionCharacter.NumeroCara.ToString();
-
-        JsonContainer.instance.Pcharacter.Accesorios = (sexElection.sexo == 1) ? selectionFemeleC.NumeroAccesorioM.ToString() : selectionCharacter.NumeroAccesorio.ToString();
-
-        JsonContainer.instance.Pcharacter.Camisa = (sexElection.sexo == 1) ? selectionFemeleC.NumeroCamisaM.ToString() : selectionCharacter.NumeroCamisa.ToString();
-
-        JsonContainer.instance.Pcharacter.Pantalon = (sexElection.sexo == 1) ? selectionFemeleC.NumeroPantalonM.ToString() : selectionCharacter.NumeroPantalon.ToString();
-
-        JsonContainer.instance.Pcharacter.Zapatos = (sexElection.sexo == 1) ? selectionFemeleC.NumeroZapatoM.ToString() : selectionCharacter.NumeroZapato.ToString();
-
-        Texture2D texture = new Texture2D(256, 256, TextureFormat.RGB24, false);
-
-        RenderTexture.active = photo.PrenderTexture;
-
-        texture.ReadPixels(new Rect(0, 0, photo.PrenderTexture.width, photo.PrenderTexture.height), 0, 0);
-
-        texture.Apply();
-
-        JsonContainer.instance.Pcharacter.FotoPerfil = Convert.ToBase64String(texture.EncodeToPNG());
-
-        if (JsonContainer.instance.Pid.IdUsuaio != "")
-            JsonContainer.instance.Pcharacter.Semillas = "0";
+        JsonContainer.instance.Pcharacter = CreateJsonCharacter();
 
         byte[] body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(JsonContainer.instance.Pcharacter));
 
@@ -131,5 +102,35 @@ public class Cameraman : MonoBehaviour
 
             output?.Invoke();
         }
+    }
+
+    JsonCharacter CreateJsonCharacter()
+    {
+        JsonCharacter jsonCharacter = new JsonCharacter
+        {
+            IdPersonaje = "0",
+            IdUsuaio = (JsonContainer.instance.Pid.IdUsuaio != "") ? JsonContainer.instance.Pid.IdUsuaio : JsonContainer.instance.Pcharacter.IdUsuaio,
+            Genero = (sexElection.sexo == 0) ? "1" : "0",
+            Cabello = (sexElection.sexo == 1) ? selectionFemeleC.NumeroPeloM.ToString() : selectionCharacter.NumeroPelo.ToString(),
+            Cara = (sexElection.sexo == 1) ? selectionFemeleC.NumeroCaraM.ToString() : selectionCharacter.NumeroCara.ToString(),
+            Accesorios = (sexElection.sexo == 1) ? selectionFemeleC.NumeroAccesorioM.ToString() : selectionCharacter.NumeroAccesorio.ToString(),
+            Camisa = (sexElection.sexo == 1) ? selectionFemeleC.NumeroCamisaM.ToString() : selectionCharacter.NumeroCamisa.ToString(),
+            Pantalon = (sexElection.sexo == 1) ? selectionFemeleC.NumeroPantalonM.ToString() : selectionCharacter.NumeroPantalon.ToString(),
+            Zapatos = (sexElection.sexo == 1) ? selectionFemeleC.NumeroZapatoM.ToString() : selectionCharacter.NumeroZapato.ToString(),
+            Semillas = (JsonContainer.instance.Pid.IdUsuaio != "") ? "0" : JsonContainer.instance.Pcharacter.Semillas,
+            Old = "29"
+        };
+
+        Texture2D texture = new Texture2D(256, 256, TextureFormat.RGB24, false);
+
+        RenderTexture.active = photo.PrenderTexture;
+
+        texture.ReadPixels(new Rect(0, 0, photo.PrenderTexture.width, photo.PrenderTexture.height), 0, 0);
+
+        texture.Apply();
+
+        jsonCharacter.FotoPerfil = Convert.ToBase64String(texture.EncodeToPNG());
+
+        return jsonCharacter;
     }
 }

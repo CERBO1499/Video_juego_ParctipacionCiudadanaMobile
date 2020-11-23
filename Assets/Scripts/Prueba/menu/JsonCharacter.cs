@@ -14,4 +14,5 @@ public class JsonCharacter
     public string Semillas;
     public string IdUsuaio;
     public string FotoPerfil;
+    public string Old;
 }

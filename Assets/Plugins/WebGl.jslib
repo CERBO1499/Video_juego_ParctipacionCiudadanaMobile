@@ -19,6 +19,21 @@ mergeInto(LibraryManager.library, {
         
         request.send();
     },
+    setCharacter: function (character)
+    {
+        var request = new XMLHttpRequest()
+        request.open('POST', 'https://polygon.us/apiEscuelaspp/public/Personaje', true)
+        request.setRequestHeader("Content-Type", "application/json");
+        request.onload = function () 
+        {
+            if (request.status >= 200 && request.status < 400) 
+                unityInstance.SendMessage('Receiver', 'Receive', this.response);
+            else 
+                unityInstance.SendMessage('Receiver', 'Receive', '>_<');
+        }
+
+        request.send(Pointer_stringify(character));
+    },
     setTime: function (time)
     {
         var request = new XMLHttpRequest()
@@ -31,7 +46,7 @@ mergeInto(LibraryManager.library, {
             else 
                 unityInstance.SendMessage('Receiver', 'Receive', '>_<');
         }
-        
+
         request.send(Pointer_stringify(time));
     }
 });

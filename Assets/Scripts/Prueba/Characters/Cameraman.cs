@@ -80,7 +80,7 @@ public class Cameraman : MonoBehaviour
 
     IEnumerator SendPhotoCoroutine(Action output = null)
     {
-        UnityWebRequest request = new UnityWebRequest("https://polygon.us/apiEscuelaspp/public/Personaje", "POST");
+        UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/Personaje", "POST");
 
         JsonContainer.instance.Pcharacter = CreateJsonCharacter();
 
@@ -118,7 +118,7 @@ public class Cameraman : MonoBehaviour
             Pantalon = (sexElection.sexo == 1) ? selectionFemeleC.NumeroPantalonM.ToString() : selectionCharacter.NumeroPantalon.ToString(),
             Zapatos = (sexElection.sexo == 1) ? selectionFemeleC.NumeroZapatoM.ToString() : selectionCharacter.NumeroZapato.ToString(),
             Semillas = (JsonContainer.instance.Pid.IdUsuaio != "") ? "0" : JsonContainer.instance.Pcharacter.Semillas,
-            Old = "29"
+            Old = JsonContainer.instance.Pcharacter.Old
         };
 
         Texture2D texture = new Texture2D(256, 256, TextureFormat.RGB24, false);

@@ -22,7 +22,7 @@ mergeInto(LibraryManager.library, {
     setCharacter: function (character)
     {
         var request = new XMLHttpRequest()
-        request.open('POST', 'https://polygon.us/apiEscuelaspp/public/Personaje', true)
+        request.open('POST', 'https://www.polygon.us/apiEscuelaspp/public/Personaje', true)
         request.setRequestHeader("Content-Type", "application/json");
         request.onload = function () 
         {

@@ -73,7 +73,7 @@ public class GetCharacter : MonoBehaviour
 
     IEnumerator AskForTheCharacter()
     {
-        UnityWebRequest request = new UnityWebRequest("https://polygon.us/apiEscuelaspp/public/Usuarios/" + title.getUser +"/" + title.getPassword, "GET");
+        UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/Usuarios/" + title.getUser +"/" + title.getPassword, "GET");
 
         request.downloadHandler = new DownloadHandlerBuffer();
 

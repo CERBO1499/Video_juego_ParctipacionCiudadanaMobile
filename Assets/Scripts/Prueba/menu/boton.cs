@@ -61,6 +61,15 @@ public class boton : MonoBehaviour
 
     public void Quit()
     {
+        GameObject receiver = new GameObject("Receiver");
+
+        receiver.AddComponent<Response>().output = (string data) =>
+        {
+            Debug.Log("Ask for Time: " + data);
+
+            Destroy(receiver);
+        };
+
         setTime("{\"IdUsuario\":\"" + ((JsonContainer.instance.Pid.IdUsuaio != "") ? JsonContainer.instance.Pid.IdUsuaio.ToString() : JsonContainer.instance.Pcharacter.IdUsuaio.ToString()) + "\",\"Tiempo\":\"" + Time.time.ToString() + "\"}");
 
         PlayerPrefs.SetString("User Name", "");

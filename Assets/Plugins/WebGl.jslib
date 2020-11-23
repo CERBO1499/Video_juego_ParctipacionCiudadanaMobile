@@ -22,8 +22,16 @@ mergeInto(LibraryManager.library, {
     setTime: function (time)
     {
         var request = new XMLHttpRequest()
-        request.open('POST', 'https://www.polygon.us/escuelaspp/public/StillAlive', true)
+        request.open('POST', 'https://www.polygon.us/apiEscuelaspp/public/StillAlive', true)
         request.setRequestHeader("Content-Type", "application/json");
+        request.onload = function () 
+        {
+            if (request.status >= 200 && request.status < 400) 
+                unityInstance.SendMessage('Receiver', 'Receive', this.response);
+            else 
+                unityInstance.SendMessage('Receiver', 'Receive', '>_<');
+        }
+        
         request.send(Pointer_stringify(time));
     }
 });

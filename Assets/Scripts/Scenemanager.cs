@@ -37,6 +37,10 @@ public class Scenemanager : MonoBehaviour
     {
         SceneManager.LoadScene("parchados", LoadSceneMode.Single);
     }
+    public void ToparchadosInfantil()
+    {
+        SceneManager.LoadScene("ParchadosInfantiles", LoadSceneMode.Single);
+    }
     public void ToGeoGuess()
     {
         SceneManager.LoadScene("GeoGuesOriginal", LoadSceneMode.Single);

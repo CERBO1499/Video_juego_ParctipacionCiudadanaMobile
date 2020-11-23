@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/prueba/minijuegos/Parchados.unity
     guid: 1ce6767559e57b441aa286f104f4548c
   - enabled: 1
+    path: Assets/Scenes/prueba/minijuegos/ParchadosInfantiles.unity
+    guid: 01bf359a670483c4ab1aa7590710a25c
+  - enabled: 1
     path: Assets/Scenes/prueba/minijuegos/GeoGuesOriginal.unity
     guid: 4cf75242477fac04c9c13ea69d6bc8f9
   - enabled: 1

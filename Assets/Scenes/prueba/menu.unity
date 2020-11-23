@@ -977,6 +977,8 @@ MonoBehaviour:
   userTxt: {fileID: 2112731571}
   passwordTxt: {fileID: 392044583}
   userIf: {fileID: 1926544849}
+  "btnNi\xF1o": {fileID: 0}
+  btnJoven: {fileID: 0}
   passwordIf: {fileID: 1253910715}
   play: {fileID: 914385637}
   curve:

@@ -12,6 +12,8 @@ public class Title : MonoBehaviour
     [SerializeField] GameObject userTxt;
     [SerializeField] GameObject passwordTxt;
     [SerializeField] GameObject userIf;
+ 
+
     public string getUser
     {
         get { return userIf.GetComponent<TMPro.TMP_InputField>().text; }
@@ -65,6 +67,8 @@ public class Title : MonoBehaviour
         passwordIf.SetActive(true);
 
         play.SetActive(true);
+
+
 
         if (deprecatedBanner.PactiveCoroutine)
             play.GetComponent<Button>().interactable = false;

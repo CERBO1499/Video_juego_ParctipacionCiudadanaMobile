@@ -28,14 +28,16 @@ public class plataformDetection : MonoBehaviour
             {
                 gameObject.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
                 gameObject.transform.position += new Vector3(0f, 44f, 0f);
-            }else if(gameObject.name== "Button_Exit")
+            }
+            else if(gameObject.name== "Button_Exit")
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
             } 
             else if (gameObject.name == "btnclose_scene")  //boton cerrar actividad de "nuestrasMelodias"
             {
                 gameObject.transform.localScale = new Vector3(1f,1f,1f);
                 gameObject.transform.position += new Vector3(67.5f,68.5f,0f);
+
             }else if (gameObject.name == "ButtonFinalizado")    //escena nuestrasMelodias
             {
                 gameObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);

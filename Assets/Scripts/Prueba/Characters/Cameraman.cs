@@ -77,7 +77,7 @@ public class Cameraman : MonoBehaviour
 
     IEnumerator SendPhotoCoroutine(Action output = null)
     {
-        UnityWebRequest request = new UnityWebRequest("http://192.168.2.87/apiEscuelaspp/public/Personaje", "POST");
+        UnityWebRequest request = new UnityWebRequest("https://polygon.us/apiEscuelaspp/public/Personaje", "POST");
 
         JsonContainer.instance.Pcharacter = new JsonCharacter();
 
@@ -127,7 +127,7 @@ public class Cameraman : MonoBehaviour
             Debug.Log(request.error);
         else
         {
-            Debug.Log(request.responseCode);
+            Debug.Log("Set Character: " + request.responseCode);
 
             output?.Invoke();
         }

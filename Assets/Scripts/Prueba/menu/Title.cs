@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class Title : MonoBehaviour
 {
-    [DllImport("__Internal")]
-    private static extern string StringReturnValueFunction();
-
     #region Information
     [Header("Information")]
     [SerializeField] GameObject logo;
@@ -38,11 +35,6 @@ public class Title : MonoBehaviour
     void Awake()
     {
         StartCoroutine(Show());
-    }
-
-    private void Start()
-    {
-        Debug.Log("String de prueba:" + StringReturnValueFunction().ToString());
     }
 
     IEnumerator Show()

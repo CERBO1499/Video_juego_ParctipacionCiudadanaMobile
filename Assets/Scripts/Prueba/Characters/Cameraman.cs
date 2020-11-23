@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections;
-using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -9,9 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class Cameraman : MonoBehaviour
 {
-    [DllImport("__Internal")]
-    private static extern string setCharacter(string character);
-
     #pragma warning disable CS0414
 
     [Space(order = 1)]
@@ -57,25 +53,7 @@ public class Cameraman : MonoBehaviour
 
     public void SendPhoto(Action output = null)
     {
-        if (Application.platform != RuntimePlatform.WebGLPlayer)
-            StartCoroutine(SendPhotoCoroutine(output));
-        else
-        {
-            GameObject receiver = new GameObject("Receiver");
-
-            receiver.AddComponent<Response>().output = (string data) =>
-            {
-                Debug.Log("Set Character: " + data);
-
-                SceneManager.LoadScene("main", LoadSceneMode.Single);
-
-                Destroy(receiver);
-            };
-
-            Debug.Log(JsonConvert.SerializeObject(CreateJsonCharacter()));
-
-            setCharacter(JsonConvert.SerializeObject(CreateJsonCharacter()));
-        }
+        StartCoroutine(SendPhotoCoroutine(output));
     }
 
     IEnumerator SendPhotoCoroutine(Action output = null)

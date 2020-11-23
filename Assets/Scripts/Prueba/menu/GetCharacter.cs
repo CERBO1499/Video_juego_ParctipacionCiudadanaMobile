@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Collections;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -8,9 +7,6 @@ using UnityEngine.UI;
 
 public class GetCharacter : MonoBehaviour
 {
-    [DllImport("__Internal")]
-    private static extern string getCharacter(string userName, string password);
-
     #region Static
     public static GetCharacter instance;
     #endregion
@@ -29,39 +25,7 @@ public class GetCharacter : MonoBehaviour
     public void Get()
     {
         if (!ignore)
-        {
-            if (Application.platform != RuntimePlatform.WebGLPlayer)
-                StartCoroutine(AskForTheCharacter());
-            else
-            {
-                GameObject receiver = new GameObject("Receiver");
-
-                receiver.AddComponent<Response>().output = (string data) =>
-                {
-                    Debug.Log("Ask for character: " + data);
-
-                    if (data == ">_<")
-                    {
-                        playBtn.interactable = true;
-
-                        banner.Active("Te falta usuario y contraseña.");
-                    }
-                    else if (data == "null")
-                    {
-                        playBtn.interactable = true;
-
-                        banner.Active("Usuario no encontrado.");
-                    }
-                    else
-                        SetTCharacter(data);
-
-                    Destroy(receiver);
-                };
-
-                getCharacter(title.getUser, title.getPassword);
-            }
-
-        }
+            StartCoroutine(AskForTheCharacter());
         else
             SceneManager.LoadScene("choseScene");
     }
@@ -76,12 +40,6 @@ public class GetCharacter : MonoBehaviour
         UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/Usuarios/" + title.getUser +"/" + title.getPassword, "GET");
 
         request.downloadHandler = new DownloadHandlerBuffer();
-
-        request.SetRequestHeader("Access-Control-Allow-Origin", "*");
-
-        request.SetRequestHeader("Access-Control-Allow-Methods", "GET");
-
-        request.SetRequestHeader("Access-Control-Allow-Headers", "accept, content-type");
 
         request.SetRequestHeader("Content-Type", "application/json");
 

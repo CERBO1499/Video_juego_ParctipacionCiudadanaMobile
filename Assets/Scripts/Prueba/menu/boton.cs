@@ -1,14 +1,10 @@
 ﻿using System.Collections;
-using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 public class boton : MonoBehaviour
 {
-    [DllImport("__Internal")]
-    private static extern string setTime(string time);
-
     [SerializeField] Transform objetive; //el transform del Pin para que la brujula lo mire.
 
     public void PressScript()
@@ -28,17 +24,14 @@ public class boton : MonoBehaviour
     }
     public void CloseApp()
     {
-        if (Application.platform == RuntimePlatform.WebGLPlayer)
-            Quit();
-        else
-            StartCoroutine(CloseAppCoroutine());
+        StartCoroutine(CloseAppCoroutine());
     }
 
     IEnumerator CloseAppCoroutine()
     {
         if (JsonContainer.instance.Pid.IdUsuaio != "" || JsonContainer.instance.Pcharacter.IdUsuaio != "")
         {
-            UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/escuelaspp/public/StillAlive", "POST");
+            UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/StillAlive", "POST");
 
             byte[] body = Encoding.UTF8.GetBytes("{\"IdUsuario\":\"" + ((JsonContainer.instance.Pid.IdUsuaio != "") ? JsonContainer.instance.Pid.IdUsuaio.ToString() : JsonContainer.instance.Pcharacter.IdUsuaio.ToString()) + "\",\"Tiempo\":\"" + Time.time.ToString() + "\"}");
 
@@ -56,25 +49,14 @@ public class boton : MonoBehaviour
                 Debug.Log("Application Quit: " + request.responseCode);
         }
 
-        Application.Quit();
-    }
-
-    public void Quit()
-    {
-        GameObject receiver = new GameObject("Receiver");
-
-        receiver.AddComponent<Response>().output = (string data) =>
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
+            Application.Quit();
+        else
         {
-            Debug.Log("Ask for Time: " + data);
+            PlayerPrefs.SetString("User Name", "");
+            PlayerPrefs.SetString("Password", "");
 
-            Destroy(receiver);
-        };
-
-        setTime("{\"IdUsuario\":\"" + ((JsonContainer.instance.Pid.IdUsuaio != "") ? JsonContainer.instance.Pid.IdUsuaio.ToString() : JsonContainer.instance.Pcharacter.IdUsuaio.ToString()) + "\",\"Tiempo\":\"" + Time.time.ToString() + "\"}");
-
-        PlayerPrefs.SetString("User Name", "");
-        PlayerPrefs.SetString("Password", "");
-
-        SceneManager.LoadScene("menu");
+            SceneManager.LoadScene("menu");
+        }
     }
 }

@@ -54,6 +54,8 @@ public class GetCharacter : MonoBehaviour
                     }
                     else
                         SetTCharacter(data);
+
+                    Destroy(receiver);
                 };
 
                 getCharacter(title.getUser, title.getPassword);

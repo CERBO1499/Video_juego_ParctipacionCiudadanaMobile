@@ -1,10 +1,13 @@
 ﻿using System.Collections;
+using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 public class boton : MonoBehaviour
 {
+    [DllImport("__Internal")]
+    private static extern string setTime(string time);
 
     [SerializeField] Transform objetive; //el transform del Pin para que la brujula lo mire.
 
@@ -25,7 +28,10 @@ public class boton : MonoBehaviour
     }
     public void CloseApp()
     {
-        StartCoroutine(CloseAppCoroutine());
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+            Quit();
+        else
+            StartCoroutine(CloseAppCoroutine());
     }
 
     IEnumerator CloseAppCoroutine()
@@ -48,26 +54,18 @@ public class boton : MonoBehaviour
                 Debug.Log(request.error);
             else
                 Debug.Log("Application Quit: " + request.responseCode);
-
-            if (Application.platform == RuntimePlatform.WebGLPlayer)
-            {
-                PlayerPrefs.SetString("User Name", "");
-                PlayerPrefs.SetString("Password", "");
-
-                SceneManager.LoadScene("menu");
-            }
-            else
-                Application.Quit();
         }
 
-        if (Application.platform == RuntimePlatform.WebGLPlayer)
-        {
-            PlayerPrefs.SetString("User Name", "");
-            PlayerPrefs.SetString("Password", "");
+        Application.Quit();
+    }
 
-            SceneManager.LoadScene("menu");
-        }
-        else
-            Application.Quit();
+    public void Quit()
+    {
+        setTime("{\"IdUsuario\":\"" + ((JsonContainer.instance.Pid.IdUsuaio != "") ? JsonContainer.instance.Pid.IdUsuaio.ToString() : JsonContainer.instance.Pcharacter.IdUsuaio.ToString()) + "\",\"Tiempo\":\"" + Time.time.ToString() + "\"}");
+
+        PlayerPrefs.SetString("User Name", "");
+        PlayerPrefs.SetString("Password", "");
+
+        SceneManager.LoadScene("menu");
     }
 }

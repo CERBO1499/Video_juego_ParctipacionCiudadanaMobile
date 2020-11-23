@@ -19,4 +19,11 @@ mergeInto(LibraryManager.library, {
         
         request.send();
     },
+    setTime: function (time)
+    {
+        var request = new XMLHttpRequest()
+        request.open('POST', 'https://www.polygon.us/escuelaspp/public/StillAlive', true)
+        request.setRequestHeader("Content-Type", "application/json");
+        request.send(Pointer_stringify(time));
+    }
 });

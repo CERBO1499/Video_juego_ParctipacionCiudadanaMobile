@@ -27,6 +27,8 @@ public class SelectAge : MonoBehaviour
         tmpButtonActive.interactable = true;
 
         StartCoroutine(AnimationButton());
+
+        JsonContainer.instance.Pcharacter.Old = "0";
     }
     public void UserResponseJoven()
     {
@@ -39,6 +41,8 @@ public class SelectAge : MonoBehaviour
         tmpButtonActive.interactable = false;
 
         StartCoroutine(AnimationButton());
+
+        JsonContainer.instance.Pcharacter.Old = "1";
     }
     IEnumerator AnimationButton()
     {

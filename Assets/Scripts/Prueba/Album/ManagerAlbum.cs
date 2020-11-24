@@ -27,13 +27,17 @@ public class ManagerAlbum : MonoBehaviour
 
     bool responseFirstime=false;
 
+    int CounterDifferences=0;
+    [SerializeField]Button btnFinishDiferences;
+
+   
 
     #endregion
     #region Components
     [SerializeField]
     Album album;
-    #endregion
-
+    #endregion  
+    
     void CheckCorrecAns()
     {
         album.Add(idPieceAlbum.IdPiece);
@@ -73,6 +77,19 @@ public class ManagerAlbum : MonoBehaviour
         CheckCorrecAns();
         objToclose.SetActive(false);
     }
+
+
+    public void DifferenceBtns(GameObject btnDiference)
+    {
+        for (int i = 0; i < btnDiference.transform.childCount; i++) btnDiference.transform.GetChild(i).gameObject.SetActive(true);
+
+        CounterDifferences++;
+
+        if (CounterDifferences == 4) btnFinishDiferences.gameObject.SetActive(true);
+        btnDiference.GetComponent<Button>().interactable = false;
+
+    }  
+   
 
     void CloseBotones()
     {

@@ -977,8 +977,6 @@ MonoBehaviour:
   userTxt: {fileID: 2112731571}
   passwordTxt: {fileID: 392044583}
   userIf: {fileID: 1926544849}
-  "btnNi\xF1o": {fileID: 0}
-  btnJoven: {fileID: 0}
   passwordIf: {fileID: 1253910715}
   play: {fileID: 914385637}
   curve:
@@ -1458,7 +1456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: -12.5}
+  m_AnchoredPosition: {x: 0, y: -12.500015}
   m_SizeDelta: {x: 0, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1292429650
@@ -1724,6 +1722,7 @@ MonoBehaviour:
     Semillas: 
     IdUsuaio: 
     FotoPerfil: 
+    Old: 
   id:
     IdUsuaio: 
 --- !u!1 &1425828761
@@ -2066,7 +2065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c209413f647ea54abc6bbbf9ee0f03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playBtn: {fileID: 0}
+  playBtn: {fileID: 914385639}
   deprecatedBanner: {fileID: 1292429652}
 --- !u!114 &1506339503
 MonoBehaviour:

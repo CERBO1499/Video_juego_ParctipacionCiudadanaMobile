@@ -16,10 +16,6 @@ public class miniMap : MonoBehaviour
             comunas.Add(child.gameObject);
         }
     }
-    private void Start()
-    {
-        Debug.Log(comunas.Count);
-    }
 
     public void ChangeComuna(int numeroComuna) //lo recibe 
     {

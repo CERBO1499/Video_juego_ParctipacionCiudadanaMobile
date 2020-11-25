@@ -123,8 +123,6 @@ public class GetCharacter : MonoBehaviour
 
             sexElection.inicio = false;
 
-            PlayerPrefs.SetInt("semillas", int.Parse(JsonContainer.instance.Pcharacter.Semillas));
-
             SceneManager.LoadScene("main");
         }
     }

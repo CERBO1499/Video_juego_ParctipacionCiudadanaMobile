@@ -44,6 +44,32 @@ public class SelectAge : MonoBehaviour
 
         JsonContainer.instance.Pcharacter.Old = "1";
     }
+    public void UserResponse(TMPro.TMP_InputField infield)
+    {
+        if (int.TryParse(infield.text, out int edad))
+        {
+            if (infield.text[0] == '0')
+                infield.text = "";
+            else
+            {
+                if (edad <= 13)
+                {
+                    StartCoroutine(AnimationButton());
+
+                    JsonContainer.instance.Pcharacter.Old = "0";
+                }
+                else
+                {
+                    StartCoroutine(AnimationButton());
+
+                    JsonContainer.instance.Pcharacter.Old = "1";
+                }
+            }
+        }
+        else
+            infield.text = "";
+    }
+
     IEnumerator AnimationButton()
     {
         if (!firstResponse)

@@ -52,8 +52,9 @@ public class Scenemanager : MonoBehaviour
 
     public void ToMainMenuWithSemilla()
     {
-        SceneManager.LoadScene("main", LoadSceneMode.Single);
-        ControlSemilla.SumarSemilla(10);
-
+        ControlSemilla.SumarSemilla(10, () =>
+        {
+            SceneManager.LoadScene("main", LoadSceneMode.Single);
+        });
     }
 }

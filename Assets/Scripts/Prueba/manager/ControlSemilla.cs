@@ -32,9 +32,9 @@ public class ControlSemilla : MonoBehaviour
         ActualizarUI();
     }
 
-    public static void SumarSemilla(int _cantSumarSemilla)
+    public static void SumarSemilla(int _cantSumarSemilla, System.Action output)
     {
-        JsonContainer.instance.StartCoroutine(SetSemillasCoroutine(_cantSumarSemilla.ToString(), instance.ActualizarUI));
+        JsonContainer.instance.StartCoroutine(SetSemillasCoroutine(_cantSumarSemilla.ToString(), output));
     }
     public void SumarSemillaEnEscena(int _cantSumarSemilla)
     {
@@ -75,6 +75,8 @@ public class ControlSemilla : MonoBehaviour
             {
                 Debug.Log("Get Semillas: " + request.responseCode);
 
+                JsonContainer.instance.Pcharacter.Semillas = request.downloadHandler.text;
+
                 output();
             }
         }
@@ -89,8 +91,6 @@ public class ControlSemilla : MonoBehaviour
             byte[] body = Encoding.UTF8.GetBytes("{\"IdPersonaje\":\"" + JsonContainer.instance.Pcharacter.IdPersonaje.ToString() + "\",\"Semillas\":\"" + semillas + "\"}");
 
             request.uploadHandler = new UploadHandlerRaw(body);
-
-            request.downloadHandler = new DownloadHandlerBuffer();
 
             request.SetRequestHeader("Content-Type", "application/json");
 

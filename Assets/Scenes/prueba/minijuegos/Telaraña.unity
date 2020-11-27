@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 15330741}
   - component: {fileID: 15330744}
   - component: {fileID: 15330743}
+  - component: {fileID: 15330745}
   - component: {fileID: 15330742}
   m_Layer: 5
   m_Name: Circle
@@ -210,6 +211,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 15330740}
   m_CullTransparentMesh: 0
+--- !u!114 &15330745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15330740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &21420857
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,6 +410,7 @@ GameObject:
   - component: {fileID: 89175460}
   - component: {fileID: 89175463}
   - component: {fileID: 89175462}
+  - component: {fileID: 89175464}
   - component: {fileID: 89175461}
   m_Layer: 5
   m_Name: Circle
@@ -474,6 +489,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89175459}
   m_CullTransparentMesh: 0
+--- !u!114 &89175464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89175459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &106179439
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,6 +813,7 @@ GameObject:
   - component: {fileID: 150664144}
   - component: {fileID: 150664147}
   - component: {fileID: 150664146}
+  - component: {fileID: 150664148}
   - component: {fileID: 150664145}
   m_Layer: 5
   m_Name: Circle
@@ -863,6 +892,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 150664143}
   m_CullTransparentMesh: 0
+--- !u!114 &150664148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150664143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &156372755
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,6 +1251,7 @@ GameObject:
   - component: {fileID: 270079784}
   - component: {fileID: 270079787}
   - component: {fileID: 270079786}
+  - component: {fileID: 270079788}
   - component: {fileID: 270079785}
   m_Layer: 5
   m_Name: Circle
@@ -1287,6 +1330,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 270079783}
   m_CullTransparentMesh: 0
+--- !u!114 &270079788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270079783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &277019775
 GameObject:
   m_ObjectHideFlags: 0
@@ -1607,6 +1663,7 @@ GameObject:
   - component: {fileID: 496698082}
   - component: {fileID: 496698085}
   - component: {fileID: 496698084}
+  - component: {fileID: 496698086}
   - component: {fileID: 496698083}
   m_Layer: 5
   m_Name: Circle
@@ -1685,6 +1742,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496698081}
   m_CullTransparentMesh: 0
+--- !u!114 &496698086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496698081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &498424383
 GameObject:
   m_ObjectHideFlags: 0
@@ -1770,6 +1840,7 @@ GameObject:
   - component: {fileID: 505766341}
   - component: {fileID: 505766344}
   - component: {fileID: 505766343}
+  - component: {fileID: 505766345}
   - component: {fileID: 505766342}
   m_Layer: 5
   m_Name: Circle
@@ -1848,6 +1919,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505766340}
   m_CullTransparentMesh: 0
+--- !u!114 &505766345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505766340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &535845754
 GameObject:
   m_ObjectHideFlags: 0
@@ -2016,6 +2100,7 @@ GameObject:
   - component: {fileID: 584090333}
   - component: {fileID: 584090336}
   - component: {fileID: 584090335}
+  - component: {fileID: 584090337}
   - component: {fileID: 584090334}
   m_Layer: 5
   m_Name: Circle
@@ -2094,6 +2179,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584090332}
   m_CullTransparentMesh: 0
+--- !u!114 &584090337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584090332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &603458882
 GameObject:
   m_ObjectHideFlags: 0
@@ -2408,6 +2506,7 @@ GameObject:
   - component: {fileID: 716887498}
   - component: {fileID: 716887501}
   - component: {fileID: 716887500}
+  - component: {fileID: 716887502}
   - component: {fileID: 716887499}
   m_Layer: 5
   m_Name: Circle
@@ -2486,6 +2585,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 716887497}
   m_CullTransparentMesh: 0
+--- !u!114 &716887502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716887497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &733659934
 GameObject:
   m_ObjectHideFlags: 0
@@ -2723,6 +2835,7 @@ GameObject:
   - component: {fileID: 851182054}
   - component: {fileID: 851182057}
   - component: {fileID: 851182056}
+  - component: {fileID: 851182058}
   - component: {fileID: 851182055}
   m_Layer: 5
   m_Name: Circle
@@ -2801,6 +2914,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 851182053}
   m_CullTransparentMesh: 0
+--- !u!114 &851182058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851182053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &889062760
 GameObject:
   m_ObjectHideFlags: 0
@@ -2936,6 +3062,7 @@ GameObject:
   - component: {fileID: 936646714}
   - component: {fileID: 936646717}
   - component: {fileID: 936646716}
+  - component: {fileID: 936646718}
   - component: {fileID: 936646715}
   m_Layer: 5
   m_Name: Circle
@@ -3014,6 +3141,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 936646713}
   m_CullTransparentMesh: 0
+--- !u!114 &936646718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936646713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &981588886
 GameObject:
   m_ObjectHideFlags: 0
@@ -3178,6 +3318,7 @@ GameObject:
   - component: {fileID: 997371020}
   - component: {fileID: 997371023}
   - component: {fileID: 997371022}
+  - component: {fileID: 997371024}
   - component: {fileID: 997371021}
   m_Layer: 5
   m_Name: Circle
@@ -3256,6 +3397,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997371019}
   m_CullTransparentMesh: 0
+--- !u!114 &997371024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997371019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &999608951
 GameObject:
   m_ObjectHideFlags: 0
@@ -3772,6 +3926,7 @@ GameObject:
   - component: {fileID: 1201222356}
   - component: {fileID: 1201222359}
   - component: {fileID: 1201222358}
+  - component: {fileID: 1201222360}
   - component: {fileID: 1201222357}
   m_Layer: 5
   m_Name: Circle
@@ -3850,6 +4005,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201222355}
   m_CullTransparentMesh: 0
+--- !u!114 &1201222360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201222355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &1222093635
 GameObject:
   m_ObjectHideFlags: 0
@@ -4558,6 +4726,7 @@ GameObject:
   - component: {fileID: 1468264237}
   - component: {fileID: 1468264240}
   - component: {fileID: 1468264239}
+  - component: {fileID: 1468264241}
   - component: {fileID: 1468264238}
   m_Layer: 5
   m_Name: Circle
@@ -4636,6 +4805,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1468264236}
   m_CullTransparentMesh: 0
+--- !u!114 &1468264241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468264236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &1469844806
 GameObject:
   m_ObjectHideFlags: 0
@@ -5039,6 +5221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   images: 0
+  drag: 0
   circle: {fileID: 387113091}
   circles:
   - {fileID: 685334537}
@@ -5145,6 +5328,7 @@ GameObject:
   - component: {fileID: 1716653393}
   - component: {fileID: 1716653396}
   - component: {fileID: 1716653395}
+  - component: {fileID: 1716653397}
   - component: {fileID: 1716653394}
   m_Layer: 5
   m_Name: Circle
@@ -5223,6 +5407,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1716653392}
   m_CullTransparentMesh: 0
+--- !u!114 &1716653397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716653392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &1725816947
 GameObject:
   m_ObjectHideFlags: 0
@@ -5684,6 +5881,7 @@ GameObject:
   - component: {fileID: 1895415811}
   - component: {fileID: 1895415814}
   - component: {fileID: 1895415813}
+  - component: {fileID: 1895415815}
   - component: {fileID: 1895415812}
   m_Layer: 5
   m_Name: Circle
@@ -5762,6 +5960,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895415810}
   m_CullTransparentMesh: 0
+--- !u!114 &1895415815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895415810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &1968685749
 GameObject:
   m_ObjectHideFlags: 0
@@ -6021,6 +6232,7 @@ GameObject:
   - component: {fileID: 2045625817}
   - component: {fileID: 2045625820}
   - component: {fileID: 2045625819}
+  - component: {fileID: 2045625821}
   - component: {fileID: 2045625818}
   m_Layer: 5
   m_Name: Circle
@@ -6099,6 +6311,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2045625816}
   m_CullTransparentMesh: 0
+--- !u!114 &2045625821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045625816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d20ed7612530fa4d8a40a20352e1f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!1 &2050226137
 GameObject:
   m_ObjectHideFlags: 0

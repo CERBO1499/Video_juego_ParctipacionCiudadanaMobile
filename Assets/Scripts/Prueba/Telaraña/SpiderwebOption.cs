@@ -29,13 +29,16 @@ public class SpiderwebOption : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        lastIndex = rect.GetSiblingIndex();
+        if (TelarañaManager.instance.drag)
+        {
+            lastIndex = rect.GetSiblingIndex();
 
-        rect.SetParent(rect.parent.parent.parent.parent, true);
+            rect.SetParent(rect.parent.parent.parent.parent, true);
 
-        root.sizeDelta = new Vector3(root.sizeDelta.x, root.sizeDelta.y - (rect.sizeDelta.y + 240));
+            root.sizeDelta = new Vector3(root.sizeDelta.x, root.sizeDelta.y - (rect.sizeDelta.y + 240));
 
-        StartCoroutine(DragCoroutine(eventData));
+            StartCoroutine(DragCoroutine(eventData));
+        }
     }
 
     IEnumerator DragCoroutine(PointerEventData pointerEventData)
@@ -74,11 +77,24 @@ public class SpiderwebOption : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
         if (cubicle != null)
         {
+            Cubicle c = cubicle.GetComponent<Cubicle>();
+
+            if (c.image != null)
+            {
+                c.image.GetComponent<RectTransform>().SetParent(root, true);
+
+                root.sizeDelta = new Vector3(root.sizeDelta.x, root.sizeDelta.y + (rect.sizeDelta.y + 240));
+
+                c.image.SetActive(true);
+            }
+            else
+                TelarañaManager.instance.images++;
+
+            c.image = gameObject;
+
             cubicle.GetComponent<RectTransform>().GetChild(0).gameObject.GetComponent<Image>().sprite = image.sprite;
 
             gameObject.SetActive(false);
-
-            TelarañaManager.instance.images++;
 
             if (TelarañaManager.instance.images == 4)
             {

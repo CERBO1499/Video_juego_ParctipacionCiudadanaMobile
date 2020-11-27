@@ -11,6 +11,7 @@ public class TelarañaManager : MonoBehaviour
     #region Information
     int circlesIndex = 0;
     public int images = 0;
+    public bool drag;
     bool pass;
     [Header("Information")]
     [SerializeField] GameObject circle;
@@ -86,7 +87,6 @@ public class TelarañaManager : MonoBehaviour
 
     IEnumerator GetCircle(GameObject circle)
     {
-
         bool founded = false;
 
         for (int i = 0; i < circles.Length; i++)
@@ -138,10 +138,14 @@ public class TelarañaManager : MonoBehaviour
             circle.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
 
             circle.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = questions[i];
+
+            drag = true;
         }
 
         while (!pass)
             yield return null;
+
+        drag = false;
 
         pass = false;
 
@@ -168,12 +172,8 @@ public class TelarañaManager : MonoBehaviour
 
         circlesIndex++;
 
-        Debug.Log(circlesIndex);
-
         if (circlesIndex < circles.Length)
         {
-            Debug.Log("true");
-            
             StartCoroutine(GetCircle(circles[circlesIndex]));
         }
     }

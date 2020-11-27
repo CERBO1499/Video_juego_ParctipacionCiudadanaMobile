@@ -99,7 +99,7 @@ public class Cameraman : MonoBehaviour
             Old = JsonContainer.instance.Pcharacter.Old
         };
 
-        Texture2D texture = new Texture2D(256, 256, TextureFormat.RGB24, false);
+        Texture2D texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
 
         RenderTexture.active = photo.PrenderTexture;
 

@@ -50,6 +50,11 @@ public class Scenemanager : MonoBehaviour
         SceneManager.LoadScene("nuestrasMelodias", LoadSceneMode.Single);
     }
 
+    public void ToTelaraña() 
+    {
+        SceneManager.LoadScene("Telaraña", LoadSceneMode.Single);
+    }
+
     public void ToMainMenuWithSemilla()
     {
         ControlSemilla.SumarSemilla(10, () =>

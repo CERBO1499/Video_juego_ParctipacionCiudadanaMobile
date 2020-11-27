@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/prueba/minijuegos/nuestrasMelodias.unity
     guid: 7407aa8197aa61a4b82fe0efaaacf526
+  - enabled: 1
+    path: "Assets/Scenes/prueba/minijuegos/Telara\xF1a.unity"
+    guid: 00d2b11bc5fd2b844bbe0bce74194241
   m_configObjects: {}

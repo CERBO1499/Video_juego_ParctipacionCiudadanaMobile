@@ -137,7 +137,7 @@ public class TelarañaManager : MonoBehaviour
 
             circle.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
 
-            circle.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = questions[i];
+            circle.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = questions[circlesIndex];
 
             drag = true;
         }

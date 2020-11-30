@@ -24,6 +24,7 @@ public class lugarEspecial : MonoBehaviour
         if (other.tag == "Player") {
            // print("conecta imagen ref");
             UiPuntoEstrategico.SetActive(true);
+
             logrosManager.GetComponent<logrosManager>().Lugar(gameObject);
 
         }

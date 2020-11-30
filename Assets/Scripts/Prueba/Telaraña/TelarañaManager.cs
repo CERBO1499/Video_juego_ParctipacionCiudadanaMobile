@@ -298,7 +298,7 @@ public class TelarañaManager : MonoBehaviour
 
     IEnumerator SendCoroutine(Texture2D texture)
     {
-        UnityWebRequest request = new UnityWebRequest("http://www.polygon.us/Escuelaspp/tejiendolazos/crearimagen.php", "POST");
+        UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/escuelaspp/tejiendolazos/crearimagen.php", "POST");
 
         byte[] body = Encoding.UTF8.GetBytes("{\"IdUsuario\":\"" + JsonContainer.instance.Pcharacter.IdUsuaio + "\",\"Spiderweb\":\"" + Convert.ToBase64String(texture.EncodeToPNG()) + "\"}");
 

@@ -1,5 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Text;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TelarañaManager : MonoBehaviour
@@ -9,11 +13,12 @@ public class TelarañaManager : MonoBehaviour
     #endregion
 
     #region Information
+    bool render;
     int circlesIndex = 0;
     [HideInInspector] public int images = 0;
     [HideInInspector] public bool drag;
     bool pass;
-    [HideInInspector] public bool line;
+    public bool line;
     [Header("Information")]
     [SerializeField] GameObject circle;
     [SerializeField] GameObject[] circles;
@@ -23,13 +28,13 @@ public class TelarañaManager : MonoBehaviour
     #endregion
     #region Jaika
     [SerializeField] GameObject secondActivity;
-    [SerializeField] Texture2D cursor;
     [SerializeField] Transform lines;
     public Material lineMaterial;
     public Transform Plines
     {
         get { return lines; }
     }
+    [SerializeField] GameObject sendBtn;
     [SerializeField] GameObject end;
     #endregion
     #endregion
@@ -37,17 +42,33 @@ public class TelarañaManager : MonoBehaviour
     #region Components
     [Header("Components")]
     [SerializeField] GameObject options;
+    [SerializeField] RectTransform spiderWeb;
+    [SerializeField] RectTransform optionsRect;
+    [SerializeField] GameObject title;
+    [SerializeField] RenderTexture renderTexture;
     #endregion
 
-    private void Awake()
+    void Awake()
     {
         instance = this;
+
+        if (JsonContainer.instance != null)
+        {
+            byte[] imageBytes = Convert.FromBase64String(JsonContainer.instance.Pcharacter.FotoPerfil);
+
+            Texture2D texture = new Texture2D(512, 512);
+
+            texture.LoadImage(imageBytes);
+
+            circle.GetComponent<RectTransform>().GetChild(0).GetChild(0).gameObject.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+        }
     }
 
-    private void Start()
+    void Start()
     {
         StartCoroutine(ShowCircle());
     }
+
     IEnumerator ShowCircle()
     {
         StartCoroutine(ShowCircle(circle));
@@ -125,7 +146,7 @@ public class TelarañaManager : MonoBehaviour
 
         Vector2[] finalLocalPosition = { new Vector2(-410f, -290f), new Vector2(-120f, 170f), new Vector2(455f, 170f), new Vector2(160f, -290f) };
 
-        Vector2[] finalLocalScale = { Vector2.one * 4f, Vector2.one * 4f , Vector2.one * 4f , Vector2.one * 4f };
+        Vector2[] finalLocalScale = { Vector2.one * 4f, Vector2.one * 4f, Vector2.one * 4f, Vector2.one * 4f };
 
         float t = Time.time;
 
@@ -215,6 +236,8 @@ public class TelarañaManager : MonoBehaviour
 
     public void PassToSecondActivity()
     {
+        circle.GetComponent<RectTransform>().GetChild(0).gameObject.GetComponent<Image>().raycastTarget = true;
+
         for (int i = 0; i < circles.Length; i++)
         {
             foreach (RectTransform rect in circles[i].GetComponent<RectTransform>())
@@ -225,9 +248,105 @@ public class TelarañaManager : MonoBehaviour
 
         secondActivity.SetActive(false);
 
-        if (Application.platform != RuntimePlatform.Android)
-            Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
+        sendBtn.SetActive(true);
 
         line = true;
+    }
+
+    public void Send()
+    {
+        circle.GetComponent<RectTransform>().GetChild(0).gameObject.GetComponent<Image>().raycastTarget = false;
+
+        for (int i = 0; i < circles.Length; i++)
+        {
+            foreach (RectTransform rect in circles[i].GetComponent<RectTransform>())
+            {
+                rect.gameObject.GetComponent<Image>().raycastTarget = false;
+            }
+        }
+
+        Vector3 spiderWebInitialPosition = new Vector3(-1280f, 0f, 0f);
+
+        Vector3 optionsInitialPosition = new Vector3(640f, 0f, 0f);
+
+        spiderWeb.anchoredPosition = new Vector3(-1920f, 0f, 0f);
+
+        optionsRect.anchoredPosition = Vector3.zero;
+
+        for (int i = 0; i < lines.childCount; i++)
+            lines.GetChild(i).gameObject.GetComponent<WebLine>().UpdatePosition();
+
+        title.SetActive(false);
+
+        Camera.main.targetTexture = renderTexture;
+
+        Camera.main.Render();
+
+        Camera.main.targetTexture = null;
+
+        spiderWeb.anchoredPosition = spiderWebInitialPosition;
+
+        optionsRect.anchoredPosition = optionsInitialPosition;
+
+        for(int i = 0; i < lines.childCount; i++)
+            lines.GetChild(i).gameObject.GetComponent<WebLine>().UpdatePosition();
+
+        title.SetActive(true);
+
+        StartCoroutine(SendCoroutine(toTexture2D(renderTexture)));
+    }
+
+    IEnumerator SendCoroutine(Texture2D texture)
+    {
+        UnityWebRequest request = new UnityWebRequest("http://www.polygon.us/Escuelaspp/tejiendolazos/crearimagen.php", "POST");
+
+        byte[] body = Encoding.UTF8.GetBytes("{\"IdUsuario\":\"" + JsonContainer.instance.Pcharacter.IdUsuaio + "\",\"Spiderweb\":\"" + Convert.ToBase64String(texture.EncodeToPNG()) + "\"}");
+
+        request.uploadHandler = new UploadHandlerRaw(body);
+
+        request.downloadHandler = new DownloadHandlerBuffer();
+
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.isNetworkError)
+            Debug.Log(request.error);
+        else
+        {
+            Debug.Log("Spider Web: " + request.downloadHandler.text);
+
+            if (Application.platform != RuntimePlatform.Android)
+            {
+                RectTransform rect = end.GetComponent<RectTransform>().GetChild(0).gameObject.GetComponent<RectTransform>();
+
+                rect.offsetMax = Vector2.zero;
+
+                rect.offsetMin = Vector2.zero;
+            }
+
+            end.SetActive(true);
+        }
+    }
+
+    Texture2D toTexture2D(RenderTexture renderTexture)
+    {
+        Texture2D texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
+
+        RenderTexture.active = renderTexture;
+
+        texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+
+        texture.Apply();
+
+        return texture;
+    }
+
+    public void ToMain()
+    {
+        ControlSemilla.SumarSemilla(10, () => 
+        {
+            SceneManager.LoadScene("main", LoadSceneMode.Single);
+        });
     }
 }

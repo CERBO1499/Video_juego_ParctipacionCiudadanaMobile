@@ -12,11 +12,6 @@ public class Scenemanager : MonoBehaviour
     public Action onToMainGame;
     #endregion
 
-    private void Awake()
-    {
-       //ctrlSemilla = GameObject.Find("ControlSemilla").GetComponent<ControlSemilla>();
-    }
-
     public void ToDrawGame() {
 
         SceneManager.LoadScene("SceneDraw",LoadSceneMode.Single);

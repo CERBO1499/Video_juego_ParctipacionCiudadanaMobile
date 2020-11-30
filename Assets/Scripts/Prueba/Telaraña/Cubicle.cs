@@ -10,13 +10,14 @@ public class Cubicle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     bool drag;
     LineRenderer line;
     int point;
+    bool anchored;
     #endregion
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if (TelarañaManager.instance.line)
         {
-            GameObject line = new GameObject("Line", typeof(LineRenderer));
+            GameObject line = new GameObject("Line", typeof(LineRenderer), typeof(WebLine));
 
             line.transform.SetParent(TelarañaManager.instance.Plines);
 
@@ -30,13 +31,11 @@ public class Cubicle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
             this.line.sortingOrder = 1;
 
-            Vector3 screenPoint = Input.mousePosition;
-
-            screenPoint.z = 90.0f;
-
-            this.line.SetPosition(0, Camera.main.ScreenToWorldPoint(screenPoint));
+            this.line.SetPosition(0, GetComponent<RectTransform>().position);
 
             point = 1;
+
+            line.GetComponent<WebLine>().initialPosition = GetComponent<RectTransform>();
 
             StartCoroutine(DragCoroutine(eventData));
         }
@@ -60,17 +59,23 @@ public class Cubicle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
             EventSystem.current.RaycastAll(pointerEventData, resoults);
 
-            GameObject cubicle = null;
+            bool anchored = false;
 
             for (int i = 0; i < resoults.Count; i++)
             {
                 if (resoults[i].gameObject.tag == "Cubicle")
                 {
-                    cubicle = resoults[i].gameObject;
+                    line.SetPosition(point, resoults[i].gameObject.GetComponent<RectTransform>().position);
+
+                    line.GetComponent<WebLine>().finalPosition = resoults[i].gameObject.GetComponent<RectTransform>();
+
+                    anchored = true;
 
                     break;
                 }
             }
+
+            this.anchored = anchored;
 
             yield return null;
         }
@@ -78,11 +83,19 @@ public class Cubicle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (line.positionCount == 2)
+        if (TelarañaManager.instance.line)
         {
-            Destroy(line.gameObject);
+            if (line.positionCount == 2)
+            {
+                if (!anchored)
+                    Destroy(line.gameObject);
 
-            line = null;
+                anchored = false;
+
+                drag = false;
+
+                line = null;
+            }
         }
     }
 }

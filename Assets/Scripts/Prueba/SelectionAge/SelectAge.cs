@@ -12,6 +12,8 @@ public class SelectAge : MonoBehaviour
     [SerializeField]RectTransform btnJugar;
     [SerializeField]AnimationCurve curve;
 
+    Coroutine ageCorotuine;
+
     bool firstResponse=false;
     #endregion
 
@@ -53,13 +55,15 @@ public class SelectAge : MonoBehaviour
             {
                 if (edad <= 13)
                 {
-                    StartCoroutine(AnimationButton());
+                    if(ageCorotuine == null)
+                        ageCorotuine = StartCoroutine(AnimationButton());
 
                     JsonContainer.instance.Pcharacter.Old = "0";
                 }
                 else
                 {
-                    StartCoroutine(AnimationButton());
+                    if (ageCorotuine == null)
+                        ageCorotuine = StartCoroutine(AnimationButton());
 
                     JsonContainer.instance.Pcharacter.Old = "1";
                 }

@@ -33,7 +33,7 @@ public class SpiderwebOption : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         {
             lastIndex = rect.GetSiblingIndex();
 
-            rect.SetParent(rect.parent.parent.parent.parent, true);
+            rect.SetParent(rect.parent.parent.parent.parent);
 
             root.sizeDelta = new Vector3(root.sizeDelta.x, root.sizeDelta.y - (rect.sizeDelta.y + 240));
 
@@ -47,9 +47,13 @@ public class SpiderwebOption : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
         while (drag)
         {
-            rect.position = Input.mousePosition;
+            Vector3 screenPoint = Input.mousePosition;
 
-            pointerEventData.position = rect.position;
+            screenPoint.z = 90.0f;
+
+            rect.position = Camera.main.ScreenToWorldPoint(screenPoint);
+
+            pointerEventData.position = Input.mousePosition;
 
             List<RaycastResult> resoults = new List<RaycastResult>();
 
@@ -59,7 +63,7 @@ public class SpiderwebOption : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
             for (int i = 0; i < resoults.Count; i++)
             {
-                if (resoults[i].gameObject.tag == "Cublicle")
+                if (resoults[i].gameObject.tag == "Cubicle")
                 {
                     cubicle = resoults[i].gameObject;
 
@@ -81,7 +85,11 @@ public class SpiderwebOption : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
             if (c.image != null)
             {
-                c.image.GetComponent<RectTransform>().SetParent(root, true);
+                RectTransform anotherRect = c.image.GetComponent<RectTransform>();
+
+                anotherRect.SetParent(root);
+
+                anotherRect.localPosition = new Vector3(anotherRect.localPosition.x, anotherRect.localPosition.y, 0f);
 
                 root.sizeDelta = new Vector3(root.sizeDelta.x, root.sizeDelta.y + (rect.sizeDelta.y + 240));
 
@@ -105,9 +113,11 @@ public class SpiderwebOption : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         }
         else
         {
-            rect.SetParent(root, true);
+            rect.SetParent(root);
 
             rect.SetSiblingIndex(lastIndex);
+
+            rect.localPosition = new Vector3(rect.localPosition.x, rect.localPosition.y, 0f);
 
             root.sizeDelta = new Vector3(root.sizeDelta.x, root.sizeDelta.y + (rect.sizeDelta.y + 240));
         }

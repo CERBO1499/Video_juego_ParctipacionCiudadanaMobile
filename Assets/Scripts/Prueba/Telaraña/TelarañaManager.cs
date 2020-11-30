@@ -10,15 +10,27 @@ public class TelarañaManager : MonoBehaviour
 
     #region Information
     int circlesIndex = 0;
-    public int images = 0;
-    public bool drag;
+    [HideInInspector] public int images = 0;
+    [HideInInspector] public bool drag;
     bool pass;
+    [HideInInspector] public bool line;
     [Header("Information")]
     [SerializeField] GameObject circle;
     [SerializeField] GameObject[] circles;
     [SerializeField] AnimationCurve curve;
     #region Questions
     [SerializeField] Sprite[] questions;
+    #endregion
+    #region Jaika
+    [SerializeField] GameObject secondActivity;
+    [SerializeField] Texture2D cursor;
+    [SerializeField] Transform lines;
+    public Material lineMaterial;
+    public Transform Plines
+    {
+        get { return lines; }
+    }
+    [SerializeField] GameObject end;
     #endregion
     #endregion
 
@@ -79,7 +91,7 @@ public class TelarañaManager : MonoBehaviour
 
             options.SetActive(true);
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
 
             StartCoroutine(GetCircle(circles[circlesIndex]));
         }
@@ -131,6 +143,8 @@ public class TelarañaManager : MonoBehaviour
 
         for (int i = 0; i < circle.transform.childCount; i++)
         {
+            circle.transform.GetChild(i).gameObject.GetComponent<Image>().raycastTarget = true;
+
             circle.transform.GetChild(i).localPosition = finalLocalPosition[i];
 
             circle.transform.GetChild(i).localScale = finalLocalScale[i];
@@ -138,16 +152,19 @@ public class TelarañaManager : MonoBehaviour
             circle.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
 
             circle.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = questions[circlesIndex];
-
-            drag = true;
         }
+
+        drag = true;
 
         while (!pass)
             yield return null;
 
+        pass = false;
+
         drag = false;
 
-        pass = false;
+        for (int i = 0; i < circle.transform.childCount; i++)
+            circle.transform.GetChild(i).gameObject.GetComponent<Image>().raycastTarget = false;
 
         t = Time.time;
 
@@ -173,13 +190,44 @@ public class TelarañaManager : MonoBehaviour
         circlesIndex++;
 
         if (circlesIndex < circles.Length)
-        {
             StartCoroutine(GetCircle(circles[circlesIndex]));
-        }
+        else
+        {
+            yield return new WaitForSeconds(1f);
+
+            if (Application.platform != RuntimePlatform.Android)
+            {
+                RectTransform rect = secondActivity.GetComponent<RectTransform>().GetChild(0).gameObject.GetComponent<RectTransform>();
+
+                rect.offsetMax = Vector2.zero;
+
+                rect.offsetMin = Vector2.zero;
+            }
+
+            secondActivity.SetActive(true);
+        };
     }
 
     public void SetCircle()
     {
         pass = true;
+    }
+
+    public void PassToSecondActivity()
+    {
+        for (int i = 0; i < circles.Length; i++)
+        {
+            foreach (RectTransform rect in circles[i].GetComponent<RectTransform>())
+            {
+                rect.gameObject.GetComponent<Image>().raycastTarget = true;
+            }
+        }
+
+        secondActivity.SetActive(false);
+
+        if (Application.platform != RuntimePlatform.Android)
+            Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
+
+        line = true;
     }
 }

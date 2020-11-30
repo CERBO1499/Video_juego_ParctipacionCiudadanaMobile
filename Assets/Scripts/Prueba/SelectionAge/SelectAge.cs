@@ -15,7 +15,6 @@ public class SelectAge : MonoBehaviour
     bool firstResponse=false;
     #endregion
 
-
     public void UserResponseNiño()
     {
         Button tmpButton;

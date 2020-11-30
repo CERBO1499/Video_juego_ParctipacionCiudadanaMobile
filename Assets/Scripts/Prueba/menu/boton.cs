@@ -5,7 +5,10 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 public class boton : MonoBehaviour
 {
+    #region Information
+    float time = 0;
     [SerializeField] Transform objetive; //el transform del Pin para que la brujula lo mire.
+    #endregion
 
     public void PressScript()
     {        
@@ -33,7 +36,9 @@ public class boton : MonoBehaviour
         {
             UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/StillAlive", "POST");
 
-            byte[] body = Encoding.UTF8.GetBytes("{\"IdUsuario\":\"" + ((JsonContainer.instance.Pid.IdUsuaio != "") ? JsonContainer.instance.Pid.IdUsuaio.ToString() : JsonContainer.instance.Pcharacter.IdUsuaio.ToString()) + "\",\"Tiempo\":\"" + Time.time.ToString() + "\"}");
+            byte[] body = Encoding.UTF8.GetBytes("{\"IdUsuario\":\"" + ((JsonContainer.instance.Pid.IdUsuaio != "") ? JsonContainer.instance.Pid.IdUsuaio.ToString() : JsonContainer.instance.Pcharacter.IdUsuaio.ToString()) + "\",\"Tiempo\":\"" + (Time.time - time).ToString() + "\"}");
+
+            time = Time.time;
 
             request.uploadHandler = new UploadHandlerRaw(body);
 

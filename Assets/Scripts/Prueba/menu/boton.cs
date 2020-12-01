@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class boton : MonoBehaviour
 {
     #region Information
-    float time = 0;
+    public static float time = 0;
     [SerializeField] Transform objetive; //el transform del Pin para que la brujula lo mire.
     #endregion
 

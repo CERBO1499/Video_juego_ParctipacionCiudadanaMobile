@@ -331,7 +331,7 @@ public class TelarañaManager : MonoBehaviour
 
     Texture2D toTexture2D(RenderTexture renderTexture)
     {
-        Texture2D texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
+        Texture2D texture = new Texture2D(1024, 1024, TextureFormat.RGB24, false);
 
         RenderTexture.active = renderTexture;
 

@@ -20,10 +20,7 @@ public class LabyrinthMove : MonoBehaviour
 
         while (true)
         {
-            if (Input.GetAxis("Horizontal") != 0)
-                rigibody.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), 0f).normalized * 5f;
-            else
-                rigibody.velocity = Vector3.zero;
+            rigibody.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * 5f;
 
             yield return null;
         }

@@ -46,11 +46,6 @@ public class Cameraman : MonoBehaviour
             photo.PrawImage.SetActive(showPhoto);
     }
 
-    public Texture TakePhoto()
-    {
-        return photo.PrenderTexture;
-    }
-
     public void SendPhoto(Action output = null)
     {
         StartCoroutine(SendPhotoCoroutine(output));
@@ -77,6 +72,8 @@ public class Cameraman : MonoBehaviour
         else
         {
             Debug.Log("Set Character: " + request.responseCode);
+
+            JsonContainer.instance.Pcharacter.IdPersonaje = request.downloadHandler.text;
 
             output?.Invoke();
         }

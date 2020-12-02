@@ -42,7 +42,7 @@ public class Version : MonoBehaviour
 
                 try
                 {
-                    Application.OpenURL("https://www.polygon.us/escuelaspp/Device.php");
+                    Application.OpenURL("https://www.polygon.us/escuelaspp/celular.html");
                 }
                 catch (Exception error)
                 {

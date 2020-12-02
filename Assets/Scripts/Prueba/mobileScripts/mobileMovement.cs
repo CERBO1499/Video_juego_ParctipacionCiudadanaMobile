@@ -4,15 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class mobileMovement : MonoBehaviour
 {
-
     Rigidbody rbPlayer;
     [SerializeField]float speed = 10f;
     FixedJoystick joystick;
     [SerializeField] GameObject joyStickImage;
     
-   
-
-
     private void Awake()
     {
         rbPlayer = GetComponent<Rigidbody>();
@@ -35,10 +31,6 @@ public class mobileMovement : MonoBehaviour
         {
               JoyStickcontrol();
         }
-                  
-
-       
-
     }
 
     void PlayerControl()
@@ -55,8 +47,7 @@ public class mobileMovement : MonoBehaviour
     }
 
     void JoyStickcontrol() 
-    {
-        
+    {    
         Vector3 directionMObile = new Vector3(joystick.Horizontal*speed,rbPlayer.velocity.y,
                                                 joystick.Vertical*speed);
         rbPlayer.velocity=directionMObile.normalized*10;
@@ -66,6 +57,4 @@ public class mobileMovement : MonoBehaviour
             (directionMObile),Time.deltaTime*7.3f);
         }
     }
-
-
 }

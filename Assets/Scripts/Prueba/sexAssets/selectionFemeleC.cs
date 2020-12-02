@@ -42,7 +42,6 @@ public class selectionFemeleC : MonoBehaviour
 
     private void Awake()
     {
-
         foreach (Transform child in pelo.transform)
         {
             pelucas.Add(child.gameObject);
@@ -67,7 +66,6 @@ public class selectionFemeleC : MonoBehaviour
         {
             zapatos.Add(child.gameObject);
         }
-        //ya guardamos aca arriba todos los hijos de los papas en las listas de ellos mismos, entonces tenemos el count
 
     }
 
@@ -143,13 +141,10 @@ public class selectionFemeleC : MonoBehaviour
     }
 
 
-
-
     public void NextHair()
     {
         if (NumeroPeloM + 1 != pelucas.Count)
         {
-
             pelucas[NumeroPeloM + 1].SetActive(true);
             pelucas[NumeroPeloM].SetActive(false);
             NumeroPeloM++;

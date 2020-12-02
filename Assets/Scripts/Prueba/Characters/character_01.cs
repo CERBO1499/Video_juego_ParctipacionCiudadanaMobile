@@ -7,7 +7,6 @@ public class character_01 : MonoBehaviour
     Animator anim;
     FixedJoystick joystick;
 
-
     float h;
     float v;
 
@@ -24,15 +23,10 @@ public class character_01 : MonoBehaviour
       
     }
 
-   
     void FixedUpdate()
     {
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
-
-       
-
-        
 
         if (h != 0 || v != 0 )
         {
@@ -45,20 +39,18 @@ public class character_01 : MonoBehaviour
             anim.SetBool("walking",false);
         }
 
-
-         if(Application.platform== RuntimePlatform.Android)
-         {
-            hmobile=joystick.Horizontal;
-            vmobile=joystick.Vertical;
-             if( hmobile!=0||vmobile!=0)
-             {
-                  anim.SetBool("walking",true);
-             }
-             else
-             {
-                  anim.SetBool("walking",false);
-             }
-         }
-                  
+        if(Application.platform== RuntimePlatform.Android)
+        {
+        hmobile=joystick.Horizontal;
+        vmobile=joystick.Vertical;
+            if( hmobile!=0||vmobile!=0)
+            {
+                anim.SetBool("walking",true);
+            }
+            else
+            {
+                anim.SetBool("walking",false);
+            }
+        }         
     }
 }

@@ -26,10 +26,9 @@ public class ControlSemilla : MonoBehaviour
     }
 
     private void Start() 
-    {        
-        textSemilla.GetComponent<TMP_Text>().text = JsonContainer.instance.Pcharacter.Semillas;
-
-        ActualizarUI();
+    {
+        if (textSemilla != null)
+            StartCoroutine(GetSemillasCoroutine());
     }
 
     public static void SumarSemilla(int _cantSumarSemilla, System.Action output)
@@ -56,14 +55,14 @@ public class ControlSemilla : MonoBehaviour
     public void ActualizarUI()
     {
         if(textSemilla != null)
-            textSemilla.GetComponent<TMP_Text>().text = JsonContainer.instance.Pcharacter.Semillas;
+            StartCoroutine(GetSemillasCoroutine());
     }
 
     public static IEnumerator GetSemillasCoroutine(System.Action output = null)
     {
         if (JsonContainer.instance.Pid.IdUsuaio != "" || JsonContainer.instance.Pcharacter.IdUsuaio != "")
         {
-            UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/Semillas/" + JsonContainer.instance.Pcharacter.IdPersonaje.ToString(), "GET");
+            UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/Semillas/" + JsonContainer.instance.Pcharacter.IdPersonaje, "GET");
 
             request.downloadHandler = new DownloadHandlerBuffer();
 
@@ -75,9 +74,14 @@ public class ControlSemilla : MonoBehaviour
             {
                 Debug.Log("Get Semillas: " + request.responseCode);
 
+                Debug.Log("Semillas:" + request.downloadHandler.text);
+
                 JsonContainer.instance.Pcharacter.Semillas = request.downloadHandler.text;
 
-                output();
+                if(instance != null)
+                    instance.textSemilla.GetComponent<TextMeshProUGUI>().text = request.downloadHandler.text;
+
+                output?.Invoke();
             }
         }
     }
@@ -88,7 +92,7 @@ public class ControlSemilla : MonoBehaviour
         {
             UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/Semillas", "POST");
 
-            byte[] body = Encoding.UTF8.GetBytes("{\"IdPersonaje\":\"" + JsonContainer.instance.Pcharacter.IdPersonaje.ToString() + "\",\"Semillas\":\"" + semillas + "\"}");
+            byte[] body = Encoding.UTF8.GetBytes("{\"IdPersonaje\":\"" + JsonContainer.instance.Pcharacter.IdPersonaje + "\",\"Semillas\":\"" + semillas + "\"}");
 
             request.uploadHandler = new UploadHandlerRaw(body);
 

@@ -90,9 +90,6 @@ public class SelectAge : MonoBehaviour
             }
             btnJugar.localScale = finalSize;
             firstResponse = true;
-
         }
-
-
     }
 }

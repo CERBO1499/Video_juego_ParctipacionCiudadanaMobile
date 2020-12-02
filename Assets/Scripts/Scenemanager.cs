@@ -50,6 +50,11 @@ public class Scenemanager : MonoBehaviour
         SceneManager.LoadScene("Telaraña", LoadSceneMode.Single);
     }
 
+    public void ToLaberinto()
+    {
+        SceneManager.LoadScene("Laberinto", LoadSceneMode.Single);
+    }
+
     public void ToMainMenuWithSemilla()
     {
         ControlSemilla.SumarSemilla(10, () =>

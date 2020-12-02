@@ -6,10 +6,7 @@ public class CharacterMovement : MonoBehaviour
 {
 
     Rigidbody rbPlayer;
-    [SerializeField]float speed = 10f;
-    
-   
-
+    [SerializeField]float speed = 10f; 
 
     private void Awake()
     {

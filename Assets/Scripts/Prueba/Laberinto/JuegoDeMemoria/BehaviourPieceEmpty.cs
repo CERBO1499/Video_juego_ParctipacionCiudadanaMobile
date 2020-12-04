@@ -29,6 +29,11 @@ public class BehaviourPieceEmpty : MonoBehaviour
     AnimationCurve curvedesapearImage;
 
     Image imgPiecebase;
+
+
+    [Header("Informacion final")]
+    [SerializeField]
+    RectTransform finalImage;
     #endregion
 
     #region Components
@@ -84,7 +89,7 @@ public class BehaviourPieceEmpty : MonoBehaviour
 
         if (managerMemoryGame.CounterCorrect1 > 8)
         {
-            print("Completadp");
+            finalImage.gameObject.SetActive(true);
         }
     }
     public IEnumerator ApearImageBase()

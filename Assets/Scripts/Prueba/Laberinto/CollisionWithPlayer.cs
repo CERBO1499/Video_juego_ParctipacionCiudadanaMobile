@@ -8,6 +8,8 @@ public class CollisionWithPlayer : MonoBehaviour
     [Header("OPbjects to active")]
     [SerializeField]
     RectTransform Pregunta;
+
+    int Counter = 0;
     #endregion
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,6 +17,7 @@ public class CollisionWithPlayer : MonoBehaviour
         {
             Pregunta.gameObject.SetActive(true);
             gameObject.SetActive(false);
+            Counter++;
            
         }
     }

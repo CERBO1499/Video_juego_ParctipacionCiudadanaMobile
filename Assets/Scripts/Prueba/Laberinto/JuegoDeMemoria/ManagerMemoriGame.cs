@@ -45,9 +45,8 @@ public class ManagerMemoriGame : MonoBehaviour
                         founded = true;
 
                         StartCoroutine(firstPiece.ImageCompleteCreace());
-                        CounterCorrect1++;
-                        print(CounterCorrect1);
-                       // firstPiece.gameObject.SetActive(false);                        
+
+                        CounterCorrect1++;         
 
                         StartCoroutine(secondPiece.ReturnRotate());
 
@@ -79,9 +78,8 @@ public class ManagerMemoriGame : MonoBehaviour
                         founded = true;
 
                         StartCoroutine(secondPiece.ImageCompleteCreace());
+
                         CounterCorrect1++;
-                        print(CounterCorrect1);
-                        //secondPiece.gameObject.SetActive(false);                        
 
                         StartCoroutine(firstPiece.ReturnRotate());
 

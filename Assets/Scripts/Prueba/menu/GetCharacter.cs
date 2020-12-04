@@ -89,6 +89,8 @@ public class GetCharacter : MonoBehaviour
             PlayerPrefs.SetString("User Name", title.getUser);
             PlayerPrefs.SetString("Password", title.getPassword);
 
+            StartCoroutine(SendSession.SendSessionCoroutine(JsonContainer.instance.Pid.IdUsuaio));
+
             SceneManager.LoadScene("choseScene");
         }
         else
@@ -122,6 +124,8 @@ public class GetCharacter : MonoBehaviour
             }
 
             sexElection.inicio = false;
+
+            StartCoroutine(SendSession.SendSessionCoroutine(JsonContainer.instance.Pcharacter.IdUsuaio));
 
             SceneManager.LoadScene("main");
         }

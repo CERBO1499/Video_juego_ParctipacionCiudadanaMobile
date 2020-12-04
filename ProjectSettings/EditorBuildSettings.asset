@@ -5,31 +5,31 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/prueba/menu.unity
     guid: d874da242cd406e49b3b3781034f485b
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/prueba/choseScene.unity
     guid: 01908177ffbff514f80669d20de1c786
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/prueba/main.unity
     guid: 8af3167092edb5645bde9b9aa5234613
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/prueba/minijuegos/Parchados.unity
     guid: 1ce6767559e57b441aa286f104f4548c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/prueba/minijuegos/ParchadosInfantiles.unity
     guid: 01bf359a670483c4ab1aa7590710a25c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/prueba/minijuegos/GeoGuesOriginal.unity
     guid: 4cf75242477fac04c9c13ea69d6bc8f9
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/prueba/minijuegos/SceneDRAW.unity
     guid: 5d13a87eab330ee49a6d0717d5158732
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/prueba/minijuegos/nuestrasMelodias.unity
     guid: 7407aa8197aa61a4b82fe0efaaacf526
-  - enabled: 0
+  - enabled: 1
     path: "Assets/Scenes/prueba/minijuegos/Telara\xF1a.unity"
     guid: 00d2b11bc5fd2b844bbe0bce74194241
   - enabled: 1

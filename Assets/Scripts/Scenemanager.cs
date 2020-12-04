@@ -54,6 +54,10 @@ public class Scenemanager : MonoBehaviour
     {
         SceneManager.LoadScene("Laberinto", LoadSceneMode.Single);
     }
+    public void ToLaberintoNiños()
+    {
+        SceneManager.LoadScene("LaberintoNiños", LoadSceneMode.Single);
+    }
 
     public void ToMainMenuWithSemilla()
     {

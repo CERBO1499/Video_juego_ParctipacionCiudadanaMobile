@@ -6,9 +6,14 @@ public class LabyrinthManager : MonoBehaviour
     #region Components
     [Header("Components")]
     #region Background
-    [Header("Instructions")]
+    [Header("Background")]
     [SerializeField] Image mapImg;
     [SerializeField] Sprite webGlMap;
+    #endregion
+    [Space]
+    #region Player
+    [SerializeField] RectTransform player;
+    [SerializeField] Material material;
     #endregion
     [Space]
     #region Buttons
@@ -31,5 +36,12 @@ public class LabyrinthManager : MonoBehaviour
             rightArrow.gameObject.SetActive(false);
             downArrow.gameObject.SetActive(false);
         }
+
+        material.SetVector("_PlayerPosition", new Vector4(player.localPosition.x, player.localPosition.y, 0f, 0f));
+    }
+
+    void Update()
+    {
+        material.SetVector("_PlayerPosition", new Vector4(player.localPosition.x, player.localPosition.y, 0f, 0f));
     }
 }

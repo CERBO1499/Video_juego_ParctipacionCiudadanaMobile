@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/prueba/minijuegos/Laberinto.unity
     guid: 423b38a13ff87f9449884ca253d1abb1
+  - enabled: 1
+    path: "Assets/Scenes/prueba/minijuegos/LaberintoNi\xF1os.unity"
+    guid: 7769304d87e003a45a03fa4958d149cc
   m_configObjects: {}

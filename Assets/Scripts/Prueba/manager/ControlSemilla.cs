@@ -74,8 +74,6 @@ public class ControlSemilla : MonoBehaviour
             {
                 Debug.Log("Get Semillas: " + request.responseCode);
 
-                Debug.Log("Semillas:" + request.downloadHandler.text);
-
                 JsonContainer.instance.Pcharacter.Semillas = request.downloadHandler.text;
 
                 if(instance != null)

@@ -16,7 +16,7 @@ public class ManagerMemoriGame : MonoBehaviour
     Dictionary<string, MemoriBox> diccionaryManager;
 
     int CounterCorrect=0;
-
+    int counterByTypeOfProblem = 0;
     public int CounterCorrect1 { get => CounterCorrect; set => CounterCorrect = value; }
 
     private void Awake()
@@ -37,6 +37,7 @@ public class ManagerMemoriGame : MonoBehaviour
             if (firstPiece.Ptype == MemoryBoxType.solution)
             {
                 bool founded = false;
+               
 
                 for (int i = 0; i < memoryBox.soluciones.Length; i++)
                 {
@@ -70,7 +71,7 @@ public class ManagerMemoriGame : MonoBehaviour
             else
             {
                 bool founded = false;
-
+               
                 for (int i = 0; i < memoryBox.soluciones.Length; i++)
                 {
                     if (secondPiece.PieceDiscoveredName == memoryBox.soluciones[i].name)
@@ -111,8 +112,12 @@ public class ManagerMemoriGame : MonoBehaviour
 
             StartCoroutine(secondPiece.ApearImageBase());
         }
+        
     }
-
-
+    void PlusCounterPerQuestion()
+    {
+        
+    }
+   
 
 }

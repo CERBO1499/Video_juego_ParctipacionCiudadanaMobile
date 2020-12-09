@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+#region Enum
+public enum TypeOfProblem
+{
+    uno,dos,tres
+}
+#endregion
 public class BehaviourPieceEmpty : MonoBehaviour
 {
     #region Information

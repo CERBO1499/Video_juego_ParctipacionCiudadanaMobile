@@ -3385,8 +3385,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Field: //polygon.us/AudioA1
-  Field2: https://www.polygon.us/AudioA1
+  Field: //polygon.us/AudioA1.php
+  Field2: https://www.polygon.us/AudioA1.php
 --- !u!1 &399017517
 GameObject:
   m_ObjectHideFlags: 0
@@ -5329,8 +5329,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Field: //polygon.us/Texto1
-  Field2: https://www.polygon.us/Texto1
+  Field: //polygon.us/Texto1.php
+  Field2: https://www.polygon.us/Texto1.php
 --- !u!114 &642383470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13192,8 +13192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Field: //polygon.us/AudioB1
-  Field2: https://www.polygon.us/AudioB1
+  Field: //polygon.us/AudioB1.php
+  Field2: https://www.polygon.us/AudioB1.php
 --- !u!114 &1379433137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19230,8 +19230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Field: //polygon.us/Collage1
-  Field2: https://www.polygon.us/Collage1
+  Field: //polygon.us/Collage1.php
+  Field2: https://www.polygon.us/Collage1.php
 --- !u!114 &1919713982
 MonoBehaviour:
   m_ObjectHideFlags: 0

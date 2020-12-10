@@ -59,13 +59,13 @@ public class Scenemanager : MonoBehaviour
         SceneManager.LoadScene("LaberintoNiños", LoadSceneMode.Single);
     }
 
-    public void ToRuleta()
+    public void ToAldea()
     {
-        SceneManager.LoadScene("Ruleta", LoadSceneMode.Single);
+        SceneManager.LoadScene("Aldea", LoadSceneMode.Single);
     }
-    public void ToRuletaNiños()
+    public void ToAldeaNiños()
     {
-        SceneManager.LoadScene("RuletaNiños", LoadSceneMode.Single);
+        SceneManager.LoadScene("Aldea Niños", LoadSceneMode.Single);
     }
 
     public void ToMainMenuWithSemilla()

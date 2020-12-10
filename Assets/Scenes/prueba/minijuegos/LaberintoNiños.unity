@@ -1467,7 +1467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &157932875
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3385,8 +3385,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Field: //polygon.us/AudioA2.php
-  Field2: http://www.polygon.us/AudioA2.php
+  Field: //polygon.us/escuelaspp/AudioA2.php
+  Field2: http://www.polygon.us/escuelaspp/AudioA2.php
 --- !u!1 &399017517
 GameObject:
   m_ObjectHideFlags: 0
@@ -5803,8 +5803,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Field: //polygon.us/Audio3.php
-  Field2: http://www.polygon.us/Audio3.php
+  Field: //polygon.us/escuelaspp/Audio3.php
+  Field2: http://www.polygon.us/escuelaspp/Audio3.php
 --- !u!114 &642383470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14090,8 +14090,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Field: //polygon.us/AudioB2.php
-  Field2: http://www.polygon.us/AudioB2.php
+  Field: //polygon.us/escuelaspp/AudioB2.php
+  Field2: http://www.polygon.us/escuelaspp/AudioB2.php
 --- !u!114 &1379433137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18362,8 +18362,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Field: //polygon.us/Collage2.php
-  Field2: http://www.polygon.us/Collage2.php
+  Field: //polygon.us/escuelaspp/Collage2.php
+  Field2: http://www.polygon.us/escuelaspp/Collage2.php
 --- !u!114 &1740219547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20219,8 +20219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Field: //polygon.us/texto2.php
-  Field2: http://www.polygon.us/texto2.php
+  Field: //polygon.us/escuelaspp/texto2.php
+  Field2: http://www.polygon.us/escuelaspp/texto2.php
 --- !u!114 &1919713982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21790,7 +21790,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2029867296
 RectTransform:
   m_ObjectHideFlags: 0

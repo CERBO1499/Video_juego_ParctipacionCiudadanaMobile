@@ -9,6 +9,7 @@ TagManager:
   - pin
   - Cubicle
   - collectable
+  - keeper
   layers:
   - Default
   - TransparentFX

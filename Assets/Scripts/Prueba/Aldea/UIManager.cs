@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
@@ -9,10 +11,10 @@ public class UIManager : MonoBehaviour
     #region Information
     [Header("Information")]
     [SerializeField] GameObject introduction;
-    System.Action Pass;
-    public System.Action PPass
+    Action pass;
+    public Action Ppass
     {
-        get { return Pass; }
+        get { return pass; }
     }
     [Space]
     #region Circus
@@ -20,6 +22,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] RectTransform circus;
     [SerializeField] Keeper[] keepers;
     int activeKeepers = 5;
+    [SerializeField] Word[] words;
+    [SerializeField] GameObject continueBtn;
+    [SerializeField] AnimationCurve finalCurve;
     [SerializeField] GameObject AnotherGame;
     #endregion
     #endregion
@@ -35,7 +40,7 @@ public class UIManager : MonoBehaviour
 
         firstActivity.SetActive(true);
 
-        Pass = () => 
+        pass = () => 
         {
             firstActivity.SetActive(false);
         };
@@ -43,11 +48,11 @@ public class UIManager : MonoBehaviour
 
     public void PlayFirstactivity(GameObject firstActivity)
     {
-        Pass();
+        pass();
 
         firstActivity.SetActive(true);
 
-        Pass = () =>
+        pass = () =>
         {
             string message = "";
 
@@ -59,11 +64,16 @@ public class UIManager : MonoBehaviour
                     return;
             }
 
-            if (message == "Puedes crear tu propio universo")
+            if (message == "puedes crear tu propio universo")
             {
-                firstActivity.SetActive(false);
+                EndFirstActivity();
 
-                AnotherGame.SetActive(true);
+                pass = () =>
+                {
+                    firstActivity.SetActive(false);
+
+                    AnotherGame.SetActive(true);
+                };
             }
         };
     }
@@ -79,5 +89,88 @@ public class UIManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void ReactiveFirstActivity(GameObject firstActivity)
+    {
+        for (int i = 0; i < keepers.Length; i++)
+        {
+            keepers[i].keeped = null;
+
+            keepers[i].gameObject.SetActive(true);
+        }
+
+        for (int i = 0; i < words.Length; i++)
+        {
+            if (i < activeKeepers)
+                words[i].OnPointerFail();
+
+            words[i].gameObject.SetActive(true);
+        }
+
+        activeKeepers = 8;
+
+        continueBtn.SetActive(false);
+
+        AnotherGame.SetActive(false);
+
+        firstActivity.SetActive(true);
+
+        Word.drag = true;
+
+        pass = () =>
+        {
+            string message = "";
+
+            for (int i = 0; i < activeKeepers; i++)
+            {
+                if (keepers[i].keeped != null)
+                    message += keepers[i].keeped.GetComponent<Word>().Pword + ((i < activeKeepers - 1) ? " " : "");
+                else
+                    return;
+            }
+
+            if (message == "puedes crear tu propio universo todos somos importantes")
+            {
+                EndFirstActivity();
+
+                pass = () =>
+                {
+                    firstActivity.SetActive(false);
+                };
+            }
+        };
+    }
+
+    public void EndFirstActivity()
+    {
+        Word.drag = false;
+
+        StartCoroutine(EndFirstActivityCorotuine());
+    }
+
+    IEnumerator EndFirstActivityCorotuine()
+    {
+        float t = Time.time;
+
+        while (Time.time <= t + 0.5f)
+        {
+            for (int i = 0; i < words.Length; i++)
+                words[i].gameObject.transform.localScale = Vector3.one * finalCurve.Evaluate((Time.time - t) / 0.5f);
+
+            yield return null;
+        }
+
+        continueBtn.SetActive(true);
+    }
+
+    public void Continue()
+    {
+        pass();
+    }
+
+    public void ExitToFirstActivity()
+    {
+        
     }
 }

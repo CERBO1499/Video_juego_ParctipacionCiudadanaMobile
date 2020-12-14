@@ -14,6 +14,7 @@ public class Word : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     Vector2 initialLocalPosition;
     int initialSiblingIndex;
     #region Drag
+    public static bool drag = true;
     int box;
     RectTransform keeper;
     Coroutine dragCorotuine;
@@ -35,11 +36,14 @@ public class Word : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        UIManager.instance.UpdateKeepers(gameObject);
+        if (drag)
+        {
+            UIManager.instance.UpdateKeepers(gameObject);
 
-        dragCorotuine = StartCoroutine(DragCoroutine());
+            dragCorotuine = StartCoroutine(DragCoroutine());
 
-        rect.SetSiblingIndex(rect.parent.childCount - 1);
+            rect.SetSiblingIndex(rect.parent.childCount - 1);
+        }
     }
 
     IEnumerator DragCoroutine()
@@ -58,29 +62,37 @@ public class Word : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        StopCoroutine(dragCorotuine);
-
-        dragCorotuine = null;
-
-        if (keeper != null)
+        if (drag)
         {
-            Keeper keeper = this.keeper.gameObject.GetComponent<Keeper>();
+            StopCoroutine(dragCorotuine);
 
-            if (keeper.keeped == null)
+            dragCorotuine = null;
+
+            if (keeper != null)
             {
-                keeper.keeped = gameObject;
+                Keeper keeper = this.keeper.gameObject.GetComponent<Keeper>();
 
-                rect.localPosition = this.keeper.localPosition;
+                if (keeper.keeped == null)
+                {
+                    keeper.keeped = gameObject;
 
-                UIManager.instance.PPass();
+                    rect.localPosition = this.keeper.localPosition;
+
+                    UIManager.instance.Ppass();
+                }
+                else
+                    OnPointerFail();
             }
             else
-                rect.localPosition = initialLocalPosition;
-        }
-        else
-            rect.localPosition = initialLocalPosition;
+                OnPointerFail();
 
-        rect.SetSiblingIndex(initialSiblingIndex);
+            rect.SetSiblingIndex(initialSiblingIndex);
+        }
+    }
+
+    public void OnPointerFail()
+    {
+        rect.localPosition = initialLocalPosition;
     }
 
     void OnTriggerEnter2D(Collider2D collision)

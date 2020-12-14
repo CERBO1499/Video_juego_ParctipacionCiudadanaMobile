@@ -5,6 +5,12 @@ using UnityEngine.EventSystems;
 public class Word : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     #region Information
+    [Header("Information")]
+    [SerializeField] string word;
+    public string Pword
+    {
+        get { return word; }
+    }
     Vector2 initialLocalPosition;
     int initialSiblingIndex;
     #region Drag
@@ -29,6 +35,8 @@ public class Word : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        UIManager.instance.UpdateKeepers(gameObject);
+
         dragCorotuine = StartCoroutine(DragCoroutine());
 
         rect.SetSiblingIndex(rect.parent.childCount - 1);
@@ -55,7 +63,20 @@ public class Word : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         dragCorotuine = null;
 
         if (keeper != null)
-            rect.localPosition = keeper.localPosition;
+        {
+            Keeper keeper = this.keeper.gameObject.GetComponent<Keeper>();
+
+            if (keeper.keeped == null)
+            {
+                keeper.keeped = gameObject;
+
+                rect.localPosition = this.keeper.localPosition;
+
+                UIManager.instance.PPass();
+            }
+            else
+                rect.localPosition = initialLocalPosition;
+        }
         else
             rect.localPosition = initialLocalPosition;
 

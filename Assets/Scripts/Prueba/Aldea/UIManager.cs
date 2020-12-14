@@ -27,6 +27,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] AnimationCurve finalCurve;
     [SerializeField] GameObject AnotherGame;
     #endregion
+    [Space]
+    [SerializeField] AnimationCurve activityCurve;
     #endregion
 
     private void Awake()
@@ -72,7 +74,10 @@ public class UIManager : MonoBehaviour
                 {
                     firstActivity.SetActive(false);
 
-                    AnotherGame.SetActive(true);
+                    StartCoroutine(ShowCircusCoroutine(() =>
+                    {
+                        AnotherGame.SetActive(true);
+                    }));
                 };
             }
         };
@@ -89,6 +94,22 @@ public class UIManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    IEnumerator ShowCircusCoroutine(Action output)
+    {
+        float t = Time.time;
+
+        while (Time.time <= t + 0.75f)
+        {
+            circus.localScale = Vector3.one * activityCurve.Evaluate((Time.time - t) / 0.75f);
+
+            yield return null;
+        }
+
+        circus.localScale = Vector3.one;
+
+        output();
     }
 
     public void ReactiveFirstActivity(GameObject firstActivity)
@@ -137,6 +158,8 @@ public class UIManager : MonoBehaviour
                 pass = () =>
                 {
                     firstActivity.SetActive(false);
+
+                    ExitToFirstActivity();
                 };
             }
         };
@@ -171,6 +194,5 @@ public class UIManager : MonoBehaviour
 
     public void ExitToFirstActivity()
     {
-        
     }
 }

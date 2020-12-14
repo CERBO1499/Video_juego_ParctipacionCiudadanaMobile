@@ -3131,8 +3131,7 @@ PrefabInstance:
         type: 3}
       propertyPath: nextChuck
       value: 
-      objectReference: {fileID: 5983422775317671316, guid: 2b4ee89f7f6a09948a22843a364123d0,
-        type: 3}
+      objectReference: {fileID: 1797437697}
     - target: {fileID: 13187045212343868, guid: 67685ec962673e6489708edbbffcd70a,
         type: 3}
       propertyPath: localPosition.x
@@ -6477,8 +6476,7 @@ PrefabInstance:
         type: 3}
       propertyPath: nextChuck
       value: 
-      objectReference: {fileID: 5983422775227630149, guid: 2b4ee89f7f6a09948a22843a364123d0,
-        type: 3}
+      objectReference: {fileID: 1854199504}
     - target: {fileID: 13187045212343868, guid: 67685ec962673e6489708edbbffcd70a,
         type: 3}
       propertyPath: localPosition.x

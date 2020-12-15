@@ -10,6 +10,7 @@ TagManager:
   - Cubicle
   - collectable
   - keeper
+  - Letter
   layers:
   - Default
   - TransparentFX

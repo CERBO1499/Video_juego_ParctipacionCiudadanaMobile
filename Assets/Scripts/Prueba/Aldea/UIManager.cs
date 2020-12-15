@@ -9,25 +9,52 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region Information
-    [Header("Information")]
+    [Header("Information", order = 0)]
     [SerializeField] GameObject introduction;
     Action pass;
     public Action Ppass
     {
         get { return pass; }
     }
-    [Space]
+    [Space(order = 1)]
     #region Circus
-    [Header("Circus")]
+    [Header("Circus", order = 2)]
     [SerializeField] RectTransform circus;
     [SerializeField] Keeper[] keepers;
-    int activeKeepers = 5;
+    int activeKeepers = 3;
     [SerializeField] Word[] words;
     [SerializeField] GameObject continueBtn;
     [SerializeField] AnimationCurve finalCurve;
     [SerializeField] GameObject AnotherGame;
     #endregion
-    [Space]
+    [Space(order = 3)]
+    #region Grafitiando
+    [Header("Grafitiando", order = 4)]
+    [SerializeField] RectTransform field;
+    [SerializeField] GameObject secondActivity;
+    [SerializeField] GameObject grafitiando;
+    [SerializeField] GameObject grafitiandoFeedback;
+    #endregion
+    #region Sopa de letras
+    [Header("Sopa de letras", order = 5)]
+    [SerializeField] RectTransform library;
+    [SerializeField] Material lineMaterial;
+    [SerializeField] GameObject thirdActivity;
+    [SerializeField] GameObject sopaDeLetras;
+    [SerializeField] Word[] soupWords;
+    [SerializeField] AnimationCurve soupCurve;
+    [SerializeField] GameObject soupContinueBtn;
+    [SerializeField] GameObject soupFeedback;
+    public Word[] PsoupWords
+    {
+        get { return soupWords; }
+    }
+    public Material PlineMaterial
+    {
+        get { return lineMaterial; }
+    }
+    #endregion
+    [Space(order = 6)]
     [SerializeField] AnimationCurve activityCurve;
     #endregion
 
@@ -66,7 +93,7 @@ public class UIManager : MonoBehaviour
                     return;
             }
 
-            if (message == "puedes crear tu propio universo")
+            if (message == "todos somos importantes")
             {
                 EndFirstActivity();
 
@@ -74,7 +101,7 @@ public class UIManager : MonoBehaviour
                 {
                     firstActivity.SetActive(false);
 
-                    StartCoroutine(ShowCircusCoroutine(() =>
+                    StartCoroutine(showItem(circus, () =>
                     {
                         AnotherGame.SetActive(true);
                     }));
@@ -96,40 +123,115 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    IEnumerator ShowCircusCoroutine(Action output)
+    public void ActiveSecondActivity()
     {
+        secondActivity.SetActive(false);
+
+        grafitiando.SetActive(true);
+
+        pass = () =>
+        {
+            grafitiando.SetActive(false);
+
+            StartCoroutine(showItem(field, () =>
+            {
+                grafitiandoFeedback.SetActive(true);
+            }));
+        };
+    }
+
+    public void ActiveThirdActivity()
+    {
+        grafitiandoFeedback.SetActive(false);
+
+        thirdActivity.SetActive(true);
+    }
+
+    public void UpdateSoup()
+    {
+        string soupSentence = "";
+
+        for (int i = 0; i < soupWords.Length; i++)
+        {
+            if(soupWords[i].gameObject.GetComponent<RectTransform>().GetChild(0).gameObject.activeSelf)
+                soupSentence += soupWords[i].Pword + ((i < soupWords.Length - 1) ? " " : "");
+        }
+
+        if (soupSentence == "LA LLENA DE LECTURA AVENTURAS")
+        {
+            aldea.LineCreator.create = false;
+
+            for (int i = 0; i < soupWords.Length; i++)
+                soupWords[i].gameObject.GetComponent<RectTransform>().GetChild(0).gameObject.SetActive(false);
+
+            StartCoroutine(ReorderSoupWords());
+        }
+    }
+
+    IEnumerator ReorderSoupWords()
+    {
+        soupWords[0].gameObject.GetComponent<RectTransform>().parent.gameObject.GetComponent<UnityEngine.UI.VerticalLayoutGroup>().enabled = false;
+
+        Vector2[] initialAnchoredPosition = new Vector2[soupWords.Length];
+
+        for (int i = 0; i < soupWords.Length; i++)
+            initialAnchoredPosition[i] = soupWords[i].prect.anchoredPosition;
+
         float t = Time.time;
 
-        while (Time.time <= t + 0.75f)
+        while (Time.time <= t + 1f)
         {
-            circus.localScale = Vector3.one * activityCurve.Evaluate((Time.time - t) / 0.75f);
+            for (int i = 0; i < soupWords.Length; i++)
+                soupWords[i].prect.anchoredPosition = initialAnchoredPosition[i] + ((soupWords[i].PfinalLocalPosition - initialAnchoredPosition[i]) * soupCurve.Evaluate(Time.time - t));
 
             yield return null;
         }
 
-        circus.localScale = Vector3.one;
+        for (int i = 0; i < soupWords.Length; i++)
+            soupWords[i].prect.anchoredPosition = soupWords[i].PfinalLocalPosition;
 
-        output();
+        pass = () =>
+        {
+            sopaDeLetras.SetActive(false);
+
+            StartCoroutine(showItem(library, () => 
+            {
+                soupFeedback.SetActive(true);
+            }));
+        };
+
+        soupContinueBtn.SetActive(true);
     }
 
     public void ReactiveFirstActivity(GameObject firstActivity)
     {
-        for (int i = 0; i < keepers.Length; i++)
-        {
-            keepers[i].keeped = null;
+        for (int i = 0; i < activeKeepers; i++)
+            keepers[i].gameObject.SetActive(false);
 
+        Keeper[] newKeepers = new Keeper[keepers.Length - activeKeepers];
+
+        for (int i = 0; i < newKeepers.Length; i++)
+            newKeepers[i] = keepers[i + activeKeepers];
+
+        keepers = newKeepers;
+
+        for (int i = 0; i < activeKeepers; i++)
+            words[i].gameObject.SetActive(false);
+
+        Word[] newWords = new Word[words.Length - activeKeepers];
+
+        for (int i = 0; i < newWords.Length; i++)
+            newWords[i] = words[i + activeKeepers];
+
+        words = newWords;
+
+        activeKeepers = 5;
+
+        for (int i = 0; i < activeKeepers; i++)
             keepers[i].gameObject.SetActive(true);
-        }
 
-        for (int i = 0; i < words.Length; i++)
-        {
-            if (i < activeKeepers)
-                words[i].OnPointerFail();
-
+        for (int i = 0; i < activeKeepers; i++)
             words[i].gameObject.SetActive(true);
-        }
-
-        activeKeepers = 8;
 
         continueBtn.SetActive(false);
 
@@ -151,7 +253,7 @@ public class UIManager : MonoBehaviour
                     return;
             }
 
-            if (message == "puedes crear tu propio universo todos somos importantes")
+            if (message == "puedes crear tu propio universo")
             {
                 EndFirstActivity();
 
@@ -194,5 +296,38 @@ public class UIManager : MonoBehaviour
 
     public void ExitToFirstActivity()
     {
+        if (AnotherGame.activeSelf)
+            AnotherGame.SetActive(false);
+
+        secondActivity.SetActive(true);
+    }
+    public void PlayThirdactivity()
+    {
+        thirdActivity.SetActive(false);
+
+        sopaDeLetras.SetActive(true);
+    }
+
+    public void ExitToSecondActivity()
+    {
+        pass();
+    }
+
+    IEnumerator showItem(RectTransform rect, Action output)
+    {
+        float t = Time.time;
+
+        while (Time.time <= t + 0.75f)
+        {
+            rect.localScale = Vector3.one * activityCurve.Evaluate((Time.time - t) / 0.75f);
+
+            yield return null;
+        }
+
+        rect.localScale = Vector3.one;
+
+        yield return new WaitForSeconds(0.25f);
+
+        output();
     }
 }

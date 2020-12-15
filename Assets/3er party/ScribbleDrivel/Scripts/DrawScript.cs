@@ -152,7 +152,9 @@ namespace LylekGames
         public void OnPointerEnter(PointerEventData eventData)
         {
             canDraw = true;
+
             brush.gameObject.SetActive(true);
+
            // botonSiguiente.SetActive(true);
         }
         public void OnPointerExit(PointerEventData eventData)
@@ -162,7 +164,7 @@ namespace LylekGames
         }
         private void Update()
         {
-            if (canDraw)
+            if (canDraw && EventSystem.current.currentSelectedGameObject == null)
             {
                 if (brush)
                 {

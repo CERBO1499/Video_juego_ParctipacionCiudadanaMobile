@@ -11,6 +11,11 @@ public class Word : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         get { return word; }
     }
+    [SerializeField] Vector2 finalLocalPosition;
+    public Vector2 PfinalLocalPosition
+    {
+        get { return finalLocalPosition; }
+    }
     Vector2 initialLocalPosition;
     int initialSiblingIndex;
     #region Drag
@@ -23,6 +28,10 @@ public class Word : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     #region Components
     RectTransform rect;
+    public RectTransform prect
+    {
+        get { return rect; }
+    }
     #endregion
 
     void Awake()

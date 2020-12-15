@@ -11,7 +11,7 @@ public class WebLine : MonoBehaviour
     LineRenderer LineRenderer;
     #endregion
 
-    private void Awake()
+    public void Awake()
     {
         LineRenderer = GetComponent<LineRenderer>();
     }

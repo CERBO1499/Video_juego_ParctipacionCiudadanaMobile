@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace LylekGames
@@ -29,6 +27,12 @@ namespace LylekGames
         public void Undo()
         {
             DrawScript.drawScript.Undo();
+        }
+
+        // Second Grafitiando
+        public void ChangeBrushSize(int size)
+        {
+            DrawScript.drawScript.SetBrushSize(size);
         }
     }
 }

@@ -8,16 +8,11 @@ public class RuletaManager : MonoBehaviour
     [Header("informaation")]
     [SerializeField] RectTransform player;
     int point = 0;
-    [SerializeField] RectTransform anchor;
     [SerializeField] RectTransform way;
-    Vector2 ΔPosition;
+    [SerializeField] float worldSpeed;
+    Coroutine moveWorldCoroutine;
     [SerializeField] List<RectTransform> points;
     #endregion
-
-    private void Awake()
-    {
-        
-    }
 
     void Update()
     {
@@ -34,8 +29,6 @@ public class RuletaManager : MonoBehaviour
             Move(2);
         if (Input.GetKeyDown(KeyCode.H))
             Move(3);
-
-        way.position = new Vector3(way.position.x, 77.3f - (player.position.y + 34.6f), way.position.z);
     }
 
     public void Move(int boxes)
@@ -52,10 +45,25 @@ public class RuletaManager : MonoBehaviour
                 boxes = -(point / 3);
         };
 
-        StartCoroutine(MoveCorotuine(boxes));
+        if (boxes != 0)
+        {
+            moveWorldCoroutine = StartCoroutine(MoveWorldCorotuine((boxes > 0) ? 1 : -1));
+
+            StartCoroutine(MovePlayerCorotuine(boxes));
+        }
     }
 
-    IEnumerator MoveCorotuine(int boxes) 
+    IEnumerator MoveWorldCorotuine(int sense)
+    {
+        while (true)
+        {
+            way.localPosition += new Vector3(0f, -sense * worldSpeed * Time.deltaTime, 0f);
+
+            yield return null;
+        }
+    }
+
+    IEnumerator MovePlayerCorotuine(int boxes) 
     {
         for (int i = 0; i < Mathf.Abs(boxes); i++)
         {
@@ -106,5 +114,7 @@ public class RuletaManager : MonoBehaviour
 
             point += ((boxes > 0) ? 3 : -3);
         }
+
+        StopCoroutine(moveWorldCoroutine);
     }
 }

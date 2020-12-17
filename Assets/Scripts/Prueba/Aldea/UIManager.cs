@@ -56,6 +56,25 @@ public class UIManager : MonoBehaviour
     #endregion
     [Space(order = 6)]
     [SerializeField] AnimationCurve activityCurve;
+
+    //Mod Carlos
+    [Header("Actividad 4 - JuegoMemoria")]
+    [SerializeField]
+    RectTransform SoupEnd;
+    [SerializeField]
+    RectTransform ActividadMemoria;
+    [SerializeField]
+    RectTransform PanelFeedBackMemoria;
+    [SerializeField]
+    RectTransform PanelBaseJuego;
+    [SerializeField]
+    RectTransform PanelInicio;
+    [SerializeField]
+    RectTransform ZonaDeVideojuegos;
+
+    [SerializeField]
+    RectTransform LastesButton;
+    //EndMod
     #endregion
 
     private void Awake()
@@ -260,7 +279,6 @@ public class UIManager : MonoBehaviour
                 pass = () =>
                 {
                     firstActivity.SetActive(false);
-
                     ExitToFirstActivity();
                 };
             }
@@ -308,12 +326,38 @@ public class UIManager : MonoBehaviour
         sopaDeLetras.SetActive(true);
     }
 
+
+
     public void ExitToSecondActivity()
     {
         pass();
     }
 
-    IEnumerator showItem(RectTransform rect, Action output)
+    //Modificacion carlos
+
+    public void ActiveFourActivity()
+    {
+        SoupEnd.gameObject.SetActive(false);
+        ActividadMemoria.gameObject.SetActive(true);
+    }
+
+    public void BeginFourActivity ()
+    {
+        PanelInicio.gameObject.SetActive(false);
+        PanelBaseJuego.gameObject.SetActive(true);
+    }
+
+    public void EndAllActivities()
+    {
+        PanelFeedBackMemoria.gameObject.SetActive(false);
+        StartCoroutine(showItem(ZonaDeVideojuegos, () =>
+        {         
+            LastesButton.gameObject.SetActive(true);
+        }));
+    }
+
+    //EndMOd
+    public IEnumerator showItem(RectTransform rect, Action output)
     {
         float t = Time.time;
 

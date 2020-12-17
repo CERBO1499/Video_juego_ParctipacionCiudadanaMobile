@@ -114,10 +114,7 @@ public class ManagerMemoriGame : MonoBehaviour
         }
         
     }
-    void PlusCounterPerQuestion()
-    {
-        
-    }
+    
    
 
 }

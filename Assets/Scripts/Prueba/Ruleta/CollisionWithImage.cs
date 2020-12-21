@@ -12,14 +12,37 @@ public class CollisionWithImage : MonoBehaviour
     [SerializeField]
     AnimationCurve curve;
     IdentificadorPieza idpieza;
+    [SerializeField]
+    BoxCollider2D bxCollider;
+
+    [SerializeField]
+    Vector3 []positionImgSelectd;
+
     #endregion
+
+    #region
+    [SerializeField]
+    RuletaManager rltManager;
+    #endregion
+
+    private void Awake()
+    {
+         bxCollider.GetComponent<Collider2D>();
+        rltManager.GetComponent<RuletaManager>();
+
+        for (int i = 0; i < Images.Length; i++)
+        {
+            positionImgSelectd[i] = Images[i].transform.localPosition;
+        }
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         
         if (collision.tag == "Images")
         {
+           
            idpieza = collision.GetComponent<IdentificadorPieza>();
-            idpieza.Selected = true;
+           idpieza.Selected = true;
 
             for (int i = 0; i < Images.Length; i++)
             {
@@ -30,34 +53,60 @@ public class CollisionWithImage : MonoBehaviour
                 
             }
             collision.transform.position = new Vector3(collision.transform.position.x, 1.1f);
-            CheckImgSelected(idpieza);
+            //CheckImgSelected(idpieza);
+            StartCoroutine(waitToClose(collision.gameObject));
+            
         }  
     }
 
     void CheckImgSelected(IdentificadorPieza idPieza)
     {
+
+        Ruleta.gameObject.SetActive(false);
+
         switch (idPieza.TipoDeImagen)
         {
             case ETipoDeImagen.AvanzaTres:
-                print("Avanza tres");
+                rltManager.Move(3);
                 break;
             case ETipoDeImagen.AvanzaDos:
-                print("avanza dos");
+                rltManager.Move(2);
                 break;
             case ETipoDeImagen.RetrocedeUna:
-                print("Retrocede una");
+                rltManager.Move(-1);
                 break;
             case ETipoDeImagen.VuelveInicio:
-                print("Veulve al inicio");
+                print("Vuelve al inicio");
                 break;
             case ETipoDeImagen.Emocion:
-                print("Emocion");
+                rltManager.OpenEmocionPanel();
                 break;               
                 
-        }
-        StartCoroutine(UnactiveRouleteCoroutine(Ruleta));
+        }   
+
+
+    }    
+
+    IEnumerator waitToClose(GameObject objToSetPosition)
+    {
+        yield return new WaitForSeconds(1f);
+        CheckImgSelected(idpieza);
+        ResetRoulette(objToSetPosition);
+    
     }
 
+    void ResetRoulette(GameObject selectdPiece)
+    {
+        bxCollider.enabled = false;        
+       
+        for (int i = 0; i < Images.Length; i++)
+        {
+            Images[i].transform.localPosition = positionImgSelectd[i];
+
+            Images[i].GetComponent<IdentificadorPieza>().Selected = false;
+            Images[i].gameObject.SetActive(true);           
+        }             
+    }
     IEnumerator UnactiveRouleteCoroutine(RectTransform Ruleta)
     {
         Vector2 iniPos = new Vector2(0f,-5.7f);

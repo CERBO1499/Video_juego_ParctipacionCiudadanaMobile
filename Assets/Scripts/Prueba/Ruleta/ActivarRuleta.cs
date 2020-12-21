@@ -8,7 +8,7 @@ public class ActivarRuleta : MonoBehaviour
     #region PalancaRuleta
     [Header("Informacion ruleta")]
     [SerializeField]
-    RectTransform Palanca;
+    RectTransform Palanca,bolaPalanca;
     [SerializeField]
     AnimationCurve curve;
     #endregion
@@ -42,7 +42,8 @@ public class ActivarRuleta : MonoBehaviour
     IEnumerator GirarPalancaRuletaCoroutine()
     {
         Vector2 iniRotation = Vector2.zero;
-        Vector2 finalRotation = new Vector2(-180f, 0f);
+        Vector2 finalRotation = new Vector2(-180f, 0f);    
+
 
         float t = Time.time;
         while (Time.time <= 1.5f + t)
@@ -57,7 +58,7 @@ public class ActivarRuleta : MonoBehaviour
         }));
 
         Vector2 iniRotation2 = new Vector2(-180f, 0f);
-        Vector2 finalRotation2 = Vector2.zero;
+        Vector2 finalRotation2 = Vector2.zero;       
 
         t = Time.time;
         while (Time.time <= 1.5f + t)
@@ -66,7 +67,6 @@ public class ActivarRuleta : MonoBehaviour
             yield return null;
         }
         Palanca.localEulerAngles = finalRotation2;
-
     }
 
     IEnumerator GirarRuletaImgCoroutine(System.Action ouput)

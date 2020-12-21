@@ -12,6 +12,14 @@ public class RuletaManager : MonoBehaviour
     [SerializeField] float worldSpeed;
     Coroutine moveWorldCoroutine;
     [SerializeField] List<RectTransform> points;
+
+    [SerializeField]
+    RectTransform Historieta;
+    [SerializeField]
+    RectTransform fbEmocion1, fbEmocion2, fbEmocion3;
+    [SerializeField]
+    RectTransform Ruleta;
+    int counterEmociones=0;
     #endregion
 
     void Update()
@@ -51,6 +59,7 @@ public class RuletaManager : MonoBehaviour
 
             StartCoroutine(MovePlayerCorotuine(boxes));
         }
+
     }
 
     IEnumerator MoveWorldCorotuine(int sense)
@@ -114,7 +123,30 @@ public class RuletaManager : MonoBehaviour
 
             point += ((boxes > 0) ? 3 : -3);
         }
-
         StopCoroutine(moveWorldCoroutine);
+
+        Ruleta.gameObject.SetActive(true);
     }
+
+    public void OpenEmocionPanel()
+    {
+        if (counterEmociones == 0)
+            fbEmocion1.gameObject.SetActive(true);
+       else if (counterEmociones == 1)
+            fbEmocion2.gameObject.SetActive(true);
+       else if (counterEmociones == 3)
+            fbEmocion3.gameObject.SetActive(true);
+        
+        Historieta.gameObject.SetActive(true);
+        counterEmociones++;      
+    }
+
+
+    public void ClosePanelHistory()
+    {
+        Historieta.gameObject.SetActive(false);
+        Ruleta.gameObject.SetActive(true);
+
+    }
+
 }

@@ -351,6 +351,7 @@ MonoBehaviour:
   fbEmocion2: {fileID: 1232964896}
   fbEmocion3: {fileID: 1257887843}
   Ruleta: {fileID: 8294295075315979967}
+  particles: {fileID: 485715421}
 --- !u!4 &37669139
 Transform:
   m_ObjectHideFlags: 0
@@ -1462,6 +1463,86 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 479940014}
   m_CullTransparentMesh: 0
+--- !u!1001 &485715420
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 791603114520497241, guid: d864d08b00458d648969801b3b552626,
+        type: 3}
+      propertyPath: m_Name
+      value: Smoke Particle System
+      objectReference: {fileID: 0}
+    - target: {fileID: 791603114520497244, guid: d864d08b00458d648969801b3b552626,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 791603114520497244, guid: d864d08b00458d648969801b3b552626,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 791603114520497244, guid: d864d08b00458d648969801b3b552626,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 791603114520497244, guid: d864d08b00458d648969801b3b552626,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 791603114520497244, guid: d864d08b00458d648969801b3b552626,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 791603114520497244, guid: d864d08b00458d648969801b3b552626,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 791603114520497244, guid: d864d08b00458d648969801b3b552626,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 791603114520497244, guid: d864d08b00458d648969801b3b552626,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 791603114520497244, guid: d864d08b00458d648969801b3b552626,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 791603114520497244, guid: d864d08b00458d648969801b3b552626,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 791603114520497244, guid: d864d08b00458d648969801b3b552626,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 791603114520497247, guid: d864d08b00458d648969801b3b552626,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d864d08b00458d648969801b3b552626, type: 3}
+--- !u!198 &485715421 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 791603114520497247, guid: d864d08b00458d648969801b3b552626,
+    type: 3}
+  m_PrefabInstance: {fileID: 485715420}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &488525979
 GameObject:
   m_ObjectHideFlags: 0

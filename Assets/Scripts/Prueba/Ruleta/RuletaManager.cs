@@ -20,23 +20,17 @@ public class RuletaManager : MonoBehaviour
     [SerializeField]
     RectTransform Ruleta;
     int counterEmociones=0;
+    #region Restart
+    Vector3 playerInitialLocalPosition;
+    Vector3 worldInitialLocalPosition;
+    [SerializeField] ParticleSystem particles;
     #endregion
-
-    void Update()
+    #endregion
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-            Move(-3);
-        if (Input.GetKeyDown(KeyCode.S))
-            Move(-2);
-        if (Input.GetKeyDown(KeyCode.D))
-            Move(-1);
+        playerInitialLocalPosition = player.localPosition;
 
-        if (Input.GetKeyDown(KeyCode.F))
-            Move(1);
-        if (Input.GetKeyDown(KeyCode.G))
-            Move(2);
-        if (Input.GetKeyDown(KeyCode.H))
-            Move(3);
+        worldInitialLocalPosition = way.localPosition;
     }
 
     public void Move(int boxes)
@@ -128,6 +122,41 @@ public class RuletaManager : MonoBehaviour
         Ruleta.gameObject.SetActive(true);
     }
 
+    public void Restart()
+    {
+        player.gameObject.SetActive(false);
+
+        particles.transform.position = new Vector2(player.position.x, player.position.y) ;
+
+        particles.Play();
+
+        StartCoroutine(RestartCorotuine());
+    }
+
+    IEnumerator RestartCorotuine()
+    {
+        Vector3 finalocalPosition = way.localPosition;
+
+        float t = Time.time;
+
+        while (Time.time <= t + 1.5f)
+        {
+            way.localPosition = finalocalPosition + ((worldInitialLocalPosition - finalocalPosition) * ((Time.time - t) / 1.5f));
+
+            yield return null;
+        }
+
+        way.localPosition = worldInitialLocalPosition;
+
+        player.localPosition = playerInitialLocalPosition;
+
+        particles.transform.position = new Vector2(player.position.x, player.position.y);
+
+        particles.Play();
+
+        player.gameObject.SetActive(true);
+    }
+
     public void OpenEmocionPanel()
     {
         if (counterEmociones == 0)
@@ -141,12 +170,9 @@ public class RuletaManager : MonoBehaviour
         counterEmociones++;      
     }
 
-
     public void ClosePanelHistory()
     {
         Historieta.gameObject.SetActive(false);
         Ruleta.gameObject.SetActive(true);
-
     }
-
 }

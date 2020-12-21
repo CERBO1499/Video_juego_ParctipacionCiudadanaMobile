@@ -61,7 +61,7 @@ public class Scenemanager : MonoBehaviour
 
     public void ToAldea()
     {
-        SceneManager.LoadScene("Aldea", LoadSceneMode.Single);
+        SceneManager.LoadScene("Aldea Jovenes", LoadSceneMode.Single);
     }
     public void ToAldeaNiños()
     {

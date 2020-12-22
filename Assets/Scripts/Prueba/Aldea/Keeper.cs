@@ -6,4 +6,9 @@ public class Keeper : MonoBehaviour
     [Header("Information")]
     public GameObject keeped;
     #endregion
+
+    public void Clear()
+    {
+        keeped = null;
+    }
 }

@@ -2,58 +2,56 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Word : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class ImagenAArrastrar : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     #region Information
+
     [Header("Information")]
-    [SerializeField] string word;
-    public string Pword
-    {
-        get { return word; }
-    }
+    #region Serializadas
     [SerializeField] Vector2 finalLocalPosition;
-    public Vector2 PfinalLocalPosition
-    {
-        get { return finalLocalPosition; }
-    }
+    #endregion
+
+    #region Privadas
     Vector2 initialLocalPosition;
     int initialSiblingIndex;
+    RectTransform parent;
+    #endregion
+
+    #region Encapsuladas y publicas
+    public Vector2 FinalLocalPosition { get { return finalLocalPosition; } }
+    #endregion
 
     #region Drag
     public static bool drag = true;
-    int box;
+    Coroutine dragCoroutine;
     RectTransform keeper;
-    Coroutine dragCorotuine;
+    int box;
+    System.Action onPointerFail;
     #endregion
 
     #endregion
-
     #region Components
     RectTransform rect;
-    public RectTransform prect
-    {
-        get { return rect; }
-    }
     #endregion
 
-    void Awake()
+    private void Awake()
     {
         rect = GetComponent<RectTransform>();
 
         initialLocalPosition = rect.localPosition;
 
         initialSiblingIndex = rect.GetSiblingIndex();
+
+        parent = rect.parent.gameObject.GetComponent<RectTransform>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if (drag)
         {
-            UIManager.instance.UpdateKeepers(gameObject);
+            rect.SetParent(rect.root);
 
-            dragCorotuine = StartCoroutine(DragCoroutine());
-
-            rect.SetSiblingIndex(rect.parent.childCount - 1);
+            dragCoroutine = StartCoroutine(DragCoroutine());
         }
     }
 
@@ -75,38 +73,45 @@ public class Word : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (drag)
         {
-            StopCoroutine(dragCorotuine);
+            StopCoroutine(dragCoroutine);
 
-            dragCorotuine = null;
+            dragCoroutine = null;
 
             if (keeper != null)
             {
                 Keeper keeper = this.keeper.gameObject.GetComponent<Keeper>();
 
-                if (keeper.keeped == null)
+                if(keeper.keeped == null)
                 {
                     keeper.keeped = gameObject;
 
-                    rect.localPosition = this.keeper.localPosition;
+                    onPointerFail = keeper.Clear;
 
-                    UIManager.instance.Ppass();
+                    rect.SetParent(this.keeper.GetChild(0));
+
+                    rect.localPosition = Vector3.zero;
                 }
                 else
                     OnPointerFail();
             }
             else
                 OnPointerFail();
-
-            rect.SetSiblingIndex(initialSiblingIndex);
         }
     }
 
     public void OnPointerFail()
     {
+        rect.SetParent(parent);
+
+        rect.SetSiblingIndex(initialSiblingIndex);
+
         rect.localPosition = initialLocalPosition;
+
+        onPointerFail?.Invoke();
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "keeper")
         {
@@ -116,13 +121,12 @@ public class Word : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
     }
 
-    void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "keeper")
         {
             box--;
-
-            if(box == 0)
+            if (box == 0)
                 keeper = null;
         }
     }

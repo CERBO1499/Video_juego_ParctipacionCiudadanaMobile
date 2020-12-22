@@ -76,7 +76,7 @@ public class CollisionWithImage : MonoBehaviour
                 rltManager.Move(-1);
                 break;
             case ETipoDeImagen.VuelveInicio:
-                print("Vuelve al inicio");
+                rltManager.Restart();
                 break;
             case ETipoDeImagen.Emocion:
                 rltManager.OpenEmocionPanel();

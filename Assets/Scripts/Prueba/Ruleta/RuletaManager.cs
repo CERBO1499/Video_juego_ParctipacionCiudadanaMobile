@@ -32,6 +32,9 @@ public class RuletaManager : MonoBehaviour
 
     [SerializeField]
     RectTransform btnCloseNormal, btnCloseHistprieta;
+
+    [SerializeField]
+    RectTransform ScrollViewImgs, ScrollViewGlobos;
     
     int counterEmociones=0;
     #region Restart
@@ -158,6 +161,7 @@ public class RuletaManager : MonoBehaviour
 
     public void Restart()
     {
+        
         player.gameObject.SetActive(false);
 
         particles.transform.position = new Vector2(player.position.x, player.position.y) ;
@@ -191,68 +195,65 @@ public class RuletaManager : MonoBehaviour
         player.gameObject.SetActive(true);
 
         Ruleta.gameObject.SetActive(true);
+
+        point = 0;
+           
     }
 
     public void OpenEmocionPanel()
-    {
-       /* if (counterEmociones == 0)
-            fbEmocion1.gameObject.SetActive(true);
-       else if (counterEmociones == 1)
-            fbEmocion2.gameObject.SetActive(true);
-       else if (counterEmociones == 3)
-            fbEmocion3.gameObject.SetActive(true);*/
-
-
+   {
+        counterEmociones++;
         switch (counterEmociones)
         {
-            case 0:
+            case 1:
                 fbEmocion1.gameObject.SetActive(true);
                 backGrounds[0].color = _colorActive;
                 Keepers[0].gameObject.SetActive(true);
                 break;
-            case 1:
+            case 2:
                 backGrounds[1].color = _colorActive;
                 Keepers[1].gameObject.SetActive(true);
                 fbEmocion2.gameObject.SetActive(true);
                 break; 
-            case 2:
+            case 3:
                 backGrounds[2].color = _colorActive;
                 Keepers[2].gameObject.SetActive(true);
                 break;
-            case 3:
+            case 4:
                 backGrounds[3].color = _colorActive;
                 Keepers[3].gameObject.SetActive(true);
                 fbEmocion3.gameObject.SetActive(true);
                 break;
-            case 4:
+            case 5:
                 backGrounds[4].color = _colorActive;
                 Keepers[4].gameObject.SetActive(true);
                 break;
-            case 5:
+            case 6:
                 backGrounds[5].color = _colorActive;
                 Keepers[5].gameObject.SetActive(true);
                 break;
-            case 6:
+            case 7:
                 backGrounds[6].color = _colorActive;
                 Keepers[6].gameObject.SetActive(true);
                 break;
-            case 7:
+            case 8:
                 backGrounds[7].color = _colorActive;
                 Keepers[7].gameObject.SetActive(true);
+                btnCloseNormal.gameObject.SetActive(false);
+                btnCloseHistprieta.gameObject.SetActive(true);
                 break;
-            case 8:
+            case 9:
                 backGrounds[8].color = _colorActive;
                 Keepers[8].gameObject.SetActive(true);
                 btnCloseNormal.gameObject.SetActive(false);
                 btnCloseHistprieta.gameObject.SetActive(true);
                 break;
-
             default:
                 break;
         }
 
         Historieta.gameObject.SetActive(true);
-        counterEmociones++;      
+        
     }
 
     public void ClosePanelHistory()
@@ -266,4 +267,19 @@ public class RuletaManager : MonoBehaviour
         Historieta.gameObject.SetActive(false);
         FeedBackFinal.gameObject.SetActive(true);        
     }
+
+    public void ChangeForImages()
+    {
+        ScrollViewGlobos.gameObject.SetActive(false);
+        ScrollViewImgs.gameObject.SetActive(true);
+    }
+
+    public void ChangeForBalonText()
+    {
+        ScrollViewGlobos.gameObject.SetActive(true);
+        ScrollViewImgs.gameObject.SetActive(false);
+           
+    }
+
+
 }

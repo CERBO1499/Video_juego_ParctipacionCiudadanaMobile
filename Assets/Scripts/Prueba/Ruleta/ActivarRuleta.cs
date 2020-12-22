@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class ActivarRuleta : MonoBehaviour
@@ -18,22 +18,32 @@ public class ActivarRuleta : MonoBehaviour
     [SerializeField]
     RectTransform columnaAGirar;
     [SerializeField]
+    Button btnActiveRuleta;
+    [SerializeField]
     Collider2D colliderDetectorImg;
+    [SerializeField]
+    AnimationCurve downVelocity;
+
+    [SerializeField]
+    Rigidbody2D rbColumna;
 
     int randomValue;
     float timeInterval;
 
     bool rowStopped;
     string stoppedSlot;
+  
     #endregion
     #endregion
 
     private void Start()
     {
         rowStopped = true;
+        rbColumna = columnaAGirar.GetComponent<Rigidbody2D>();
     }
     public void GirarRuleta()
     {
+        btnActiveRuleta.interactable = false;
         print("Entro a btn");
         stoppedSlot = "";
         StartCoroutine(GirarPalancaRuletaCoroutine());
@@ -68,62 +78,55 @@ public class ActivarRuleta : MonoBehaviour
         }
         Palanca.localEulerAngles = finalRotation2;
     }
+   
 
     IEnumerator GirarRuletaImgCoroutine(System.Action ouput)
     {
+      
         rowStopped = false;
-        timeInterval = 0.025f;
 
-        for (int i = 0; i < 30; i++)
+        rbColumna.velocity = new Vector2(0f, -25f);
+
+        float initialTime = Random.Range(3f, 5f);
+
+        float t = Time.time;
+
+        while (Time.time <= t + initialTime)
         {
             if (columnaAGirar.transform.localPosition.y <= -5985f)
                 columnaAGirar.transform.localPosition = new Vector2(columnaAGirar.transform.localPosition.x, 5707f);
 
-            columnaAGirar.transform.localPosition = new Vector2(columnaAGirar.transform.localPosition.x, columnaAGirar.transform.localPosition.y -144.25f);
-            yield return new WaitForSeconds(timeInterval);
+            yield return null;
         }
-        randomValue = Random.Range(60, 100);
 
-        switch (randomValue % 3)
+        t = Time.time;
+
+        while (Time.time <= t + 3f)
         {
-            case 1:
-                randomValue += 2;
-                break;
-            case 2:
-                randomValue += 1;
-                break;           
-        }
-        for (int i = 0; i < randomValue; i++)
-        {
+            rbColumna.velocity = new Vector2(0f, -25f * downVelocity.Evaluate((Time.time - t) / 3f));
+
+            yield return null;
+
             if (columnaAGirar.transform.localPosition.y <= -5985f)
                 columnaAGirar.transform.localPosition = new Vector2(columnaAGirar.transform.localPosition.x, 5707f);
-
-            columnaAGirar.transform.localPosition = new Vector2(columnaAGirar.transform.localPosition.x, columnaAGirar.transform.localPosition.y - 144.25f);
-
-            //Controlar el snap
-
-            if (i > Mathf.RoundToInt(randomValue * 0.25f))
-                timeInterval = 0.05f;
-            if (i > Mathf.RoundToInt(randomValue * 0.5f))
-                timeInterval = 0.1f;
-            if (i > Mathf.RoundToInt(randomValue * 0.75f))
-                timeInterval = 0.15f;
-            if (i > Mathf.RoundToInt(randomValue * 0.95f))
-                timeInterval = 0.2f;
-
-            yield return new WaitForSeconds(timeInterval);
-            rowStopped = true;
-            ouput();        
         }
+
+        rbColumna.velocity = Vector3.zero;
+
+        rowStopped = true;
+
+        ouput();
     }
+   
     IEnumerator snapLastImg()
     {
-        yield return new WaitForSeconds(8f);
+
         if (rowStopped)
         {
             colliderDetectorImg.enabled = true;
             yield return new WaitForSeconds(1f);
             colliderDetectorImg.enabled = false;
+            btnActiveRuleta.interactable = true;
         }      
     
     }

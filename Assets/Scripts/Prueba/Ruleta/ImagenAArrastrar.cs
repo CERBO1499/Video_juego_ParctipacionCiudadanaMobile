@@ -1,6 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using TMPro;
+
+public enum TipoArrastrable
+{
+    imagen,
+    globodetexto
+}
 
 public class ImagenAArrastrar : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -9,6 +17,9 @@ public class ImagenAArrastrar : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     [Header("Information")]
     #region Serializadas
     [SerializeField] Vector2 finalLocalPosition;
+    [SerializeField] TipoArrastrable tipoArrastrable;
+    [SerializeField] AnimationCurve curve;
+    [SerializeField] RectTransform btnCloseGlobo;
     #endregion
 
     #region Privadas
@@ -24,7 +35,7 @@ public class ImagenAArrastrar : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     #region Drag
     public static bool drag = true;
     Coroutine dragCoroutine;
-    RectTransform keeper;
+    RectTransform keeper,tmpKeeper;
     int box;
     System.Action onPointerFail;
     #endregion
@@ -90,6 +101,17 @@ public class ImagenAArrastrar : MonoBehaviour, IPointerDownHandler, IPointerUpHa
                     rect.SetParent(this.keeper.GetChild(0));
 
                     rect.localPosition = Vector3.zero;
+
+                    switch (tipoArrastrable)
+                    {
+                        case TipoArrastrable.imagen:
+                            break;
+                        case TipoArrastrable.globodetexto:
+                            StartCoroutine(CreaceGloboTexto());
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 else
                     OnPointerFail();
@@ -110,6 +132,69 @@ public class ImagenAArrastrar : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         onPointerFail?.Invoke();
     }
 
+
+    IEnumerator CreaceGloboTexto()
+    {
+        tmpKeeper = keeper;
+
+        rect.SetParent(rect.root);
+        
+        Vector2 initialSize = Vector2.one;
+        Vector2 finalSize = new Vector2(3f, 3f);
+
+        Vector2 initialPos = rect.transform.localPosition;
+        Vector2 finiPos =Vector2.zero;
+
+        float t = Time.time;
+
+        while (Time.time <= t + 1f)
+        {
+            rect.localPosition = initialPos + ((finiPos - initialPos) * curve.Evaluate((Time.time - t) / 1f));
+            rect.localScale = initialSize + ((finalSize - initialSize) * curve.Evaluate((Time.time - t) / 1f));
+
+            yield return null;
+        }
+
+        rect.localPosition = finiPos;
+        rect.localScale = finalSize;
+
+        gameObject.transform.GetChild(0).GetComponent<TMP_InputField>().enabled = true;
+        gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        btnCloseGlobo.gameObject.SetActive(true);
+    }
+    public void DecreaceImg()
+    {
+        StartCoroutine(DecreaceGlobo());
+    }
+    public IEnumerator DecreaceGlobo()
+    {
+        print("Decreace keeper: " + "" + keeper);
+        rect.SetParent(tmpKeeper.GetChild(0));
+
+
+        Vector2 initialSize = new Vector2(3f, 3f);
+        Vector2 finalSize = Vector2.one;
+
+        Vector2 initialPos = rect.localPosition;
+        Vector2 finiPos = Vector3.zero;
+
+        float t = Time.time;
+
+        while (Time.time <= t + 1f)
+        {
+            rect.localPosition = initialPos + ((finiPos - initialPos) * curve.Evaluate((Time.time - t) / 1f));
+            rect.localScale = initialSize + ((finalSize - initialSize) * curve.Evaluate((Time.time - t) / 1f));
+
+            yield return null;
+        }
+
+        rect.localPosition = finiPos;
+        rect.localScale = finalSize;
+
+        gameObject.transform.GetChild(0).GetComponent<TMP_InputField>().enabled = false;
+        btnCloseGlobo.gameObject.SetActive(false);
+
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

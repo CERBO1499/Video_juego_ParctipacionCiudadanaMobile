@@ -18,11 +18,13 @@ public class CollisionWithImage : MonoBehaviour
     [SerializeField]
     Vector3 []positionImgSelectd;
 
+    
     #endregion
 
-    #region
+    #region Components
     [SerializeField]
     RuletaManager rltManager;
+    RectTransform rectImageSelectd;
     #endregion
 
     private void Awake()
@@ -35,7 +37,7 @@ public class CollisionWithImage : MonoBehaviour
             positionImgSelectd[i] = Images[i].transform.localPosition;
         }
     }
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         
         if (collision.tag == "Images")
@@ -43,7 +45,7 @@ public class CollisionWithImage : MonoBehaviour
            
            idpieza = collision.GetComponent<IdentificadorPieza>();
            idpieza.Selected = true;
-
+            rectImageSelectd = collision.GetComponent<RectTransform>();
             for (int i = 0; i < Images.Length; i++)
             {
                 if (Images[i].GetComponent<IdentificadorPieza>().Selected==false)
@@ -52,7 +54,11 @@ public class CollisionWithImage : MonoBehaviour
                 }
                 
             }
-            collision.transform.position = new Vector3(collision.transform.position.x, 1.1f);
+
+           
+
+            //collision.transform.position = new Vector3(collision.transform.position.x, 1.1f);
+            StartCoroutine(snapImageCoroutine(rectImageSelectd, rectImageSelectd.position, new Vector2(rectImageSelectd.position.x, 1.1f)));
             //CheckImgSelected(idpieza);
             StartCoroutine(waitToClose(collision.gameObject));
             
@@ -101,30 +107,24 @@ public class CollisionWithImage : MonoBehaviour
        
         for (int i = 0; i < Images.Length; i++)
         {
+
             Images[i].transform.localPosition = positionImgSelectd[i];
 
             Images[i].GetComponent<IdentificadorPieza>().Selected = false;
             Images[i].gameObject.SetActive(true);           
         }             
     }
-    IEnumerator UnactiveRouleteCoroutine(RectTransform Ruleta)
-    {
-        Vector2 iniPos = new Vector2(0f,-5.7f);
-        Vector2 finiPos = new Vector2(1322f,-487f);
-
-        Vector2 iniSzie = new Vector2(1f,1f);
-        Vector2 finiSize = new Vector2(0.5f,0.5f);
-
+    IEnumerator snapImageCoroutine(RectTransform imgSeleced,Vector2 iniPos,Vector2 finiPos)
+    {         
         float t = Time.time;
-        while (Time.time<=t+2f)
+
+        while (Time.time<=t+0.5f)
         {
-            Ruleta.localPosition = iniPos + ((finiPos - iniPos) * curve.Evaluate((Time.time - t) / 2f));
-            Ruleta.localScale = iniSzie + ((finiSize - iniSzie) * curve.Evaluate((Time.time - t) / 2f));
+            imgSeleced.position= iniPos + ((finiPos - iniPos) * curve.Evaluate((Time.time - t) / 0.5f));           
 
             yield return null;
         }
-
-        Ruleta.localScale = finiSize;
-        Ruleta.localPosition = finiPos;
+        
+        imgSeleced.position = finiPos;
     }
 }

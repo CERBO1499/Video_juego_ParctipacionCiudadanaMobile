@@ -176,7 +176,7 @@ public class UIManager : MonoBehaviour
                 soupSentence += soupWords[i].Pword + ((i < soupWords.Length - 1) ? " " : "");
         }
 
-        if (soupSentence == "LA LLENA DE LECTURA AVENTURAS")
+        if (soupSentence == "LA LLENA DE LECTURA AVENTURAS NOS")
         {
             aldea.LineCreator.create = false;
 

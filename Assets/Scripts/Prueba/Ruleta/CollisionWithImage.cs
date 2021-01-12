@@ -16,7 +16,7 @@ public class CollisionWithImage : MonoBehaviour
     BoxCollider2D bxCollider;
 
     [SerializeField]
-    Vector3 []positionImgSelectd;
+    Vector3 [] positionImgSelectd;
 
     
     #endregion
@@ -29,7 +29,7 @@ public class CollisionWithImage : MonoBehaviour
 
     private void Awake()
     {
-         bxCollider.GetComponent<Collider2D>();
+        bxCollider.GetComponent<Collider2D>();
         rltManager.GetComponent<RuletaManager>();
 
         for (int i = 0; i < Images.Length; i++)
@@ -54,9 +54,6 @@ public class CollisionWithImage : MonoBehaviour
                 }
                 
             }
-
-           
-
             //collision.transform.position = new Vector3(collision.transform.position.x, 1.1f);
             StartCoroutine(snapImageCoroutine(rectImageSelectd, rectImageSelectd.position, new Vector2(rectImageSelectd.position.x, 1.1f)));
             //CheckImgSelected(idpieza);

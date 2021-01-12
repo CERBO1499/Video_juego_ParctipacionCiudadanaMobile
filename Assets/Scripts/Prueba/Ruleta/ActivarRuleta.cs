@@ -93,8 +93,8 @@ public class ActivarRuleta : MonoBehaviour
 
         while (Time.time <= t + initialTime)
         {
-            if (columnaAGirar.transform.localPosition.y <= -5985f)
-                columnaAGirar.transform.localPosition = new Vector2(columnaAGirar.transform.localPosition.x, 5707f);
+            if (columnaAGirar.transform.localPosition.y <= -7566.5f)
+                columnaAGirar.transform.localPosition = new Vector2(columnaAGirar.transform.localPosition.x, 7464f);
 
             yield return null;
         }
@@ -107,8 +107,8 @@ public class ActivarRuleta : MonoBehaviour
 
             yield return null;
 
-            if (columnaAGirar.transform.localPosition.y <= -5985f)
-                columnaAGirar.transform.localPosition = new Vector2(columnaAGirar.transform.localPosition.x, 5707f);
+            if (columnaAGirar.transform.localPosition.y <= -7566.5f)
+                columnaAGirar.transform.localPosition = new Vector2(columnaAGirar.transform.localPosition.x, 7464f);
         }
 
         rbColumna.velocity = Vector3.zero;

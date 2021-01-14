@@ -12186,7 +12186,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Arrastra las im\xE1genes y globos de texto al recuadro que no este oscuro."
+  m_text: "Crea tu historieta arrastrando las im\xE1genes y cuadros de texto al recuadro
+    habilitado."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 666cb6d320d5f064f8a4666aa96739d6, type: 2}
   m_sharedMaterial: {fileID: -3498394888173277883, guid: 666cb6d320d5f064f8a4666aa96739d6,
@@ -12214,7 +12215,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 109.15
+  m_fontSize: 105.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -22360,7 +22361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1935255309
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23641,7 +23642,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b5990a11152d07f48ba5a5314792942b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 590b71c71a78a864eaffd24e58e2354e, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

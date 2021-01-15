@@ -1089,7 +1089,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 64274861}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1325611377}
+        m_MethodName: OpenLinkJS
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &64274861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1138,6 +1149,7 @@ GameObject:
   - component: {fileID: 69768596}
   - component: {fileID: 69768598}
   - component: {fileID: 69768597}
+  - component: {fileID: 69768599}
   m_Layer: 5
   m_Name: Foro 3
   m_TagString: Untagged
@@ -1205,6 +1217,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 69768595}
   m_CullTransparentMesh: 0
+--- !u!114 &69768599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69768595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Field: //polygon.us/escuelaspp/Foro/router.php?idblog=15
+  Field2: https://polygon.us/escuelaspp/Foro/router.php?idblog=15
 --- !u!1 &90711844
 GameObject:
   m_ObjectHideFlags: 0
@@ -3510,7 +3536,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 315123902}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 322914313}
+        m_MethodName: OpenLinkJS
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &315123902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3559,6 +3596,7 @@ GameObject:
   - component: {fileID: 322914310}
   - component: {fileID: 322914312}
   - component: {fileID: 322914311}
+  - component: {fileID: 322914313}
   m_Layer: 5
   m_Name: Game 3
   m_TagString: Untagged
@@ -3625,6 +3663,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322914309}
   m_CullTransparentMesh: 0
+--- !u!114 &322914313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322914309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Field: //polygon.us/escuelaspp/Foro/router.php?idblog=17
+  Field2: https://polygon.us/escuelaspp/Foro/router.php?idblog=17
 --- !u!1 &335173091
 GameObject:
   m_ObjectHideFlags: 0
@@ -3779,7 +3831,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 342190913}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1559045338}
+        m_MethodName: OpenLinkJS
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &342190913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4137,7 +4200,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -692, y: 66.79999}
+  m_AnchoredPosition: {x: -691.9995, y: 66.799805}
   m_SizeDelta: {x: -2435, y: -1069.4008}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &382301400
@@ -10471,7 +10534,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1211464821}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1718490433}
+        m_MethodName: OpenLinkJS
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1211464821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11586,6 +11660,7 @@ GameObject:
   - component: {fileID: 1325611374}
   - component: {fileID: 1325611376}
   - component: {fileID: 1325611375}
+  - component: {fileID: 1325611377}
   m_Layer: 5
   m_Name: Foro 1
   m_TagString: Untagged
@@ -11653,6 +11728,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1325611373}
   m_CullTransparentMesh: 0
+--- !u!114 &1325611377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325611373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Field: //polygon.us/escuelaspp/Foro/router.php?idblog=13
+  Field2: https://polygon.us/escuelaspp/Foro/router.php?idblog=13
 --- !u!1 &1352792540
 GameObject:
   m_ObjectHideFlags: 0
@@ -12172,7 +12261,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 825, y: -831.69946}
+  m_AnchoredPosition: {x: 825, y: -831.6995}
   m_SizeDelta: {x: 1650, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1449207713
@@ -12299,6 +12388,7 @@ GameObject:
   - component: {fileID: 1466364026}
   - component: {fileID: 1466364028}
   - component: {fileID: 1466364027}
+  - component: {fileID: 1466364029}
   m_Layer: 5
   m_Name: Foro 4
   m_TagString: Untagged
@@ -12366,6 +12456,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1466364025}
   m_CullTransparentMesh: 0
+--- !u!114 &1466364029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466364025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Field: //polygon.us/escuelaspp/Foro/router.php?idblog=16
+  Field2: https://polygon.us/escuelaspp/Foro/router.php?idblog=16
 --- !u!1 &1471120256
 GameObject:
   m_ObjectHideFlags: 0
@@ -13036,6 +13140,7 @@ GameObject:
   - component: {fileID: 1559045335}
   - component: {fileID: 1559045337}
   - component: {fileID: 1559045336}
+  - component: {fileID: 1559045338}
   m_Layer: 5
   m_Name: Foro 2
   m_TagString: Untagged
@@ -13103,6 +13208,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1559045334}
   m_CullTransparentMesh: 0
+--- !u!114 &1559045338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559045334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Field: //polygon.us/escuelaspp/Foro/router.php?idblog=14
+  Field2: https://polygon.us/escuelaspp/Foro/router.php?idblog=14
 --- !u!1 &1561530672
 GameObject:
   m_ObjectHideFlags: 0
@@ -14442,6 +14561,7 @@ GameObject:
   - component: {fileID: 1718490430}
   - component: {fileID: 1718490432}
   - component: {fileID: 1718490431}
+  - component: {fileID: 1718490433}
   m_Layer: 5
   m_Name: Game 1
   m_TagString: Untagged
@@ -14508,6 +14628,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1718490429}
   m_CullTransparentMesh: 0
+--- !u!114 &1718490433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718490429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ef33f0527d24bb0ab7e72fa2727d6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Field: //polygon.us/escuelaspp/Foro/router.php?idblog=12
+  Field2: https://polygon.us/escuelaspp/Foro/router.php?idblog=12
 --- !u!1 &1721192501
 GameObject:
   m_ObjectHideFlags: 0
@@ -15876,7 +16010,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1858730962}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1466364029}
+        m_MethodName: OpenLinkJS
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1858730962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16459,7 +16604,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1957713241}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 69768599}
+        m_MethodName: OpenLinkJS
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1957713241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16651,7 +16807,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -692, y: 66.79999}
+  m_AnchoredPosition: {x: -691.9995, y: 66.799805}
   m_SizeDelta: {x: -2435, y: -1069.4008}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1985957742

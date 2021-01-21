@@ -71,6 +71,11 @@ public class Scenemanager : MonoBehaviour
     {
         SceneManager.LoadScene("Ruleta", LoadSceneMode.Single);
     }
+
+    public void ToDominoInfantil()
+    {
+        SceneManager.LoadScene("Domino Infantil", LoadSceneMode.Single);
+    }
     public void ToMainMenuWithSemilla()
     {
         ControlSemilla.SumarSemilla(10, () =>

@@ -2,46 +2,51 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class PieceDomino : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IPointerDownHandler
+namespace Diverdomino
 {
-    #region Components
-    RectTransform rectTrasnform;
-    public RectTransform PrectTrasnform { get => rectTrasnform; set => rectTrasnform = value; }
-    Image img;
-    #endregion
-
-
-    void Awake()
+    public class PieceDomino : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IPointerDownHandler
     {
-        rectTrasnform = GetComponent<RectTransform>();
-    }
+        #region Information
+        int lastIndex;
+        #endregion
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        img.color = new Color(1f, 1f, 1f, 0.5f);
-    }
+        #region Components
+        RectTransform rect;
+        public RectTransform Prect { get => rect; set => rect = value; }
+        Image img;
+        #endregion
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-         img.color =Color.white;
-    }
 
-    public void OnPointerUp(PointerEventData eventData)
-    {/*
-        if (drag)
+        void Awake()
         {
-            lastIndex = rect.GetSiblingIndex();
+            rect = GetComponent<RectTransform>();
 
-            rect.SetParent(rect.parent.parent.parent.parent);
+            img = GetComponent<Image>();
 
-            root.sizeDelta = new Vector3(root.sizeDelta.x, root.sizeDelta.y - (rect.sizeDelta.y + 240));
+            gameObject.SetActive(false);
+        }
 
-            StartCoroutine(DragCoroutine(eventData));
-        }*/
-    }
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            img.color = new Color(1f, 1f, 1f, 0.5f);
+        }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        throw new System.NotImplementedException();
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            img.color = Color.white;
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            if (GameManager.instance.drag)
+            {
+                lastIndex = rect.GetSiblingIndex();
+            }
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

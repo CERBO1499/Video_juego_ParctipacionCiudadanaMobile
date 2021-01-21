@@ -14,17 +14,20 @@ namespace Diverdomino
         public bool drag = true;
         [SerializeField] List<PieceDomino> piecesToDistribute;
         [SerializeField] List<PieceDomino> piecesToPlayer;
+        [SerializeField] RectTransform pieces;
         [SerializeField] List<PieceDomino> piecesToMachine;
-        [SerializeField] RectTransform[] positions;
         #endregion
-
 
         private void Awake()
         {
             instance = this;
+        }
 
+        private void Start()
+        {
             DistributePiecesAleatori();
         }
+
         void DistributePiecesAleatori()
         {
             for (int i = 0; i < 14; i++)
@@ -32,7 +35,11 @@ namespace Diverdomino
                 PieceDomino myPiece = piecesToDistribute[Random.Range(0, piecesToDistribute.Count)];
                 piecesToDistribute.Remove(myPiece);
                 piecesToPlayer.Add(myPiece);
-                myPiece.transform.position = positions[i].transform.position;
+
+                myPiece.Prect.SetParent(pieces);
+                pieces.sizeDelta = new Vector2(pieces.childCount * 315f + pieces.GetComponent<UnityEngine.UI.HorizontalLayoutGroup>().spacing, pieces.sizeDelta.y);
+
+                myPiece.gameObject.SetActive(true);
             }
             for (int i = 0; i < 14; i++)
             {

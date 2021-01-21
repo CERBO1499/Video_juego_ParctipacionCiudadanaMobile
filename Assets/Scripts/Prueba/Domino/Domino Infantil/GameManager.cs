@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] List <PieceDomino> piecesToDistribute; 
     [SerializeField] List <PieceDomino> piecesToPlayer;
     [SerializeField] List <PieceDomino> piecesToMachine;
+    [SerializeField] RectTransform [] positions;
     #endregion
     
 
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
             PieceDomino myPiece = piecesToDistribute[Random.Range(0, piecesToDistribute.Count)];
             piecesToDistribute.Remove(myPiece);
             piecesToPlayer.Add(myPiece);
+            myPiece.transform.position = positions[i].transform.position; 
         }
         for (int i = 0; i < 14; i++)
         {

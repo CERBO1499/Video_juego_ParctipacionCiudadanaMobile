@@ -5,44 +5,29 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     #region Information
-    [SerializeField] RectTransform [] piecesToDistribute;
-    [SerializeField] RectTransform [] piecesPlayer;
-    [SerializeField] RectTransform [] piecesMachine;
+    [SerializeField] List <PieceDomino> piecesToDistribute; 
+    [SerializeField] List <PieceDomino> piecesToPlayer;
+    [SerializeField] List <PieceDomino> piecesToMachine;
     #endregion
-
-    #region Components
-    [SerializeField] PieceDomino [] idPieceDomino;
-    #endregion
+    
 
     private void Awake()
     {
-        for (int i = 0; i < piecesToDistribute.Length; i++)
-        {
-            idPieceDomino[i] = piecesToDistribute[i].GetComponent<PieceDomino>();
-        }
         DistributePiecesAleatori();
     }
     void DistributePiecesAleatori()
-    {
-        List<int> tmpNumbers = new List<int>();
-        int number;
-
-        for (int i = 0; i < piecesToDistribute.Length; i++)
+    {        
+        for (int i = 0; i < 14; i++)
         {
-            do
-            {
-                number = Random.Range(0, 27);
-            } while (tmpNumbers.Contains(number));
-            tmpNumbers.Add(number);
-
-            if(idPieceDomino[i].IdNumber == number)
-            {
-
-            }
-                           
+            PieceDomino myPiece = piecesToDistribute[Random.Range(0, piecesToDistribute.Count)];
+            piecesToDistribute.Remove(myPiece);
+            piecesToPlayer.Add(myPiece);
         }
-
-        
-       
+        for (int i = 0; i < 14; i++)
+        {
+            PieceDomino myPiece = piecesToDistribute[Random.Range(0, piecesToDistribute.Count)];
+            piecesToDistribute.Remove(myPiece);
+            piecesToMachine.Add(myPiece);
+        }
     }
 }

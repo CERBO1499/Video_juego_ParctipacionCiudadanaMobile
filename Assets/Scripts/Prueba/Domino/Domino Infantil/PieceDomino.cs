@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PieceDomino : MonoBehaviour
 {
-    [SerializeField] int idNumber;
-    public int IdNumber { get => idNumber; set => idNumber = value; }
+    RectTransform rectTrasnform;
+
+    public RectTransform PrectTrasnform { get => rectTrasnform; set => rectTrasnform = value; }
 }

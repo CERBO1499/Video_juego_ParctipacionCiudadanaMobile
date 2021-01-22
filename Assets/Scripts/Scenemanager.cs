@@ -28,6 +28,11 @@ public class Scenemanager : MonoBehaviour
         else
             SceneManager.LoadScene("main", LoadSceneMode.Single);
     }
+
+    public void ToPersonalitation()
+    {
+        SceneManager.LoadScene("choseScene",LoadSceneMode.Single);
+    }
     public void ToParchados()
     {
         SceneManager.LoadScene("parchados", LoadSceneMode.Single);

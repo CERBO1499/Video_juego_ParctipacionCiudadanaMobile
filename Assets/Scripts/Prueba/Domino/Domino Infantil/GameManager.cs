@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Diverdomino
 {
@@ -16,6 +17,13 @@ namespace Diverdomino
         [SerializeField] List<PieceDomino> piecesToPlayer;
         [SerializeField] RectTransform pieces;
         [SerializeField] List<PieceDomino> piecesToMachine;
+        [SerializeField] Transform parentToPieces;
+        [SerializeField] ScrollRect scrollToUnactive;
+        [SerializeField] Transform parentToReturn;
+
+        public Transform ParentToPieces { get => parentToPieces; set => parentToPieces = value; }
+        public ScrollRect ScrollToUnactive { get => scrollToUnactive; set => scrollToUnactive = value; }
+        public Transform ParentToReturn { get => parentToReturn; set => parentToReturn = value; }
         #endregion
 
         private void Awake()

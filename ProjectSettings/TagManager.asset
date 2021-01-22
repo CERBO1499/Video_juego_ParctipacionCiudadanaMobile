@@ -12,6 +12,7 @@ TagManager:
   - keeper
   - Letter
   - Images
+  - Piece Domino
   layers:
   - Default
   - TransparentFX

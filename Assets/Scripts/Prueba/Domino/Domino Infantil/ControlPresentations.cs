@@ -5,8 +5,9 @@ using UnityEngine;
 public class ControlPresentations : MonoBehaviour
 {
     #region Information
-    [SerializeField] RectTransform [] descriptions;
+    [SerializeField] RectTransform[] descriptions;
     [SerializeField] RectTransform PanelPresentation;
+    [SerializeField] RectTransform boardGame;
     int countClick=0;
     #endregion
 
@@ -41,6 +42,7 @@ public class ControlPresentations : MonoBehaviour
                 break;
             case 5:
                 PanelPresentation.gameObject.SetActive(false);
+                boardGame.gameObject.SetActive(true);
                 break;
             default:
                 break;

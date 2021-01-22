@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/prueba/minijuegos/Ruleta.unity
     guid: 27415af9ac6dee848a02af29a3507474
+  - enabled: 1
+    path: Assets/Scenes/prueba/minijuegos/Domino Infantil.unity
+    guid: f0aefbf89a5536b4e9759b520c1790f7
   m_configObjects: {}

@@ -20,6 +20,8 @@ namespace Diverdomino
         [SerializeField] Transform parentToPieces;
         [SerializeField] ScrollRect scrollToUnactive;
         [SerializeField] Transform parentToReturn;
+        [SerializeField] RectTransform yourTurnImg;
+        [SerializeField] AnimationCurve curveTurn;
 
         public RectTransform Ppieces { get { return pieces; } }
         public Transform ParentToPieces { get => parentToPieces; set => parentToPieces = value; }
@@ -37,6 +39,30 @@ namespace Diverdomino
             DistributePiecesAleatori();
         }
 
+        private void OnEnable()
+        {
+            StartCoroutine(ShowTurnCoroutine());
+        }
+        IEnumerator ShowTurnCoroutine()
+        {
+            yield return new WaitForSeconds(2f);
+
+            yourTurnImg.gameObject.SetActive(true);
+
+            Vector2 iniSize = Vector2.zero;
+
+            Vector2 finiSize = new Vector2(2f,2f);
+
+            float t = Time.time;
+
+            while (Time.time <= t + 3f)
+            {
+                yourTurnImg.localScale = iniSize + ((finiSize - iniSize) * curveTurn.Evaluate((Time.time) - t) / 3f);
+                yield return null;
+            }
+
+            yourTurnImg.localScale = iniSize;
+        }
         void DistributePiecesAleatori()
         {
             for (int i = 0; i < 14; i++)

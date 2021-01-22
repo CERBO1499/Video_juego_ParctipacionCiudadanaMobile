@@ -18,27 +18,50 @@ namespace Diverdomino
         [SerializeField] TypePiece typeOfPiece;
         int lastIndex;
         bool drag;
+        public bool isInPosition = true;
+        Image rayCastToUnactive;
         GameObject posibilty;
+        Coroutine dragCoroutine;
         #endregion
 
         #region Components
         RectTransform rect;
         public RectTransform Prect { get => rect; set => rect = value; }
+
         Image img;
-     
+
+        #endregion
+
+        #region Events
         #endregion
 
         void Awake()
         {
+            rayCastToUnactive = GetComponent<Image>();
+
             rect = GetComponent<RectTransform>();
 
             img = GetComponent<Image>();
 
             gameObject.SetActive(false);
+
+            switch (typeOfPiece)
+            {
+                case TypePiece.Double:
+                    break;
+                case TypePiece.Single:
+                    img.raycastTarget = false;
+                    img.color = new Color(1f, 1f, 1f, 0.5f);
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if(isInPosition)
             img.color = new Color(1f, 1f, 1f, 0.5f);
         }
 
@@ -48,22 +71,26 @@ namespace Diverdomino
         }
 
         public void OnPointerDown(PointerEventData eventData)
-        {
-            if (GameManager.instance.drag)
-            {
-                lastIndex = rect.GetSiblingIndex();
+        {  
+                if (GameManager.instance.drag && isInPosition)
+                {
+                    Debug.Log("sisas");
 
-                GameManager.instance.ScrollToUnactive.enabled = false;
+                    lastIndex = rect.GetSiblingIndex();
 
-                rect.SetParent(GameManager.instance.ParentToPieces);
+                    GameManager.instance.ScrollToUnactive.enabled = false;
 
-                StartCoroutine(DragCoroutine(eventData));
-            }
+                    rect.SetParent(GameManager.instance.ParentToPieces);
+
+                    dragCoroutine =  StartCoroutine(DragCoroutine(eventData));
+                }            
+                
         }
+
         IEnumerator DragCoroutine(PointerEventData pointerEventData)
         {
             drag = true;
-
+            
             while (drag)
             {
                 Vector3 screenPoint = Input.mousePosition;
@@ -88,6 +115,20 @@ namespace Diverdomino
 
                         posibilty = resoults[i].gameObject;
 
+                        gameObject.transform.localEulerAngles = posibilty.transform.localEulerAngles;
+
+                        switch (typeOfPiece)
+                        {
+                            case TypePiece.Double:
+                                gameObject.transform.localEulerAngles = new Vector3(0f, 0f, 0f);
+                                break;
+                            case TypePiece.Single:
+                                gameObject.transform.localEulerAngles = new Vector3(0f, 0f, 90f);
+                                break;
+                            default:
+                                break;
+                        }
+
                         break;
                     }
                 }
@@ -105,20 +146,47 @@ namespace Diverdomino
 
             GameManager.instance.ScrollToUnactive.enabled = true;
 
-            if (posibilty == null)
-            {
-                rect.SetParent(GameManager.instance.Ppieces);
+            if (isInPosition) {
+                if (posibilty == null)
+                {                    
+                    rect.SetParent(GameManager.instance.Ppieces);
 
-                rect.SetSiblingIndex(lastIndex);
+                    rect.SetSiblingIndex(lastIndex);
 
-                rect.localPosition = new Vector3(rect.localPosition.x, rect.localPosition.y, 0f);
+                    rect.localPosition = new Vector3(rect.localPosition.x, rect.localPosition.y, 0f);
+
+                    rect.localEulerAngles = Vector3.zero;
+                }
+                else
+                {
+                    rect.position = posibilty.GetComponent<RectTransform>().position;
+
+                    posibilty.gameObject.GetComponent<Image>().raycastTarget = false;
+
+                    posibilty = null;
+
+                    PieceInPosition();
+                }
             }
-            else
-            {
-                rect.position = posibilty.GetComponent<RectTransform>().position;
-
-                posibilty = null;
-            }
+           
         }
+
+        void PieceInPosition()
+        {
+            StopCoroutine(dragCoroutine);
+
+            rayCastToUnactive.raycastTarget = false;
+
+            isInPosition = false;
+
+            foreach (Transform item in transform)
+            {
+                if (item != null)
+                {
+                    item.gameObject.SetActive(true);
+                }              
+            }          
+
+        }   
     }
 }

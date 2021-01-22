@@ -15,25 +15,21 @@ namespace Diverdomino
     public class PieceDomino : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IPointerDownHandler
     {
         #region Information
-        int lastIndex;
-        GameObject putPosition;
-        bool drag;
-        bool release;
         [SerializeField] TypePiece typeOfPiece;
+        int lastIndex;
+        bool drag;
+        GameObject posibilty;
         #endregion
 
         #region Components
         RectTransform rect;
-        BoxCollider2D coll;
         public RectTransform Prect { get => rect; set => rect = value; }
         Image img;
+     
         #endregion
-
 
         void Awake()
         {
-            coll = GetComponent<BoxCollider2D>();
-
             rect = GetComponent<RectTransform>();
 
             img = GetComponent<Image>();
@@ -51,59 +47,13 @@ namespace Diverdomino
             img.color = Color.white;
         }
 
-        public void OnPointerUp(PointerEventData eventData)
-        {
-            drag = false;
-
-            GameManager.instance.ScrollToUnactive.enabled = true;
-
-            coll.isTrigger = true;
-
-            if (release)
-            {
-                switch (typeOfPiece)
-                {
-                    case TypePiece.Double:
-                        gameObject.transform.localEulerAngles = new Vector3(0f, 0f, 90f);
-                        break;
-                    case TypePiece.Single:
-                        break;
-                    default:
-                        break;
-                }
-                gameObject.GetComponent<PieceDomino>().enabled = false;
-
-                img.color = Color.white;
-            }
-            else
-                rect.SetParent(GameManager.instance.ParentToReturn);
-        }
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-
-            if (collision.tag == "Piece Domino")
-            {
-                print("Entro");
-                release = true;
-            }
-            else 
-            {
-                release = false;
-                coll.enabled = false;
-                print("Release true");
-
-            }
-
-
-        }
-
         public void OnPointerDown(PointerEventData eventData)
         {
             if (GameManager.instance.drag)
             {
-                GameManager.instance.ScrollToUnactive.enabled = false;
-
                 lastIndex = rect.GetSiblingIndex();
+
+                GameManager.instance.ScrollToUnactive.enabled = false;
 
                 rect.SetParent(GameManager.instance.ParentToPieces);
 
@@ -124,10 +74,51 @@ namespace Diverdomino
 
                 pointerEventData.position = Input.mousePosition;
 
-                yield return null;
+                List<RaycastResult> resoults = new List<RaycastResult>();
 
+                EventSystem.current.RaycastAll(pointerEventData, resoults);
+
+                bool found = false;
+
+                for (int i = 0; i < resoults.Count; i++)
+                {
+                    if (resoults[i].gameObject.tag == "Piece Domino")
+                    {
+                        found = true;
+
+                        posibilty = resoults[i].gameObject;
+
+                        break;
+                    }
+                }
+
+                if (!found)
+                    posibilty = null;
+
+                yield return null;
             }
         }
 
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            drag = false;
+
+            GameManager.instance.ScrollToUnactive.enabled = true;
+
+            if (posibilty == null)
+            {
+                rect.SetParent(GameManager.instance.Ppieces);
+
+                rect.SetSiblingIndex(lastIndex);
+
+                rect.localPosition = new Vector3(rect.localPosition.x, rect.localPosition.y, 0f);
+            }
+            else
+            {
+                rect.position = posibilty.GetComponent<RectTransform>().position;
+
+                posibilty = null;
+            }
+        }
     }
 }

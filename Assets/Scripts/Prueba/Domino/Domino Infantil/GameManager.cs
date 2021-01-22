@@ -15,12 +15,13 @@ namespace Diverdomino
         public bool drag = true;
         [SerializeField] List<PieceDomino> piecesToDistribute;
         [SerializeField] List<PieceDomino> piecesToPlayer;
-        [SerializeField] RectTransform pieces;
+        [SerializeField] RectTransform pieces;   
         [SerializeField] List<PieceDomino> piecesToMachine;
         [SerializeField] Transform parentToPieces;
         [SerializeField] ScrollRect scrollToUnactive;
         [SerializeField] Transform parentToReturn;
 
+        public RectTransform Ppieces { get { return pieces; } }
         public Transform ParentToPieces { get => parentToPieces; set => parentToPieces = value; }
         public ScrollRect ScrollToUnactive { get => scrollToUnactive; set => scrollToUnactive = value; }
         public Transform ParentToReturn { get => parentToReturn; set => parentToReturn = value; }

@@ -113,7 +113,7 @@ namespace Diverdomino
 
                         found = true;
 
-                        posibilty = resoults[i].gameObject;
+                        Posibility = posibilty = resoults[i].gameObject;
 
                         gameObject.transform.localEulerAngles = posibilty.transform.localEulerAngles;
 
@@ -265,14 +265,45 @@ namespace Diverdomino
 
             isInPosition = false;
 
+
             foreach (Transform item in transform)
             {
-                if (item != null)
+                //if (item != null)
                 {
                     item.gameObject.SetActive(true);
                 }
             }
+            
 
+            int i = (TypeOfPiece == TypePiece.Double)? 2 : ((Posibility.GetComponent<Keper>().Sidde == Side.Dere) ? 1 : 0);
+            Debug.Log("posibility" + i);
+            Debug.Log("Posibility" + Posibility);
+
+
+            switch (i) {
+                case 0:
+                    if (transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde == Side.Dere) { 
+                        transform.GetChild(0).gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        transform.GetChild(1).gameObject.SetActive(false);
+                    }
+                    Debug.Log("Caso 0 " + i);
+                    break;
+
+                case 1:
+                    if (transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde == Side.Izq) { 
+                        transform.GetChild(1).gameObject.SetActive(false);
+                    }
+                    else {
+                        transform.GetChild(0).gameObject.SetActive(false);
+                    }
+                        Debug.Log("Caso 1 " + i);
+                    break;
+            }
         }
+
+        GameObject Posibility { get; set; }
     }
 }

@@ -5,7 +5,11 @@ using UnityEngine.EventSystems;
 
 public enum NumberPiece
 {
-    cero,uno,dos,tres,cuatro,cinco,seis
+    cero,uno,dos,tres,cuatro,cinco,seis,firstPiece
+}
+public enum Side
+{
+    Izq,Dere
 }
 
 namespace Diverdomino
@@ -15,25 +19,31 @@ namespace Diverdomino
         #region Information 
         [SerializeField] NumberPiece numPiece;
         [SerializeField] LayerMask fichasMask;
-        bool isActive;
+        [SerializeField] Side sidde;
+        PieceDomino pieceDomino;
         bool isKeeped;
-        RaycastHit hit;
         #endregion
 
         #region EncapsulatedField
         public bool IsKeeped { get => isKeeped; set => isKeeped = value; }
+        public NumberPiece NumPiece { get => numPiece; set => numPiece = value; }
+        public Side Sidde { get => sidde; set => sidde = value; }
         #endregion
 
-        private void OnEnable()
+
+        void OnEnable()
         {
-            bool hitDetected = Physics2D.Raycast(this.transform.position, this.transform.forward, float.MaxValue, fichasMask);
-            if (hitDetected)
+
+            RaycastHit2D hit2D = Physics2D.Raycast(transform.position,new Vector3(0f,0f,100f), -float.MaxValue, fichasMask);
+            RaycastHit2D hit2D2 = Physics2D.Raycast(transform.position, new Vector3(0f, 0f, 100f), float.MaxValue, fichasMask);
+
+            if (hit2D.collider != null || hit2D2.collider != null)
             {
+                print("Collision with ficha" + hit2D.collider.name);
+
                 gameObject.SetActive(false);
-            }            
+            }
         }
-
-
     }
 
 }

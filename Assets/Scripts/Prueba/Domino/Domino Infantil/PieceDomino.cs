@@ -280,32 +280,48 @@ namespace Diverdomino
             switch (i)
             {
                 case 0:
-                    if (transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde == Side.Dere)                    
+                    if (transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde == Side.Dere)
                         transform.GetChild(0).gameObject.SetActive(false);
-                    
-                    else                    
+
+                    else
                         transform.GetChild(1).gameObject.SetActive(false);
-                    
+
                     break;
 
                 case 1:
-                    if (transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde == Side.Izq)                    
+                    if (transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde == Side.Izq)
                         transform.GetChild(1).gameObject.SetActive(false);
-                    
-                    else                    
-                        transform.GetChild(0).gameObject.SetActive(false);                    
+
+                    else
+                        transform.GetChild(0).gameObject.SetActive(false);
 
                     break;
 
                 case 2:
-                    if (Posibility.transform)
-                        break
+                    if(Posibility.GetComponent<Keper>().NumPiece != NumberPiece.firstPiece)
+                    {
+                        if (Posibility.GetComponent<Keper>().Sidde == Side.Dere)
+                        {
+                            if (transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde == Side.Izq)
+                                transform.GetChild(0).gameObject.SetActive(false);
+                            else
+                                transform.GetChild(1).gameObject.SetActive(false);
+                        }
+                        else
+                        {
+                            if (transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde == Side.Dere)
+                                transform.GetChild(0).gameObject.SetActive(false);
+                            else
+                                transform.GetChild(1).gameObject.SetActive(false);
+                        }
+                    }                    
+                    break;
             }
-            
+
             Posibility.gameObject.SetActive(false);
         }
 
         GameObject Posibility { get; set; }
-      
+
     }
 }

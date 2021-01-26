@@ -37,7 +37,7 @@ namespace Diverdomino
 
         #region Events
         public System.Action OnFirstPiece;
-        public System.Action OnPieceInPlace;
+        public static System.Action<PieceDomino, Side> OnPieceInPlace;
         #endregion
 
         void Awake()
@@ -253,9 +253,6 @@ namespace Diverdomino
 
         void PieceInPosition()
         {
-
-            OnPieceInPlace?.Invoke();
-
             StopCoroutine(dragCoroutine);
 
             rayCastToUnactive.raycastTarget = false;
@@ -265,12 +262,14 @@ namespace Diverdomino
             foreach (Transform item in transform) item.gameObject.SetActive(true);
 
             int i = (TypeOfPiece == TypePiece.Double) ? 2 : ((Posibility.GetComponent<Keper>().Sidde == Side.Dere) ? 1 : 0);
+            int availableNumPiece = 0;
 
             switch (i)
             {
                 case 0:
-                    if (transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde == Side.Dere)
+                    if (transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde == Side.Dere) {
                         transform.GetChild(0).gameObject.SetActive(false);
+                    }
                     else
                         transform.GetChild(1).gameObject.SetActive(false);
                     break;
@@ -303,9 +302,11 @@ namespace Diverdomino
                     break;
             }
 
+            OnPieceInPlace?.Invoke(this, Posibility.GetComponent<Keper>().Sidde);
+
             Posibility.gameObject.SetActive(false);
 
-            GameManager.instance.drag = false;
+            //GameManager.instance.drag = false;
         }
         GameObject Posibility { get; set; }       
         

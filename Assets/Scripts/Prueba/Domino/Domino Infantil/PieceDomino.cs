@@ -207,12 +207,12 @@ namespace Diverdomino
                 {
 
                     Vector3 finalPositionleft = new Vector3(posibilty.gameObject.transform.position.x + 7.5f, posibilty.gameObject.transform.position.y, posibilty.gameObject.transform.position.z);
+
                     Vector3 finalPositionRigth = new Vector3(posibilty.gameObject.transform.position.x - 7.5f, posibilty.gameObject.transform.position.y, posibilty.gameObject.transform.position.z);
-                    if (posibilty.gameObject.GetComponent<Keper>().NumPiece == NumberPiece.firstPiece)
-                    {
+
+                    if (posibilty.gameObject.GetComponent<Keper>().NumPiece == NumberPiece.firstPiece)                    
                         rect.position = posibilty.GetComponent<RectTransform>().position;
-                        //foreach (Transform item in transform) item.gameObject.SetActive(true);
-                    }
+                    
                     else
                     {
                         switch (TypeOfPiece)
@@ -236,18 +236,7 @@ namespace Diverdomino
                             default:
                                 break;
                         }
-
-                        /*bool b = (Posibility.GetComponent<Keper>().Sidde == Side.Dere) ? true : false;
-
-                        if (!b && transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde == Side.Dere)
-                            transform.GetChild(0).gameObject.SetActive(false);
-                        else
-                            transform.GetChild(1).gameObject.SetActive(false);
-
-                        if (b && transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde == Side.Izq)
-                            transform.GetChild(1).gameObject.SetActive(false);
-                        else
-                            transform.GetChild(0).gameObject.SetActive(false);*/
+                        
                     }
 
                     posibilty.gameObject.GetComponent<Image>().raycastTarget = false;
@@ -282,19 +271,15 @@ namespace Diverdomino
                 case 0:
                     if (transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde == Side.Dere)
                         transform.GetChild(0).gameObject.SetActive(false);
-
                     else
                         transform.GetChild(1).gameObject.SetActive(false);
-
                     break;
 
                 case 1:
                     if (transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde == Side.Izq)
                         transform.GetChild(1).gameObject.SetActive(false);
-
                     else
                         transform.GetChild(0).gameObject.SetActive(false);
-
                     break;
 
                 case 2:
@@ -319,9 +304,10 @@ namespace Diverdomino
             }
 
             Posibility.gameObject.SetActive(false);
+
+            GameManager.instance.drag = false;
         }
-
-        GameObject Posibility { get; set; }
-
+        GameObject Posibility { get; set; }       
+        
     }
 }

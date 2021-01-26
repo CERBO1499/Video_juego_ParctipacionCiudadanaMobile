@@ -40,7 +40,6 @@ namespace Diverdomino
             if (hit2D.collider != null || hit2D2.collider != null)
             {
                 print("Collision with ficha" + hit2D.collider.name);
-
                 gameObject.SetActive(false);
             }
         }

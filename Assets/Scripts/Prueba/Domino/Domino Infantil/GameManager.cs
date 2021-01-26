@@ -12,6 +12,7 @@ namespace Diverdomino
         #endregion
 
         #region Information
+        
         public bool drag = true;
         public bool firstPiece = false;
         [SerializeField] List<PieceDomino> piecesToDistribute;
@@ -23,6 +24,7 @@ namespace Diverdomino
         [SerializeField] Transform parentToReturn;
         [SerializeField] RectTransform yourTurnImg;
         [SerializeField] AnimationCurve curveTurn;
+
 
         public RectTransform Ppieces { get { return pieces; } }
         public Transform ParentToPieces { get => parentToPieces; set => parentToPieces = value; }

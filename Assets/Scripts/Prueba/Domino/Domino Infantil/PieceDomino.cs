@@ -44,7 +44,7 @@ namespace Diverdomino
         {
             rayCastToUnactive = GetComponent<Image>();
 
-            rect = GetComponent<RectTransform>();
+            rect = GetComponent<RectTransform>();           
 
             img = GetComponent<Image>();
 
@@ -238,7 +238,7 @@ namespace Diverdomino
                         }
                     }
                     
-                    //rect.position = posibilty.GetComponent<RectTransform>().position;
+                    rect.position = posibilty.GetComponent<RectTransform>().position;
 
                     //rect.position = finalPosition;
 

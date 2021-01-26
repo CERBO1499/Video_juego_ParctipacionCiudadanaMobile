@@ -44,7 +44,7 @@ namespace Diverdomino
         {
             rayCastToUnactive = GetComponent<Image>();
 
-            rect = GetComponent<RectTransform>();           
+            rect = GetComponent<RectTransform>();
 
             img = GetComponent<Image>();
 
@@ -206,12 +206,12 @@ namespace Diverdomino
                 else
                 {
 
-                    Vector3 finalPosition = new Vector3(posibilty.GetComponent<RectTransform>().localPosition.x + 30f, posibilty.GetComponent<RectTransform>().localPosition.y, posibilty.GetComponent<RectTransform>().localPosition.z);
-                    
-                    if(posibilty.gameObject.GetComponent<Keper>().NumPiece == NumberPiece.firstPiece)
+                    Vector3 finalPositionleft = new Vector3(posibilty.gameObject.transform.position.x + 7.5f, posibilty.gameObject.transform.position.y, posibilty.gameObject.transform.position.z);
+                    Vector3 finalPositionRigth = new Vector3(posibilty.gameObject.transform.position.x - 7.5f, posibilty.gameObject.transform.position.y, posibilty.gameObject.transform.position.z);
+                    if (posibilty.gameObject.GetComponent<Keper>().NumPiece == NumberPiece.firstPiece)
                     {
                         rect.position = posibilty.GetComponent<RectTransform>().position;
-
+                        //foreach (Transform item in transform) item.gameObject.SetActive(true);
                     }
                     else
                     {
@@ -221,10 +221,10 @@ namespace Diverdomino
                                 switch (posibilty.gameObject.GetComponent<Keper>().Sidde)
                                 {
                                     case Side.Izq:
-                                        rect.localPosition = finalPosition;
+                                        rect.gameObject.transform.position = finalPositionleft;
                                         break;
                                     case Side.Dere:
-                                        rect.localPosition = finalPosition;
+                                        rect.gameObject.transform.position = finalPositionRigth;
                                         break;
                                     default:
                                         break;
@@ -236,11 +236,19 @@ namespace Diverdomino
                             default:
                                 break;
                         }
-                    }
-                    
-                    rect.position = posibilty.GetComponent<RectTransform>().position;
 
-                    //rect.position = finalPosition;
+                        /*bool b = (Posibility.GetComponent<Keper>().Sidde == Side.Dere) ? true : false;
+
+                        if (!b && transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde == Side.Dere)
+                            transform.GetChild(0).gameObject.SetActive(false);
+                        else
+                            transform.GetChild(1).gameObject.SetActive(false);
+
+                        if (b && transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde == Side.Izq)
+                            transform.GetChild(1).gameObject.SetActive(false);
+                        else
+                            transform.GetChild(0).gameObject.SetActive(false);*/
+                    }
 
                     posibilty.gameObject.GetComponent<Image>().raycastTarget = false;
 
@@ -265,45 +273,39 @@ namespace Diverdomino
 
             isInPosition = false;
 
+            foreach (Transform item in transform) item.gameObject.SetActive(true);
 
-            foreach (Transform item in transform)
+            int i = (TypeOfPiece == TypePiece.Double) ? 2 : ((Posibility.GetComponent<Keper>().Sidde == Side.Dere) ? 1 : 0);
+
+            switch (i)
             {
-                //if (item != null)
-                {
-                    item.gameObject.SetActive(true);
-                }
-            }
-            
-
-            int i = (TypeOfPiece == TypePiece.Double)? 2 : ((Posibility.GetComponent<Keper>().Sidde == Side.Dere) ? 1 : 0);
-            Debug.Log("posibility" + i);
-            Debug.Log("Posibility" + Posibility);
-
-
-            switch (i) {
                 case 0:
-                    if (transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde == Side.Dere) { 
+                    if (transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde == Side.Dere)                    
                         transform.GetChild(0).gameObject.SetActive(false);
-                    }
-                    else
-                    {
+                    
+                    else                    
                         transform.GetChild(1).gameObject.SetActive(false);
-                    }
-                    Debug.Log("Caso 0 " + i);
+                    
                     break;
 
                 case 1:
-                    if (transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde == Side.Izq) { 
+                    if (transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde == Side.Izq)                    
                         transform.GetChild(1).gameObject.SetActive(false);
-                    }
-                    else {
-                        transform.GetChild(0).gameObject.SetActive(false);
-                    }
-                        Debug.Log("Caso 1 " + i);
+                    
+                    else                    
+                        transform.GetChild(0).gameObject.SetActive(false);                    
+
                     break;
+
+                case 2:
+                    if (Posibility.transform)
+                        break
             }
+            
+            Posibility.gameObject.SetActive(false);
         }
 
         GameObject Posibility { get; set; }
+      
     }
 }

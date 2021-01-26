@@ -31,19 +31,7 @@ namespace Diverdomino
         #endregion
 
 
-        void OnEnable()
-        {
-
-            /*RaycastHit2D hit2D = Physics2D.Raycast(transform.position,new Vector3(0f,0f,100f), -float.MaxValue, fichasMask);
-            RaycastHit2D hit2D2 = Physics2D.Raycast(transform.position, new Vector3(0f, 0f, 100f), float.MaxValue, fichasMask);
-
-            if (hit2D.collider != null || hit2D2.collider != null)
-            {
-                print("Collision with ficha" + hit2D.collider.name);
-                print("Collision with ficha" + hit2D2.collider.name);
-                gameObject.SetActive(false);
-            }*/
-        }
+       
     }
 
 }

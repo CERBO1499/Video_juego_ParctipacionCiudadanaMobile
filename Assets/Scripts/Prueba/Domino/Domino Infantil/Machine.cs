@@ -1,18 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class Machine : MonoBehaviour
+namespace Diverdomino
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Machine : MonoBehaviour
     {
-        
-    }
+        #region Information
+        [SerializeField] TextMeshProUGUI txtPieces;
+        int pieces;
+        #endregion
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Start()
+        {
+            StartCoroutine(ActualicePiecesUI());
+        }
+        IEnumerator ActualicePiecesUI()
+        {
+            yield return new WaitForSeconds(1f);
+            pieces = GameManager.instance.PiecesToMachine.Count;
+            txtPieces.text = pieces.ToString();
+        }
+
+        void PickPieceMachine()
+        {
+
+        }
+
     }
 }
+

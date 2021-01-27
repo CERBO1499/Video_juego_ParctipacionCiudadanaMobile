@@ -30,8 +30,14 @@ namespace Diverdomino
         public Transform ParentToPieces { get => parentToPieces; set => parentToPieces = value; }
         public ScrollRect ScrollToUnactive { get => scrollToUnactive; set => scrollToUnactive = value; }
         public Transform ParentToReturn { get => parentToReturn; set => parentToReturn = value; }
+        public List<PieceDomino> PiecesToMachine { get => piecesToMachine; set => piecesToMachine = value; }
         #endregion
 
+
+        #region Events
+        public System.Action OnTurnPlayer;
+        public System.Action OnTurnMachine;
+        #endregion
         private void Awake()
         {
             instance = this;
@@ -90,7 +96,7 @@ namespace Diverdomino
             {
                 PieceDomino myPiece = piecesToDistribute[Random.Range(0, piecesToDistribute.Count)];
                 piecesToDistribute.Remove(myPiece);
-                piecesToMachine.Add(myPiece);
+                PiecesToMachine.Add(myPiece);
             }
         }
 
@@ -124,11 +130,11 @@ namespace Diverdomino
                 piecesToPlayer[i].GetComponent<Image>().raycastTarget = true;
                 piecesToPlayer[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
             }
-            for (int i = 0; i < piecesToMachine.Count; i++)
+            for (int i = 0; i < PiecesToMachine.Count; i++)
             {
-                piecesToMachine[i].GetComponent<Image>();
-                piecesToMachine[i].GetComponent<Image>().raycastTarget = true;
-                piecesToMachine[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+                PiecesToMachine[i].GetComponent<Image>();
+                PiecesToMachine[i].GetComponent<Image>().raycastTarget = true;
+                PiecesToMachine[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
 
             }
         }

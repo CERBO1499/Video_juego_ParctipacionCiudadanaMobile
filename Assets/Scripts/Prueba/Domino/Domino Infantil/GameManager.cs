@@ -96,6 +96,7 @@ namespace Diverdomino
             {
                 PieceDomino myPiece = piecesToDistribute[Random.Range(0, piecesToDistribute.Count)];
                 piecesToDistribute.Remove(myPiece);
+                myPiece.SetAsMachinePiece();
                 PiecesToMachine.Add(myPiece);
             }
         }

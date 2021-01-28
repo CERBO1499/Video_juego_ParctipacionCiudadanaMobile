@@ -18,7 +18,7 @@ namespace Diverdomino
         [SerializeField] TypePiece typeOfPiece;
         int lastIndex;
         bool drag;
-        bool machinePiece;
+        bool isMachinePiece;
         public bool isInPosition = true;
         Image rayCastToUnactive;
         GameObject posibilty;
@@ -38,7 +38,7 @@ namespace Diverdomino
 
         #region Events
         public System.Action OnFirstPiece;
-        public static System.Action<GameObject, Side> OnPieceInPlace;
+        public static System.Action<GameObject, Side, bool> OnPieceInPlace;
         #endregion
 
         void Awake()
@@ -49,7 +49,7 @@ namespace Diverdomino
 
             img = GetComponent<Image>();
 
-            machinePiece = false;
+            isMachinePiece = false;
 
             gameObject.SetActive(false);
 
@@ -91,103 +91,100 @@ namespace Diverdomino
 
         IEnumerator DragCoroutine(PointerEventData pointerEventData)
         {
-            //if (machinePiece == false) 
+            drag = true;
+
+            while (drag)
             {
-                drag = true;
+                Vector3 screenPoint = Input.mousePosition;
 
-                while (drag)
+                screenPoint.z = 90.0f;
+
+                rect.position = Camera.main.ScreenToWorldPoint(screenPoint);
+
+                pointerEventData.position = Input.mousePosition;
+
+                List<RaycastResult> resoults = new List<RaycastResult>();
+
+                EventSystem.current.RaycastAll(pointerEventData, resoults);
+
+                bool found = false;
+
+                for (int i = 0; i < resoults.Count; i++)
                 {
-                    Vector3 screenPoint = Input.mousePosition;
-
-                    screenPoint.z = 90.0f;
-
-                    rect.position = Camera.main.ScreenToWorldPoint(screenPoint);
-
-                    pointerEventData.position = Input.mousePosition;
-
-                    List<RaycastResult> resoults = new List<RaycastResult>();
-
-                    EventSystem.current.RaycastAll(pointerEventData, resoults);
-
-                    bool found = false;
-
-                    for (int i = 0; i < resoults.Count; i++)
+                    if (resoults[i].gameObject.tag == "Piece Domino")
                     {
-                        if (resoults[i].gameObject.tag == "Piece Domino")
+
+                        found = true;
+
+                        Posibility = posibilty = resoults[i].gameObject;
+
+                        gameObject.transform.localEulerAngles = posibilty.transform.localEulerAngles;
+
+                        if (posibilty.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[0].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString()
+                            || posibilty.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[1].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString()
+                            || posibilty.gameObject.GetComponent<Keper>().NumPiece == NumberPiece.firstPiece)
                         {
-
-                            found = true;
-
-                            Posibility = posibilty = resoults[i].gameObject;
-
-                            gameObject.transform.localEulerAngles = posibilty.transform.localEulerAngles;
-
-                            if (posibilty.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[0].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString()
-                                || posibilty.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[1].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString()
-                                || posibilty.gameObject.GetComponent<Keper>().NumPiece == NumberPiece.firstPiece)
+                            switch (TypeOfPiece)
                             {
-                                switch (TypeOfPiece)
-                                {
-                                    case TypePiece.Double:
-                                        gameObject.transform.localEulerAngles = new Vector3(0f, 0f, 0f);
-                                        break;
-                                    case TypePiece.Single:
-                                        switch (posibilty.gameObject.GetComponent<Keper>().Sidde)
-                                        {
-                                            case Side.Izq:
-                                                if (posibilty.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[0].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString())
-                                                {
-                                                    gameObject.transform.localEulerAngles = new Vector3(0f, 0f, 90f);
-                                                    gameObject.transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde = Side.Dere;
-                                                    gameObject.transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde = Side.Izq;
-                                                }
+                                case TypePiece.Double:
+                                    gameObject.transform.localEulerAngles = Vector3.zero;
+                                    break;
+                                case TypePiece.Single:
+                                    switch (posibilty.gameObject.GetComponent<Keper>().Sidde)
+                                    {
+                                        case Side.Izq:
+                                            if (posibilty.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[0].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString())
+                                            {
+                                                gameObject.transform.localEulerAngles = new Vector3(0f, 0f, 90f);
+                                                gameObject.transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde = Side.Dere;
+                                                gameObject.transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde = Side.Izq;
+                                            }
 
-                                                if (posibilty.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[1].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString())
-                                                {
-                                                    gameObject.transform.localEulerAngles = new Vector3(0f, 0f, -90f);
-                                                    gameObject.transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde = Side.Dere;
-                                                    gameObject.transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde = Side.Izq;
-                                                }
+                                            if (posibilty.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[1].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString())
+                                            {
+                                                gameObject.transform.localEulerAngles = new Vector3(0f, 0f, -90f);
+                                                gameObject.transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde = Side.Dere;
+                                                gameObject.transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde = Side.Izq;
+                                            }
 
-                                                break;
-                                            case Side.Dere:
-                                                if (posibilty.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[0].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString())
-                                                {
-                                                    gameObject.transform.localEulerAngles = new Vector3(0f, 0f, -90f);
-                                                    gameObject.transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde = Side.Dere;
-                                                    gameObject.transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde = Side.Izq;
-                                                }
+                                            break;
+                                        case Side.Dere:
+                                            if (posibilty.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[0].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString())
+                                            {
+                                                gameObject.transform.localEulerAngles = new Vector3(0f, 0f, -90f);
+                                                gameObject.transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde = Side.Dere;
+                                                gameObject.transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde = Side.Izq;
+                                            }
 
-                                                if (posibilty.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[1].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString())
-                                                {
-                                                    gameObject.transform.localEulerAngles = new Vector3(0f, 0f, 90f);
-                                                    gameObject.transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde = Side.Dere;
-                                                    gameObject.transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde = Side.Izq;
-                                                }
-                                                break;
-                                            default:
-                                                break;
-                                        }
+                                            if (posibilty.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[1].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString())
+                                            {
+                                                gameObject.transform.localEulerAngles = new Vector3(0f, 0f, 90f);
+                                                gameObject.transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde = Side.Dere;
+                                                gameObject.transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde = Side.Izq;
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
 
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                    break;
+                                default:
+                                    break;
                             }
-                            else
-                            {
-                                posibilty = null;
-                            }
-
-                            break;
                         }
+                        else
+                        {
+                            posibilty = null;
+                        }
+
+                        break;
                     }
-
-                    if (!found)
-                        posibilty = null;
-
-                    yield return null;
                 }
+
+                if (!found)
+                    posibilty = null;
+
+                yield return null;
             }
         }
 
@@ -208,8 +205,8 @@ namespace Diverdomino
                     rect.localPosition = new Vector3(rect.localPosition.x, rect.localPosition.y, 0f);
 
                     rect.localEulerAngles = Vector3.zero;
-                    Debug.Log("PRINTED!");
 
+                    Debug.Log("PRINTED!");
                 }
                 else
                 {
@@ -261,17 +258,21 @@ namespace Diverdomino
 
         void PieceInPosition()
         {
-            //if (machinePiece == false) 
+        //Debug.Log($"Game object: {gameObject} | Side: {Posibility.GetComponent<Keper>().Sidde} | Is Machine Piece: {isMachinePiece}");
+            if(isInPosition == true || isMachinePiece == true) OnPieceInPlace?.Invoke(gameObject, Posibility.GetComponent<Keper>().Sidde, isMachinePiece);
+
+            try { 
                 StopCoroutine(dragCoroutine);
+            }
+            catch {}
 
             rayCastToUnactive.raycastTarget = false;
-
-            isInPosition = false;
 
             foreach (Transform item in transform) item.gameObject.SetActive(true);
 
             int i = (TypeOfPiece == TypePiece.Double) ? 2 : ((Posibility.GetComponent<Keper>().Sidde == Side.Dere) ? 1 : 0);
 
+            
             switch (i)
             {
                 case 0:
@@ -311,7 +312,13 @@ namespace Diverdomino
                     break;
             }
 
-            OnPieceInPlace?.Invoke(gameObject, Posibility.GetComponent<Keper>().Sidde);
+
+            //transform.GetChild(0).gameObject.SetActive(false);
+            //transform.GetChild(1).gameObject.SetActive(false);
+            //transform.GetChild(2).gameObject.SetActive(false);
+            //Debug.Log("PASÉEEEEEE");
+            
+            isInPosition = false;
 
             Posibility.gameObject.SetActive(false);
 
@@ -320,19 +327,20 @@ namespace Diverdomino
 
         public void SetAsMachinePiece()
         {
-            machinePiece = true;
+            isInPosition = false;
+            isMachinePiece = true;
         }
         public void MachinePlay(GameObject placeForPiece)
         {
             Posibility = placeForPiece;
 
-            Vector3 finalPositionleft = new Vector3(placeForPiece.transform.position.x + 7.5f, placeForPiece.transform.position.y, placeForPiece.transform.position.z);
+            Vector3 finalPositionleft = new Vector3(Posibility.transform.position.x + 7.5f, Posibility.transform.position.y, Posibility.transform.position.z);
 
-            Vector3 finalPositionRigth = new Vector3(placeForPiece.transform.position.x - 7.5f, placeForPiece.transform.position.y, placeForPiece.transform.position.z);
+            Vector3 finalPositionRigth = new Vector3(Posibility.transform.position.x - 7.5f, Posibility.transform.position.y, Posibility.transform.position.z);
 
-            if (placeForPiece.GetComponent<Keper>().NumPiece == NumberPiece.firstPiece)
+            if (Posibility.GetComponent<Keper>().NumPiece == NumberPiece.firstPiece)
             {
-                rect.position = placeForPiece.GetComponent<RectTransform>().position;
+                rect.position = Posibility.GetComponent<RectTransform>().position;
             }
 
             else
@@ -340,7 +348,9 @@ namespace Diverdomino
                 switch (TypeOfPiece)
                 {
                     case TypePiece.Double:
-                        switch (placeForPiece.GetComponent<Keper>().Sidde)
+                        gameObject.transform.localEulerAngles = Vector3.zero;
+
+                        switch (Posibility.GetComponent<Keper>().Sidde)
                         {
                             case Side.Izq:
                                 rect.gameObject.transform.position = finalPositionleft;
@@ -353,12 +363,46 @@ namespace Diverdomino
                         }
                         break;
                     case TypePiece.Single:
-                        rect.position = placeForPiece.GetComponent<RectTransform>().position;
+                        rect.position = Posibility.GetComponent<RectTransform>().position;
+
+                        switch (Posibility.GetComponent<Keper>().Sidde) {
+                            case Side.Izq:
+                                if (Posibility.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[0].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString())
+                                {
+                                    gameObject.transform.localEulerAngles = new Vector3(0f, 0f, 90f);
+                                    gameObject.transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde = Side.Dere;
+                                    gameObject.transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde = Side.Izq;
+                                }
+
+                                if (Posibility.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[1].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString())
+                                {
+                                    gameObject.transform.localEulerAngles = new Vector3(0f, 0f, -90f);
+                                    gameObject.transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde = Side.Dere;
+                                    gameObject.transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde = Side.Izq;
+                                }
+                                break;
+
+                            case Side.Dere:
+                                if (Posibility.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[0].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString())
+                                {
+                                    gameObject.transform.localEulerAngles = new Vector3(0f, 0f, -90f);
+                                    gameObject.transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde = Side.Dere;
+                                    gameObject.transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde = Side.Izq;
+                                }
+
+                                if (Posibility.gameObject.GetComponent<Keper>().NumPiece.ToString() == difPiece[1].gameObject.GetComponent<DiferentationPiece>().PieceNumber1.ToString())
+                                {
+                                    gameObject.transform.localEulerAngles = new Vector3(0f, 0f, 90f);
+                                    gameObject.transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde = Side.Dere;
+                                    gameObject.transform.GetChild(1).gameObject.GetComponent<Keper>().Sidde = Side.Izq;
+                                }
+                                break;
+                        }
                         break;
                     default:
                         break;
                 }
-
+                
             }
 
             placeForPiece.GetComponent<Image>().raycastTarget = false;
@@ -366,11 +410,14 @@ namespace Diverdomino
             placeForPiece = null;
 
             OnFirstPiece?.Invoke();
-
             PieceInPosition();
         }
 
-        GameObject Posibility { get; set; }
+        public void SetBlock(bool state) {
+            isInPosition = !state;
+            img.color = state? new Color(1f, 1f, 1f, 0.5f) : new Color(1f, 1f, 1f, 1f);
+        }
 
+        GameObject Posibility { get; set; }
+        }
     }
-}

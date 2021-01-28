@@ -1945,8 +1945,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_HandleRect: {fileID: 2030786326}
   m_Direction: 0
-  m_Value: 0.49948606
-  m_Size: 0.13898717
+  m_Value: 0.4994854
+  m_Size: 0.16085537
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4240,8 +4240,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 428.5}
-  m_SizeDelta: {x: 0, y: 886.9861}
+  m_AnchoredPosition: {x: 0, y: 374.2}
+  m_SizeDelta: {x: 0, y: 778.36035}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &459132045
 MonoBehaviour:
@@ -5163,7 +5163,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &589958730
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5180,7 +5180,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.0000038146973}
+  m_AnchoredPosition: {x: 0, y: 20}
   m_SizeDelta: {x: 1345, y: 335}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &589958731
@@ -6851,7 +6851,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 11469194}
   m_Direction: 2
   m_Value: 0.5185185
-  m_Size: 0.5263158
+  m_Size: 0.5
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6900,6 +6900,7 @@ RectTransform:
   - {fileID: 54029485}
   - {fileID: 459132044}
   - {fileID: 589958730}
+  - {fileID: 1531794578}
   m_Father: {fileID: 2142565285}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6995,6 +6996,7 @@ MonoBehaviour:
   scrollToUnactive: {fileID: 387598609}
   parentToReturn: {fileID: 1612345382}
   yourTurnImg: {fileID: 589958730}
+  enemyTurnImg: {fileID: 1531794578}
   curveTurn:
     serializedVersion: 2
     m_Curve:
@@ -7008,13 +7010,22 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.5
-      value: 1
-      inSlope: 0
-      outSlope: 0
+      time: 0.2176157
+      value: 1.0050645
+      inSlope: 0.049730916
+      outSlope: 0.049730916
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
+      outWeight: 0.06509864
+    - serializedVersion: 3
+      time: 0.78900063
+      value: 1.0023584
+      inSlope: -0.05705651
+      outSlope: -0.05705651
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06648963
       outWeight: 0.1851852
     - serializedVersion: 3
       time: 1
@@ -8225,7 +8236,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -11882, y: 1040}
+  m_AnchoredPosition: {x: -11881.982, y: 1040}
   m_SizeDelta: {x: 23788.45, y: 2160}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &923668935
@@ -9882,7 +9893,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1418, y: -103}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1095813910
@@ -13429,7 +13440,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -392, y: 294}
+  m_AnchoredPosition: {x: -375, y: 396}
   m_SizeDelta: {x: 1464.3108, y: 884.8324}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1513946249
@@ -13721,6 +13732,80 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1531669925}
+  m_CullTransparentMesh: 0
+--- !u!1 &1531794577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1531794578}
+  - component: {fileID: 1531794580}
+  - component: {fileID: 1531794579}
+  m_Layer: 5
+  m_Name: Turno enemigo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1531794578
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531794577}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 784227560}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 20}
+  m_SizeDelta: {x: 1345, y: 335}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1531794579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531794577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 9e6d86c8727c1204a9751a027026b4de, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1531794580
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531794577}
   m_CullTransparentMesh: 0
 --- !u!1 &1532879254
 GameObject:
@@ -14459,7 +14544,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -0.00018310547, y: 292}
+  m_AnchoredPosition: {x: -0.00047312284, y: 292}
   m_SizeDelta: {x: 0, y: 600}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1612345383
@@ -18113,7 +18198,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1938185789}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 784227563}
+        m_MethodName: PassTurnButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1938185789
 MonoBehaviour:
   m_ObjectHideFlags: 0

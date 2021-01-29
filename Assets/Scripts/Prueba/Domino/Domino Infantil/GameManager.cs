@@ -97,7 +97,6 @@ namespace Diverdomino
             yourTurnImg.localScale = iniSize;
 
             passBtn.interactable = true;
-            SetPassBtnAlert(false);
         }
         IEnumerator ShowEnemyTurnCoroutine()
         {
@@ -181,6 +180,13 @@ namespace Diverdomino
 
         void ChangeTurn(GameObject obj, Side side, bool isUserTurn)
         {
+            if (PiecesToPlayer.Count <= 0 || PiecesToMachine.Count <= 0) GameOver = true;
+
+            if (turnPassed == PassTurnType.first) { 
+                turnPassed = PassTurnType.none;
+                SetPassBtnAlert(false);
+            }
+
             if (obj != null) PiecesToPlayer.Remove(obj.GetComponent<PieceDomino>());
 
             if (isUserTurn == false)
@@ -203,7 +209,6 @@ namespace Diverdomino
 
         public void PassTurnButton()
         {
-            SetPassBtnAlert(true);
             //  If user pass turn:
             if (GameOver == false) {
                 ChangeTurn(null, Side.Izq, false);
@@ -212,10 +217,10 @@ namespace Diverdomino
             else {
                 VerifyWinner();
             }
+            SetPassBtnAlert(true);
         }
         public void PassTurnMachine()
         {
-            SetPassBtnAlert(true);
             //  If machine pass turn:
             Debug.Log($"Turn Pass To Player");
             if (GameOver == false)
@@ -226,18 +231,12 @@ namespace Diverdomino
             {
                 VerifyWinner();
             }
+            SetPassBtnAlert(true);
         }
 
         void VerifyWinner()
         {
             if (GameOver == true)
-            {
-                if (PiecesToPlayer.Count >= PiecesToMachine.Count)
-                    UserIsWinner(true);
-                else
-                    UserIsWinner(false);
-            }
-            else
             {
                 if (PiecesToPlayer.Count <= 0) {
                     GameOver = true;
@@ -247,6 +246,10 @@ namespace Diverdomino
                     GameOver = true;
                     UserIsWinner(false);
                 }
+                else if (PiecesToPlayer.Count >= PiecesToMachine.Count)
+                    UserIsWinner(true);
+                else
+                    UserIsWinner(false);
             }
         }
 
@@ -256,14 +259,17 @@ namespace Diverdomino
             winnerImg.gameObject.SetActive(true);
             winnerImg.GetComponentInChildren<TextMeshProUGUI>().text = userWon ? "¡Ganaste!" : "Sigue intentando";
         }
+
         void SetPassBtnAlert(bool state) {
             if(state == true) {
                 if (turnPassed == PassTurnType.second) {
+                    GameOver = true;
                     VerifyWinner();
                     Debug.Log("1111111111111 Verifico el ganador.");
                 } 
-                else if (turnPassed == PassTurnType.first) {
-                    turnPassed = PassTurnType.second;
+                else {
+                    if (turnPassed == PassTurnType.none) turnPassed = PassTurnType.first;
+                    else if (turnPassed == PassTurnType.first) turnPassed = PassTurnType.second;
 
                     var colors = new ColorBlock();
                     colors.normalColor = Color.white;
@@ -285,6 +291,8 @@ namespace Diverdomino
 
                 Debug.Log("33333333333333 Vuelvo el botón normal.");
             }
+
+            Debug.Log("PASS BUTTON STATE: " + turnPassed);
         }
 
         private bool GameOver { get; set; }

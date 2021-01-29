@@ -12,7 +12,6 @@ namespace Diverdomino
         const float SECS_BETWEEN_PLAYERS_MAX = 4f;
 
         [SerializeField] TextMeshProUGUI txtPieces;
-        int pieceCant;
         bool enemyTurn;
         GameObject[] openPieces;
         List<PieceDomino> enemyPieces;
@@ -100,9 +99,13 @@ namespace Diverdomino
             return availablePieces;
         }
 
-        public void PlayPiece(Side side) {
+        public bool PlayPiece(Side side) {
+            PieceDomino resultantPiece = null;
+
             try { 
                 var selectedPiece = VerifyAvailablePieces(side)[0];
+
+                resultantPiece = selectedPiece;
 
                 selectedPiece.gameObject.SetActive(true);
                 selectedPiece.transform.SetParent(openPieces[(int)_Side].transform.parent);
@@ -126,7 +129,9 @@ namespace Diverdomino
             //Debug.Log("No hay más jugadas por el lado " + _Side);
             }
 
-            //StopCoroutine(timeBtwPlayers);
+            UpdatePieceCount();
+
+            return resultantPiece != null;
         }
 
         IEnumerator WaitSecsBetweenPlayers() {
@@ -134,7 +139,12 @@ namespace Diverdomino
 
             if (enemyTurn == true)
             {
-                PlayPiece(Random.Range(0,2) == 0? Side.Izq : Side.Dere);
+                var random = Random.Range(0, 2);
+                bool validPiece = PlayPiece(random == 0 ? Side.Izq : Side.Dere);
+
+                if (validPiece == false)
+                    if (PlayPiece(random == 0 ? Side.Dere : Side.Izq) == false)
+                        GameManager.instance.PassTurnMachine();
             }
         }
 
@@ -143,6 +153,9 @@ namespace Diverdomino
 
             enemyTurn = true;
             StartCoroutine(WaitSecsBetweenPlayers());
+        }
+        void UpdatePieceCount() {
+            txtPieces.text = "x " + GameManager.instance.PiecesToMachine.Count.ToString();
         }
 
         private Side _Side { get; set; }

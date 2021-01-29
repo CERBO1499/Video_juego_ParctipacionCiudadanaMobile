@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Diverdomino
 {
+    enum PassTurnType {none, first, second}
+
     public class GameManager : MonoBehaviour
     {
         #region Static
@@ -13,8 +16,10 @@ namespace Diverdomino
 
         #region Information
         const float SECS_TO_BEFORE_ANIMATION = 0.5f;
+        const float ANIMATION_DURATION = 1f;
 
         public bool drag = true;
+        PassTurnType turnPassed = PassTurnType.none;
         public bool firstPiece = false;
         [SerializeField] List<PieceDomino> piecesToDistribute;
         [SerializeField] List<PieceDomino> piecesToPlayer;
@@ -26,7 +31,10 @@ namespace Diverdomino
         [SerializeField] RectTransform yourTurnImg;
         [SerializeField] RectTransform enemyTurnImg;
         [SerializeField] AnimationCurve curveTurn;
+        [SerializeField] Button passBtn;
+        [SerializeField] Image winnerImg;
 
+        Coroutine enemyTurn, userTurn;
 
         public RectTransform Ppieces { get { return pieces; } }
         public Transform ParentToPieces { get => parentToPieces; set => parentToPieces = value; }
@@ -45,6 +53,8 @@ namespace Diverdomino
         private void Awake()
         {
             instance = this;
+
+            winnerImg.gameObject.SetActive(false);
 
             OcultSinglePieces();
 
@@ -74,17 +84,20 @@ namespace Diverdomino
 
             Vector2 iniSize = Vector2.zero;
 
-            Vector2 finiSize = new Vector2(4f, 4f);
+            Vector2 finiSize = new Vector2(2f, 2f);
 
             float t = Time.time;
 
-            while (Time.time <= t + 3f)
+            while (Time.time <= t + ANIMATION_DURATION)
             {
-                yourTurnImg.localScale = iniSize + ((finiSize - iniSize) * curveTurn.Evaluate((Time.time) - t) / 3f);
+                yourTurnImg.localScale = iniSize + ((finiSize - iniSize) * curveTurn.Evaluate((Time.time) - t) / ANIMATION_DURATION);
                 yield return null;
             }
 
             yourTurnImg.localScale = iniSize;
+
+            passBtn.interactable = true;
+            SetPassBtnAlert(false);
         }
         IEnumerator ShowEnemyTurnCoroutine()
         {
@@ -94,13 +107,13 @@ namespace Diverdomino
 
             Vector2 iniSize = Vector2.zero;
 
-            Vector2 finiSize = new Vector2(6f, 6f);
+            Vector2 finiSize = new Vector2(2f, 2f);
 
             float t = Time.time;
 
-            while (Time.time <= t + 3f)
+            while (Time.time <= t + ANIMATION_DURATION)
             {
-                enemyTurnImg.localScale = iniSize + ((finiSize - iniSize) * curveTurn.Evaluate((Time.time) - t) / 3f);
+                enemyTurnImg.localScale = iniSize + ((finiSize - iniSize) * curveTurn.Evaluate((Time.time) - t) / ANIMATION_DURATION);
                 yield return null;
             }
 
@@ -172,24 +185,109 @@ namespace Diverdomino
 
             if (isUserTurn == false)
             {
-                StartCoroutine(ShowEnemyTurnCoroutine());
+                passBtn.interactable = false;
+                enemyTurn = StartCoroutine(ShowEnemyTurnCoroutine());
             }
             else
             {
-                StartCoroutine(ShowTurnCoroutine());
+                userTurn = StartCoroutine(ShowTurnCoroutine());
             }
 
             foreach (PieceDomino domino in PiecesToPlayer)
             {
                 domino.SetBlock(!isUserTurn);
             }
+
+            VerifyWinner();
         }
 
-        public void PassTurnButton() {
-            ChangeTurn(null, Side.Izq, false);
-
-            OnPassBtn?.Invoke();
+        public void PassTurnButton()
+        {
+            SetPassBtnAlert(true);
+            //  If user pass turn:
+            if (GameOver == false) {
+                ChangeTurn(null, Side.Izq, false);
+                OnPassBtn?.Invoke();
+            }
+            else {
+                VerifyWinner();
+            }
         }
+        public void PassTurnMachine()
+        {
+            SetPassBtnAlert(true);
+            //  If machine pass turn:
+            Debug.Log($"Turn Pass To Player");
+            if (GameOver == false)
+            {
+                ChangeTurn(null, Side.Izq, true);
+            }
+            else
+            {
+                VerifyWinner();
+            }
+        }
+
+        void VerifyWinner()
+        {
+            if (GameOver == true)
+            {
+                if (PiecesToPlayer.Count >= PiecesToMachine.Count)
+                    UserIsWinner(true);
+                else
+                    UserIsWinner(false);
+            }
+            else
+            {
+                if (PiecesToPlayer.Count <= 0) {
+                    GameOver = true;
+                    UserIsWinner(true);
+                }
+                else if (PiecesToMachine.Count <= 0) {
+                    GameOver = true;
+                    UserIsWinner(false);
+                }
+            }
+        }
+
+        void UserIsWinner(bool userWon)
+        {
+            GameOver = true;
+            winnerImg.gameObject.SetActive(true);
+            winnerImg.GetComponentInChildren<TextMeshProUGUI>().text = userWon ? "¡Ganaste!" : "Sigue intentando";
+        }
+        void SetPassBtnAlert(bool state) {
+            if(state == true) {
+                if (turnPassed == PassTurnType.second) {
+                    VerifyWinner();
+                    Debug.Log("1111111111111 Verifico el ganador.");
+                } 
+                else if (turnPassed == PassTurnType.first) {
+                    turnPassed = PassTurnType.second;
+
+                    var colors = new ColorBlock();
+                    colors.normalColor = Color.white;
+                    colors.highlightedColor = Color.white;
+                    colors.pressedColor = new Color(0.8f, 0.8f, 0.8f);
+                    colors.disabledColor = new Color(0.8f, 0.8f, 0.8f, 0.5f);
+                    colors.colorMultiplier = 1f;
+                    passBtn.colors = colors;
+
+                    passBtn.GetComponent<Image>().color = Color.red;
+                    GetComponentInChildren<TextMeshProUGUI>().text = "Terminar juego";
+
+                    Debug.Log("22222222222222 Alerta roja.");
+                }
+            }
+            else {
+                passBtn.GetComponent<Image>().color = Color.white;
+                GetComponentInChildren<TextMeshProUGUI>().text = "Pasar turno";
+
+                Debug.Log("33333333333333 Vuelvo el botón normal.");
+            }
+        }
+
+        private bool GameOver { get; set; }
     }
 
 }

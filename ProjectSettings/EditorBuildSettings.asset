@@ -50,4 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/prueba/minijuegos/Domino Infantil.unity
     guid: f0aefbf89a5536b4e9759b520c1790f7
+  - enabled: 1
+    path: Assets/Scenes/prueba/minijuegos/Uno.unity
+    guid: 16a5a6aa34e815d449fffebb455e74be
   m_configObjects: {}

@@ -15,7 +15,6 @@ namespace Diverdomino
         bool enemyTurn;
         GameObject[] openPieces;
         List<PieceDomino> enemyPieces;
-        //Coroutine timeBtwPlayers;
         #endregion
 
         void Awake()
@@ -31,11 +30,6 @@ namespace Diverdomino
 
             PieceDomino.OnPieceInPlace -= UpdatePossiblePieces;
             PieceDomino.OnPieceInPlace += UpdatePossiblePieces;
-
-            /*GameManager.instance.OnPassBtn = () =>
-            {
-                timeBtwPlayers = StartCoroutine(WaitSecsBetweenPlayers()); 
-            };*/
 
             enemyPieces = GameManager.instance.PiecesToMachine;
         }
@@ -115,8 +109,6 @@ namespace Diverdomino
                 selectedPiece.transform.SetParent(openPieces[(int)_Side].transform.parent);
 
                 if (side == Side.Izq) {
-                //Debug.Log("Piece played " + openPieces[0]);
-
                     selectedPiece.MachinePlay(
                         openPieces[0].transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde == Side.Izq ?
                             openPieces[0].transform.GetChild(0).gameObject : openPieces[0].transform.GetChild(1).gameObject);
@@ -127,9 +119,7 @@ namespace Diverdomino
                             openPieces[1].transform.GetChild(1).gameObject : openPieces[1].transform.GetChild(0).gameObject);
                 }
             }
-            catch { 
-            //Debug.Log("No hay más jugadas por el lado " + _Side);
-            }
+            catch { }
 
             UpdatePieceCount();
 
@@ -148,8 +138,6 @@ namespace Diverdomino
                     if (PlayPiece(random == 0 ? Side.Dere : Side.Izq) == false)
                         GameManager.instance.PassTurnMachine();
             }
-
-            //GameManager.instance.PassTurnMachine();
         }
 
         void PassTurn() {

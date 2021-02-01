@@ -16,7 +16,8 @@ namespace Diverdomino
 
         #region Information
         const float SECS_TO_BEFORE_ANIMATION = 0.5f;
-        const float ANIMATION_DURATION = 1f;
+        const float ANIMATION_DURATION = 3f;
+        const float ANIMATION_SIZE = 5f;
 
         public bool drag = true;
         public bool firstPiece = false;
@@ -60,6 +61,7 @@ namespace Diverdomino
             instance = this;
 
             homeBtn.gameObject.SetActive(false);
+            passBtn.gameObject.SetActive(false);
             feedbackPanel.gameObject.SetActive(false);
 
             OcultSinglePieces();
@@ -92,19 +94,19 @@ namespace Diverdomino
 
             Vector2 iniSize = Vector2.zero;
 
-            Vector2 finiSize = new Vector2(2f, 2f);
+            Vector2 finiSize = new Vector2(ANIMATION_SIZE, ANIMATION_SIZE);
 
             float t = Time.time;
+
+            yourTurnImg.localScale = iniSize;
+
+            passBtn.interactable = true;
 
             while (Time.time <= t + ANIMATION_DURATION)
             {
                 yourTurnImg.localScale = iniSize + ((finiSize - iniSize) * curveTurn.Evaluate((Time.time) - t) / ANIMATION_DURATION);
                 yield return null;
             }
-
-            yourTurnImg.localScale = iniSize;
-
-            passBtn.interactable = true;
         }
         IEnumerator ShowEnemyTurnCoroutine()
         {
@@ -114,22 +116,29 @@ namespace Diverdomino
 
             Vector2 iniSize = Vector2.zero;
 
-            Vector2 finiSize = new Vector2(2f, 2f);
+            Vector2 finiSize = new Vector2(ANIMATION_SIZE, ANIMATION_SIZE);
 
             float t = Time.time;
+
+            enemyTurnImg.localScale = iniSize;
 
             while (Time.time <= t + ANIMATION_DURATION)
             {
                 enemyTurnImg.localScale = iniSize + ((finiSize - iniSize) * curveTurn.Evaluate((Time.time) - t) / ANIMATION_DURATION);
                 yield return null;
             }
-
-            enemyTurnImg.localScale = iniSize;
         }
         void DistributePiecesRandom()
         {
+            PieceDomino doublePiece = new PieceDomino();
+            doublePiece.TypeOfPiece = TypePiece.Single;
+            while (doublePiece.TypeOfPiece != TypePiece.Double) {
+                doublePiece = piecesToDistribute[Random.Range(0, piecesToDistribute.Count)];
+            }
 
-            for (int i = 0; i < 14; i++)
+            piecesToPlayer.Add(doublePiece);
+
+            for (int i = 0; i < 13; i++)
             {
                 PieceDomino myPiece = piecesToDistribute[Random.Range(0, piecesToDistribute.Count)];
                 piecesToDistribute.Remove(myPiece);
@@ -172,6 +181,8 @@ namespace Diverdomino
 
         void ResetSinglePieces()
         {
+            passBtn.gameObject.SetActive(true);
+
             for (int i = 0; i < piecesToPlayer.Count; i++)
             {
                 piecesToPlayer[i].GetComponent<Image>();
@@ -190,13 +201,13 @@ namespace Diverdomino
         {
             if (obj != null) PiecesToPlayer.Remove(obj.GetComponent<PieceDomino>());
 
-            if (PiecesToPlayer.Count <= 0 || PiecesToMachine.Count <= 0)
-            {
-                GameOver = true;
-                VerifyWinner();
-            }
+            if(GameOver == false) {
+                if (PiecesToPlayer.Count <= 0 || PiecesToMachine.Count <= 0)
+                {
+                    GameOver = true;
+                    VerifyWinner();
+                }
 
-            if(GameOver == false) { 
                 if (turnPassed == true) {
                     if (isUserTurn == false && feedbackBeingUsed == false) {
                         feedbackBeingUsed = true;
@@ -280,7 +291,17 @@ namespace Diverdomino
             passBtn.gameObject.SetActive(false);
             feedbackPanel.gameObject.SetActive(true);
             feedbackPanel.GetComponentsInChildren<Image>()[1].sprite = goodJobFeedback[0];
-            feedbackPanel.GetComponentsInChildren<Button>()[0].gameObject.SetActive(false);
+
+            var n = feedbackPanel.GetComponentsInChildren<Button>();
+            Debug.Log(n.Length);
+
+            if(n[0] != homeBtn) {
+                n[0].gameObject.SetActive(false);
+            }
+            else {
+                n[1].gameObject.SetActive(false);
+            }
+
             feedbackPanel.GetComponentInChildren<TextMeshProUGUI>().text = userWon ? "¡Ganaste!" : "Sigue intentando";
         }
 

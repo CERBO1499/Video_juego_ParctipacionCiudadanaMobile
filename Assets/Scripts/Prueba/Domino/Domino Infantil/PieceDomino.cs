@@ -197,7 +197,6 @@ namespace Diverdomino
 
             if (isInPosition)
             {
-                // Retorna si no se puede poner la ficha
                 if (posibilty == null)
                 {
                     rect.SetParent(GameManager.instance.Ppieces);

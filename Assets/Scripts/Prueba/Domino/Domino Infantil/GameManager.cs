@@ -116,7 +116,7 @@ namespace Diverdomino
 
             Vector2 iniSize = Vector2.zero;
 
-            Vector2 finiSize = new Vector2(ANIMATION_SIZE, ANIMATION_SIZE);
+            Vector2 finiSize = new Vector2(ANIMATION_SIZE * 1.1f, ANIMATION_SIZE * 1.1f);
 
             float t = Time.time;
 
@@ -135,10 +135,12 @@ namespace Diverdomino
             while (doublePiece.TypeOfPiece != TypePiece.Double) {
                 doublePiece = piecesToDistribute[Random.Range(0, piecesToDistribute.Count)];
             }
-
             piecesToPlayer.Add(doublePiece);
+            piecesToDistribute.Remove(doublePiece);
+            doublePiece.Prect.SetParent(pieces);
+            doublePiece.gameObject.SetActive(true);
 
-            for (int i = 0; i < 13; i++)
+            for (int i = 0; i < 2; i++)
             {
                 PieceDomino myPiece = piecesToDistribute[Random.Range(0, piecesToDistribute.Count)];
                 piecesToDistribute.Remove(myPiece);
@@ -201,13 +203,13 @@ namespace Diverdomino
         {
             if (obj != null) PiecesToPlayer.Remove(obj.GetComponent<PieceDomino>());
 
-            if(GameOver == false) {
-                if (PiecesToPlayer.Count <= 0 || PiecesToMachine.Count <= 0)
-                {
-                    GameOver = true;
-                    VerifyWinner();
-                }
+            if ((PiecesToPlayer.Count <= 0 || PiecesToMachine.Count <= 0) && GameOver == false)
+            {
+                GameOver = true;
+                VerifyWinner();
+            }
 
+            if(GameOver == false) {
                 if (turnPassed == true) {
                     if (isUserTurn == false && feedbackBeingUsed == false) {
                         feedbackBeingUsed = true;
@@ -239,13 +241,14 @@ namespace Diverdomino
 
         public void PassTurnButton()
         {
-            if (turnPassed == true) {
-                GameOver = true;
-                VerifyWinner();
-            }
             //  If user pass turn:
             if (GameOver == false)
             {
+                if (turnPassed == true) {
+            Debug.Log("El jugador pasó turno");
+                    GameOver = true;
+                    VerifyWinner();
+                }
                 ChangeTurn(null, Side.Izq, false);
                 SetPassBtnAlert(true);
                 OnPassBtn?.Invoke();
@@ -253,15 +256,15 @@ namespace Diverdomino
         }
         public void PassTurnMachine()
         {
-            if (turnPassed == true)
-            {
-                GameOver = true;
-                VerifyWinner();
-            }
             //  If machine pass turn:
-            Debug.Log($"Turn Pass To Player");
             if (GameOver == false)
             {
+                if (turnPassed == true)
+                {
+            Debug.Log("El enemigo pasó turno");
+                    GameOver = true;
+                    VerifyWinner();
+                }
                 ChangeTurn(null, Side.Izq, true);
                 SetPassBtnAlert(true);
             }
@@ -292,14 +295,12 @@ namespace Diverdomino
             feedbackPanel.gameObject.SetActive(true);
             feedbackPanel.GetComponentsInChildren<Image>()[1].sprite = goodJobFeedback[0];
 
-            var n = feedbackPanel.GetComponentsInChildren<Button>();
-            Debug.Log(n.Length);
-
-            if(n[0] != homeBtn) {
-                n[0].gameObject.SetActive(false);
+            var feedbackPanelButtons = feedbackPanel.GetComponentsInChildren<Button>();
+            if(feedbackPanelButtons[0] != homeBtn) {
+                feedbackPanelButtons[0].gameObject.SetActive(false);
             }
             else {
-                n[1].gameObject.SetActive(false);
+                feedbackPanelButtons[1].gameObject.SetActive(false);
             }
 
             feedbackPanel.GetComponentInChildren<TextMeshProUGUI>().text = userWon ? "¡Ganaste!" : "Sigue intentando";
@@ -327,7 +328,7 @@ namespace Diverdomino
         }
 
         void FeedbackWrongPiece() {
-            if(feedbackBeingUsed == false) {
+            if(feedbackBeingUsed == false && GameOver == false) {
                 feedbackBeingUsed = true;
 
                 feedbackPanel.gameObject.SetActive(true);
@@ -340,7 +341,7 @@ namespace Diverdomino
             feedbackBeingUsed = false;
         }
 
-        private bool GameOver { get; set; }
+        public bool GameOver { get; private set; }
     }
 
 }

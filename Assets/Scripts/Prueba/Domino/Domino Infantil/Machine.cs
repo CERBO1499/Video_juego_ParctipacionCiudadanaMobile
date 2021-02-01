@@ -102,8 +102,12 @@ namespace Diverdomino
         public bool PlayPiece(Side side) {
             PieceDomino resultantPiece = null;
 
-            try { 
-                var selectedPiece = VerifyAvailablePieces(side)[0];
+            try {
+                var availablePieces = VerifyAvailablePieces(side);
+                var selectedPiece = availablePieces[Random.Range(0, availablePieces.Count)];
+
+                enemyPieces.Remove(selectedPiece);
+                GameManager.instance.PiecesToMachine.Remove(selectedPiece);
 
                 resultantPiece = selectedPiece;
 
@@ -122,8 +126,6 @@ namespace Diverdomino
                         openPieces[1].transform.GetChild(0).gameObject.GetComponent<Keper>().Sidde == Side.Izq ?
                             openPieces[1].transform.GetChild(1).gameObject : openPieces[1].transform.GetChild(0).gameObject);
                 }
-
-                enemyPieces.Remove(selectedPiece);
             }
             catch { 
             //Debug.Log("No hay más jugadas por el lado " + _Side);
@@ -146,6 +148,8 @@ namespace Diverdomino
                     if (PlayPiece(random == 0 ? Side.Dere : Side.Izq) == false)
                         GameManager.instance.PassTurnMachine();
             }
+
+            //GameManager.instance.PassTurnMachine();
         }
 
         void PassTurn() {

@@ -19,8 +19,9 @@ namespace Diverdomino
         const float ANIMATION_DURATION = 1f;
 
         public bool drag = true;
-        PassTurnType turnPassed = PassTurnType.none;
         public bool firstPiece = false;
+        bool turnPassed = false;
+        bool feedbackBeingUsed = false;
         [SerializeField] List<PieceDomino> piecesToDistribute;
         [SerializeField] List<PieceDomino> piecesToPlayer;
         [SerializeField] RectTransform pieces;
@@ -32,7 +33,11 @@ namespace Diverdomino
         [SerializeField] RectTransform enemyTurnImg;
         [SerializeField] AnimationCurve curveTurn;
         [SerializeField] Button passBtn;
-        [SerializeField] Image winnerImg;
+        [SerializeField] Button homeBtn;
+        [SerializeField] Image feedbackPanel;
+        [SerializeField] GameObject scrollPieces;
+        [SerializeField] Sprite[] wrongPieceFeedback;
+        [SerializeField] Sprite[] goodJobFeedback;
 
         Coroutine enemyTurn, userTurn;
 
@@ -54,7 +59,8 @@ namespace Diverdomino
         {
             instance = this;
 
-            winnerImg.gameObject.SetActive(false);
+            homeBtn.gameObject.SetActive(false);
+            feedbackPanel.gameObject.SetActive(false);
 
             OcultSinglePieces();
 
@@ -65,11 +71,13 @@ namespace Diverdomino
 
             PieceDomino.OnPieceInPlace -= ChangeTurn;
             PieceDomino.OnPieceInPlace += ChangeTurn;
+            PieceDomino.OnWrongPiece -= FeedbackWrongPiece;
+            PieceDomino.OnWrongPiece += FeedbackWrongPiece;
         }
 
         private void Start()
         {
-            DistributePiecesAleatori();
+            DistributePiecesRandom();
         }
 
         private void OnEnable()
@@ -118,14 +126,14 @@ namespace Diverdomino
 
             enemyTurnImg.localScale = iniSize;
         }
-        void DistributePiecesAleatori()
+        void DistributePiecesRandom()
         {
+
             for (int i = 0; i < 14; i++)
             {
                 PieceDomino myPiece = piecesToDistribute[Random.Range(0, piecesToDistribute.Count)];
                 piecesToDistribute.Remove(myPiece);
                 piecesToPlayer.Add(myPiece);
-
                 myPiece.Prect.SetParent(pieces);
                 pieces.sizeDelta = new Vector2(pieces.childCount * 315f + pieces.GetComponent<UnityEngine.UI.HorizontalLayoutGroup>().spacing, pieces.sizeDelta.y);
 
@@ -180,58 +188,72 @@ namespace Diverdomino
 
         void ChangeTurn(GameObject obj, Side side, bool isUserTurn)
         {
-            if (PiecesToPlayer.Count <= 0 || PiecesToMachine.Count <= 0) GameOver = true;
-
-            if (turnPassed == PassTurnType.first) { 
-                turnPassed = PassTurnType.none;
-                SetPassBtnAlert(false);
-            }
-
             if (obj != null) PiecesToPlayer.Remove(obj.GetComponent<PieceDomino>());
 
-            if (isUserTurn == false)
+            if (PiecesToPlayer.Count <= 0 || PiecesToMachine.Count <= 0)
             {
-                passBtn.interactable = false;
-                enemyTurn = StartCoroutine(ShowEnemyTurnCoroutine());
-            }
-            else
-            {
-                userTurn = StartCoroutine(ShowTurnCoroutine());
+                GameOver = true;
+                VerifyWinner();
             }
 
-            foreach (PieceDomino domino in PiecesToPlayer)
-            {
-                domino.SetBlock(!isUserTurn);
-            }
+            if(GameOver == false) { 
+                if (turnPassed == true) {
+                    if (isUserTurn == false && feedbackBeingUsed == false) {
+                        feedbackBeingUsed = true;
 
-            VerifyWinner();
+                        feedbackPanel.gameObject.SetActive(true);
+                        feedbackPanel.GetComponentInChildren<TextMeshProUGUI>().text = "";
+                        feedbackPanel.GetComponentsInChildren<Image>()[1].sprite = goodJobFeedback[Random.Range(1, goodJobFeedback.Length)];
+                    }
+                    turnPassed = false;
+                    SetPassBtnAlert(false);
+                }
+
+                if (isUserTurn == false)
+                {
+                    passBtn.interactable = false;
+                    enemyTurn = StartCoroutine(ShowEnemyTurnCoroutine());
+                }
+                else
+                {
+                    userTurn = StartCoroutine(ShowTurnCoroutine());
+                }
+
+                foreach (PieceDomino domino in PiecesToPlayer)
+                {
+                    domino.SetBlock(!isUserTurn);
+                }
+            }
         }
 
         public void PassTurnButton()
         {
-            //  If user pass turn:
-            if (GameOver == false) {
-                ChangeTurn(null, Side.Izq, false);
-                OnPassBtn?.Invoke();
-            }
-            else {
+            if (turnPassed == true) {
+                GameOver = true;
                 VerifyWinner();
             }
-            SetPassBtnAlert(true);
+            //  If user pass turn:
+            if (GameOver == false)
+            {
+                ChangeTurn(null, Side.Izq, false);
+                SetPassBtnAlert(true);
+                OnPassBtn?.Invoke();
+            }
         }
         public void PassTurnMachine()
         {
+            if (turnPassed == true)
+            {
+                GameOver = true;
+                VerifyWinner();
+            }
             //  If machine pass turn:
             Debug.Log($"Turn Pass To Player");
             if (GameOver == false)
             {
                 ChangeTurn(null, Side.Izq, true);
+                SetPassBtnAlert(true);
             }
-            else
-            {
-                VerifyWinner();
-            }
-            SetPassBtnAlert(true);
         }
 
         void VerifyWinner()
@@ -239,14 +261,12 @@ namespace Diverdomino
             if (GameOver == true)
             {
                 if (PiecesToPlayer.Count <= 0) {
-                    GameOver = true;
                     UserIsWinner(true);
                 }
                 else if (PiecesToMachine.Count <= 0) {
-                    GameOver = true;
                     UserIsWinner(false);
                 }
-                else if (PiecesToPlayer.Count >= PiecesToMachine.Count)
+                else if (PiecesToPlayer.Count <= PiecesToMachine.Count)
                     UserIsWinner(true);
                 else
                     UserIsWinner(false);
@@ -255,44 +275,48 @@ namespace Diverdomino
 
         void UserIsWinner(bool userWon)
         {
-            GameOver = true;
-            winnerImg.gameObject.SetActive(true);
-            winnerImg.GetComponentInChildren<TextMeshProUGUI>().text = userWon ? "¡Ganaste!" : "Sigue intentando";
+            scrollPieces.SetActive(false);
+            homeBtn.gameObject.SetActive(true);
+            passBtn.gameObject.SetActive(false);
+            feedbackPanel.gameObject.SetActive(true);
+            feedbackPanel.GetComponentsInChildren<Image>()[1].sprite = goodJobFeedback[0];
+            feedbackPanel.GetComponentsInChildren<Button>()[0].gameObject.SetActive(false);
+            feedbackPanel.GetComponentInChildren<TextMeshProUGUI>().text = userWon ? "¡Ganaste!" : "Sigue intentando";
         }
 
         void SetPassBtnAlert(bool state) {
             if(state == true) {
-                if (turnPassed == PassTurnType.second) {
-                    GameOver = true;
-                    VerifyWinner();
-                    Debug.Log("1111111111111 Verifico el ganador.");
-                } 
-                else {
-                    if (turnPassed == PassTurnType.none) turnPassed = PassTurnType.first;
-                    else if (turnPassed == PassTurnType.first) turnPassed = PassTurnType.second;
+                turnPassed = true;
 
-                    var colors = new ColorBlock();
-                    colors.normalColor = Color.white;
-                    colors.highlightedColor = Color.white;
-                    colors.pressedColor = new Color(0.8f, 0.8f, 0.8f);
-                    colors.disabledColor = new Color(0.8f, 0.8f, 0.8f, 0.5f);
-                    colors.colorMultiplier = 1f;
-                    passBtn.colors = colors;
+                var colors = new ColorBlock();
+                colors.normalColor = Color.white;
+                colors.highlightedColor = Color.white;
+                colors.pressedColor = new Color(0.8f, 0.8f, 0.8f);
+                colors.disabledColor = new Color(0.8f, 0.8f, 0.8f, 0.5f);
+                colors.colorMultiplier = 1f;
+                passBtn.colors = colors;
 
-                    passBtn.GetComponent<Image>().color = Color.red;
-                    GetComponentInChildren<TextMeshProUGUI>().text = "Terminar juego";
-
-                    Debug.Log("22222222222222 Alerta roja.");
-                }
+                passBtn.GetComponent<Image>().color = Color.red;
+                passBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Terminar juego";
             }
             else {
                 passBtn.GetComponent<Image>().color = Color.white;
                 GetComponentInChildren<TextMeshProUGUI>().text = "Pasar turno";
-
-                Debug.Log("33333333333333 Vuelvo el botón normal.");
             }
+        }
 
-            Debug.Log("PASS BUTTON STATE: " + turnPassed);
+        void FeedbackWrongPiece() {
+            if(feedbackBeingUsed == false) {
+                feedbackBeingUsed = true;
+
+                feedbackPanel.gameObject.SetActive(true);
+                feedbackPanel.GetComponentInChildren<TextMeshProUGUI>().text = "";
+                feedbackPanel.GetComponentsInChildren<Image>()[1].sprite = wrongPieceFeedback[Random.Range(0, wrongPieceFeedback.Length)];
+            }
+        }
+
+        public void StopUsingFeedback() {
+            feedbackBeingUsed = false;
         }
 
         private bool GameOver { get; set; }

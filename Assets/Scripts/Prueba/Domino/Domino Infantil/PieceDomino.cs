@@ -38,6 +38,7 @@ namespace Diverdomino
 
         #region Events
         public System.Action OnFirstPiece;
+        public static System.Action OnWrongPiece;
         public static System.Action<GameObject, Side, bool> OnPieceInPlace;
         #endregion
 
@@ -196,6 +197,7 @@ namespace Diverdomino
 
             if (isInPosition)
             {
+                // Retorna si no se puede poner la ficha
                 if (posibilty == null)
                 {
                     rect.SetParent(GameManager.instance.Ppieces);
@@ -205,6 +207,8 @@ namespace Diverdomino
                     rect.localPosition = new Vector3(rect.localPosition.x, rect.localPosition.y, 0f);
 
                     rect.localEulerAngles = Vector3.zero;
+
+                    OnWrongPiece();
 
                     Debug.Log("PRINTED!");
                 }
@@ -258,7 +262,6 @@ namespace Diverdomino
 
         void PieceInPosition()
         {
-        //Debug.Log($"Game object: {gameObject} | Side: {Posibility.GetComponent<Keper>().Sidde} | Is Machine Piece: {isMachinePiece}");
             if(isInPosition == true || isMachinePiece == true) OnPieceInPlace?.Invoke(gameObject, Posibility.GetComponent<Keper>().Sidde, isMachinePiece);
 
             try { 
@@ -311,18 +314,10 @@ namespace Diverdomino
                     }
                     break;
             }
-
-
-            //transform.GetChild(0).gameObject.SetActive(false);
-            //transform.GetChild(1).gameObject.SetActive(false);
-            //transform.GetChild(2).gameObject.SetActive(false);
-            //Debug.Log("PASÉEEEEEE");
             
             isInPosition = false;
 
             Posibility.gameObject.SetActive(false);
-
-            //GameManager.instance.drag = false;
         }
 
         public void SetAsMachinePiece()

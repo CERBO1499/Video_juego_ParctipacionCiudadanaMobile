@@ -35,16 +35,20 @@ namespace Uno
         [SerializeField] Machine machine;
         [SerializeField] RectTransform[] feedBackTurno;
         [SerializeField] AnimationCurve curveTurno;
+        [SerializeField] Image colorFrame;
+        [SerializeField] Image winnerPanel;
 
         string actualColor = "";
         string actualNumber = "";
         Card myCurrentCard;
         bool playerTurn = true;
+        Coroutine changeTurn;
         
         public bool PplayerTurn
         {
             get { return playerTurn; }
         }
+        bool gameOver = false;
 
         #region EncapsulatedFields
         public Transform PositionBoardCards { get => positionBoardCards; set => positionBoardCards = value; }
@@ -64,11 +68,12 @@ namespace Uno
         {
             instance = this;
 
+            winnerPanel.gameObject.SetActive(false);
         }
         private void Start()
         {
             InitialDistributeCardRandom();
-            StartCoroutine(ChangeTurnCoroutine());
+            changeTurn = StartCoroutine(ChangeTurnCoroutine());
         }
         void InitialDistributeCardRandom()
         {
@@ -115,52 +120,37 @@ namespace Uno
             ActualCard();
         }
 
-        public void ChangeTurn()
+        public void ChangeTurn(bool turnChanged)
         {
-            playerTurn = !playerTurn;
-            if (!playerTurn)
-            {
-                print("Es turno de la maquina");
-                StartCoroutine(ChangeTurnCoroutine());
+            if(cardsToPlayerInitial.Count <= 0 || CardsToMachineInitial.Count <= 0) {
+                gameOver = true;
+                winnerPanel.gameObject.SetActive(true);
+            }
 
-                Card card = machine.PickCard();
-
-                if (card == null)
-                    TakeNewCardEnemie();
-                else
+            if(gameOver == false) { 
+                if (turnChanged == true)
                 {
-                    machine.PositionCard();
+                    playerTurn = !playerTurn;
 
-                    switch (card.NumberCard)
+                    if (playerTurn == false)
                     {
-                        case NumberCard.PlusTwo:
-                            GameManager.instance.TakeTwoCards();
-                            break;
-                        case NumberCard.Reverse:
-                            break;
-                        case NumberCard.Stop:
-                            break;
-                        case NumberCard.Questions:
-                            break;
-                        case NumberCard.PlusFour:
-                            GameManager.instance.TakeFourCards();
-                            GameManager.instance.ChangeColor();
-                            break;
-                        case NumberCard.ChangeColor:
-                            GameManager.instance.ChangeColor();
-                            break;
-                        default:
-                            GameManager.instance.ChangeTurn();
-                            break;
-                    }
+                        StartCoroutine(MachinePlayCoroutine());
+                    }            
                 }
-                    
-            }            
+
+                if(changeTurn != null) {
+                    StopCoroutine(changeTurn);
+                }
+
+                changeTurn = StartCoroutine(ChangeTurnCoroutine());
+            }
         }
         public void ActualCard()
         {
             ActualColor = MyCurrentCard.ColorCard.ToString();
             ActualNumber = MyCurrentCard.NumberCard.ToString();
+
+            UpdateColorFrame();
         }
         public void TakeNewCardPlayer()
         {
@@ -174,7 +164,7 @@ namespace Uno
                 myCard.Prect.SetParent(parentPlayer);
                 myCard.gameObject.SetActive(true);
 
-                ChangeTurn();
+                ChangeTurn(true);
             }
            
         }
@@ -190,7 +180,7 @@ namespace Uno
             myCard.gameObject.GetComponent<Image>().raycastTarget = false;
             myCard.gameObject.SetActive(true);
 
-            ChangeTurn();
+            ChangeTurn(true);
         }
         public void TakeTwoCards()
         {
@@ -224,7 +214,7 @@ namespace Uno
                 }
             }
 
-            ChangeTurn();
+            ChangeTurn(true);
         }
         public void TakeFourCards()
         {
@@ -265,19 +255,23 @@ namespace Uno
             if (!playerTurn)
             {
                 ActualColor = ((ColorCard)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ColorCard)).Length - 1)).ToString();
-                ChangeTurn();
+
+                ChangeTurn(true);
+                UpdateColorFrame();
             }
             else
             {
                 StartCoroutine(ChangeColorApearCoroutine());
             }
-        }      
+        }
 
         IEnumerator ChangeTurnCoroutine()
         {
             RectTransform feedBack;
-            if (playerTurn) feedBack = feedBackTurno[0];
+            if (playerTurn == true) feedBack = feedBackTurno[0];
             else feedBack = feedBackTurno[1];
+
+            Debug.Log("El feedback es del usuario: " + (feedBackTurno[0] == feedBack));
 
             feedBack.gameObject.SetActive(true);
 
@@ -294,7 +288,6 @@ namespace Uno
 
             feedBack.localScale = finiSize;
             feedBack.gameObject.SetActive(false);
-
         }
         IEnumerator ChangeColorApearCoroutine()
         {
@@ -316,6 +309,8 @@ namespace Uno
         public void ChangeColorSelection(string colorSelected)
         {
             actualColor = colorSelected;
+
+            UpdateColorFrame();
             StartCoroutine(ChangeColorDesapearCoroutine());
         }
 
@@ -333,7 +328,82 @@ namespace Uno
             }
             changeColorPanel.localScale = finiSize;
 
-            ChangeTurn();
+            ChangeTurn(true);
+        }
+
+        IEnumerator MachinePlayCoroutine() {
+            yield return new WaitForSeconds(2f);
+
+            Card card = machine.PickCard();
+
+            if (card == null)
+                TakeNewCardEnemie();
+            else
+            {
+                machine.PositionCard();
+
+                switch (card.NumberCard)
+                {
+                    case NumberCard.PlusTwo:
+                        GameManager.instance.TakeTwoCards();
+                        break;
+                    case NumberCard.Reverse:
+                        //  Volver a tirar
+                        StartCoroutine(MachinePlayCoroutine());
+                        ChangeTurn(false);
+                        break;
+                    case NumberCard.Stop:
+                        //  Volver a tirar
+                        StartCoroutine(MachinePlayCoroutine());
+                        ChangeTurn(false);
+                        break;
+                    case NumberCard.Questions:
+                        StartCoroutine(MachinePlayCoroutine());
+                        ChangeTurn(false);
+                        break;
+                    case NumberCard.PlusFour:
+                        GameManager.instance.TakeFourCards();
+                        GameManager.instance.ChangeColor();
+                        break;
+                    case NumberCard.ChangeColor:
+                        GameManager.instance.ChangeColor();
+                        break;
+                    default:
+                        GameManager.instance.ChangeTurn(true);
+                        break;
+                }
+
+                CardsToMachineInitial.Remove(card);
+            }
+        }
+
+        void UpdateColorFrame() {
+            switch (ActualColor)
+            {
+                case "Amarillo":
+                    colorFrame.color = Color.yellow;
+                    break;
+
+                case "Azul":
+                    colorFrame.color = Color.blue;
+                    break;
+
+                case "Rojo":
+                    colorFrame.color = Color.red;
+                    break;
+
+                case "Verde":
+                    colorFrame.color = Color.green;
+                    break;
+
+                case "Negro":
+                    colorFrame.color = Color.black;
+                    break;
+            }
+        }
+
+        public void UserPlayed(Card _card) {
+            cardsToPlayerInitial.Remove(_card);
         }
     }
 }

@@ -54,6 +54,7 @@ namespace Uno
                     rect.sizeDelta = new Vector2(452f, 965f);
                     GameManager.instance.MyCurrentCard = gameObject.GetComponent<Card>();
                     GameManager.instance.ActualCard();
+                    GameManager.instance.UserPlayed(this);
 
 
                     switch (numberCard)
@@ -62,10 +63,16 @@ namespace Uno
                             GameManager.instance.TakeTwoCards();
                             break;
                         case NumberCard.Reverse:
+                            Debug.Log("SIGUE EN EL TURNO");
+                            GameManager.instance.ChangeTurn(false);
                             break;
                         case NumberCard.Stop:
+                            Debug.Log("SIGUE EN EL TURNO");
+                            GameManager.instance.ChangeTurn(false);
                             break;
                         case NumberCard.Questions:
+                            Debug.Log("SIGUE EN EL TURNO");
+                            GameManager.instance.ChangeTurn(false);
                             break;
                         case NumberCard.PlusFour:
                             GameManager.instance.TakeFourCards();
@@ -75,7 +82,7 @@ namespace Uno
                             GameManager.instance.ChangeColor();
                             break;
                         default:
-                            GameManager.instance.ChangeTurn();
+                            GameManager.instance.ChangeTurn(true);
                             break;
                     }
                 }

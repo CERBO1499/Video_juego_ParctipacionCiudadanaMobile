@@ -25,7 +25,7 @@ namespace Uno
             {
                 machineCard = GameManager.instance.CardsToMachineInitial[i];
 
-                if (machineCard.ColorCard.ToString() == colorToSelect || machineCard.NumberCard.ToString() == numberToSelect)
+                if (machineCard.ColorCard.ToString() == colorToSelect || machineCard.NumberCard.ToString() == numberToSelect || machineCard.ColorCard == ColorCard.Negro)
                     break;
 
                 machineCard = null;
@@ -51,6 +51,5 @@ namespace Uno
             GameManager.instance.ActualCard();
         }
     }
-
 }
 

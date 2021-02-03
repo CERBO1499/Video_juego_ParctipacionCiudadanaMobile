@@ -17,6 +17,13 @@ namespace Uno
         public static GameManager instance;
         #endregion
         #region Information 
+        [Header("Cards colors")]
+        [SerializeField] Color black;
+        [SerializeField] Color blue;
+        [SerializeField] Color green;
+        [SerializeField] Color red;
+        [SerializeField] Color yellow;
+
         [Header("Cards list")]
         [SerializeField] List<Card> cardsToDistributeInitial;
         [SerializeField] List<Card> cardsToPlayerInitial;
@@ -37,10 +44,13 @@ namespace Uno
         [SerializeField] AnimationCurve curveTurno;
         [SerializeField] Image colorFrame;
         [SerializeField] Image winnerPanel;
+        [SerializeField] ParticleSystem takeCardIndicator;
+        [SerializeField] Image unoFeedback;
 
         string actualColor = "";
         string actualNumber = "";
         Card myCurrentCard;
+        bool uno = false;
         bool playerTurn = true;
         Coroutine changeTurn;
         
@@ -67,7 +77,10 @@ namespace Uno
         private void Awake()
         {
             instance = this;
+            changeColorPanel.GetComponent<Image>().enabled = false;
+            changeColorPanel.gameObject.SetActive(false);
 
+            unoFeedback.gameObject.SetActive(false);
             winnerPanel.gameObject.SetActive(false);
         }
         private void Start()
@@ -121,7 +134,7 @@ namespace Uno
         }
 
         public void ChangeTurn(bool turnChanged)
-        {
+        { 
             if(cardsToPlayerInitial.Count <= 0 || CardsToMachineInitial.Count <= 0) {
                 gameOver = true;
                 winnerPanel.gameObject.SetActive(true);
@@ -140,6 +153,7 @@ namespace Uno
 
                 if(changeTurn != null) {
                     StopCoroutine(changeTurn);
+                    Debug.Log("Detiene la animación.");
                 }
 
                 changeTurn = StartCoroutine(ChangeTurnCoroutine());
@@ -252,7 +266,7 @@ namespace Uno
 
         public void ChangeColor()
         {
-            if (!playerTurn)
+            if (playerTurn == false)
             {
                 ActualColor = ((ColorCard)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ColorCard)).Length - 1)).ToString();
 
@@ -267,11 +281,27 @@ namespace Uno
 
         IEnumerator ChangeTurnCoroutine()
         {
-            RectTransform feedBack;
-            if (playerTurn == true) feedBack = feedBackTurno[0];
-            else feedBack = feedBackTurno[1];
+            yield return new WaitForSeconds(0.5f);
 
-            Debug.Log("El feedback es del usuario: " + (feedBackTurno[0] == feedBack));
+            RectTransform feedBack;
+
+            feedBack = feedBackTurno[(playerTurn == true) ? 0 : 1];
+            feedBackTurno[(playerTurn == true) ? 1 : 0].gameObject.SetActive(false);
+
+
+            if (playerTurn == true)
+            {
+                if (VerifyUserCards() == false) takeCardIndicator.Play();
+                else takeCardIndicator.Stop();
+            }
+            else
+            {
+                takeCardIndicator.Stop();
+
+                if (cardsToPlayerInitial.Count == 1 && uno == false) {
+                    TakeFourCards();
+                }
+            }
 
             feedBack.gameObject.SetActive(true);
 
@@ -292,6 +322,7 @@ namespace Uno
         IEnumerator ChangeColorApearCoroutine()
         {
             changeColorPanel.gameObject.SetActive(true);
+            changeColorPanel.GetComponent<Image>().raycastTarget = true;
 
             Vector2 iniSize = Vector2.zero;
             Vector2 finiSize = Vector2.one;
@@ -304,6 +335,7 @@ namespace Uno
                 yield return null;
             }
 
+            changeColorPanel.GetComponent<Image>().raycastTarget = false;
             changeColorPanel.localScale = finiSize;
         }
         public void ChangeColorSelection(string colorSelected)
@@ -381,29 +413,73 @@ namespace Uno
             switch (ActualColor)
             {
                 case "Amarillo":
-                    colorFrame.color = Color.yellow;
+                    colorFrame.color = yellow;
                     break;
 
                 case "Azul":
-                    colorFrame.color = Color.blue;
+                    colorFrame.color = blue;
                     break;
 
                 case "Rojo":
-                    colorFrame.color = Color.red;
+                    colorFrame.color = red;
                     break;
 
                 case "Verde":
-                    colorFrame.color = Color.green;
+                    colorFrame.color = green;
                     break;
 
                 case "Negro":
-                    colorFrame.color = Color.black;
+                    colorFrame.color = black;
                     break;
             }
         }
 
         public void UserPlayed(Card _card) {
             cardsToPlayerInitial.Remove(_card);
+        }
+
+        private bool VerifyUserCards() {
+            bool areCardsAvailable = false;
+
+            for(int i = 0; i < cardsToPlayerInitial.Count; i++) { 
+                if(cardsToPlayerInitial[i].ColorCard.ToString() == actualColor || cardsToPlayerInitial[i].NumberCard.ToString() == actualNumber ||
+                    cardsToPlayerInitial[i].ColorCard.ToString() == ColorCard.Negro.ToString()) {
+                    areCardsAvailable = true;
+                    break;
+                }
+            }
+
+            return areCardsAvailable;
+        }
+
+        public void UnoBtn() {
+            if (uno == false) {
+                StartCoroutine(UnoCoroutine());
+                uno = true;
+                Invoke("ResetUnoBtn", 1f);
+            }
+        }
+
+        private void ResetUnoBtn() { 
+            uno = false;
+        }
+
+        IEnumerator UnoCoroutine()
+        {
+            Vector2 iniSize = Vector2.zero;
+            Vector2 finiSize = new Vector2(4f, 4f);
+            float t = Time.time;
+
+            unoFeedback.gameObject.SetActive(true);
+
+            while (Time.time <= t + 1f)
+            {
+                unoFeedback.transform.localScale = iniSize + ((finiSize - iniSize) * curveTurno.Evaluate((Time.time) - t) / 1f);
+                yield return null;
+            }
+
+            unoFeedback.transform.localScale = finiSize;
+            unoFeedback.gameObject.SetActive(false);
         }
     }
 }

@@ -63,15 +63,12 @@ namespace Uno
                             GameManager.instance.TakeTwoCards();
                             break;
                         case NumberCard.Reverse:
-                            Debug.Log("SIGUE EN EL TURNO");
                             GameManager.instance.ChangeTurn(false);
                             break;
                         case NumberCard.Stop:
-                            Debug.Log("SIGUE EN EL TURNO");
                             GameManager.instance.ChangeTurn(false);
                             break;
                         case NumberCard.Questions:
-                            Debug.Log("SIGUE EN EL TURNO");
                             GameManager.instance.ChangeTurn(false);
                             break;
                         case NumberCard.PlusFour:

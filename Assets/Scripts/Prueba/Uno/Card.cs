@@ -39,11 +39,13 @@ namespace Uno
         {
             MySprite = gameObject.GetComponent<Image>().sprite;
             rect = GetComponent<RectTransform>();
+
+            SelectingColor = false;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (GameManager.instance.PplayerTurn)
+            if (GameManager.instance.PplayerTurn && SelectingColor == false)
             {
                 if (GameManager.instance.ActualColor == colorCard.ToString() || GameManager.instance.ActualNumber == numberCard.ToString() || colorCard == ColorCard.Negro)
                 {
@@ -85,5 +87,7 @@ namespace Uno
                 }
             }
         }
+
+        public bool SelectingColor { get; set; }
     }
 }

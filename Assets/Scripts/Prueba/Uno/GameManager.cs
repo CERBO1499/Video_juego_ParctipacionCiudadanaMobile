@@ -46,6 +46,7 @@ namespace Uno
         [SerializeField] Image winnerPanel;
         [SerializeField] ParticleSystem takeCardIndicator;
         [SerializeField] Image unoFeedback;
+        [SerializeField] Button cardsDeckBtn;
 
         string actualColor = "";
         string actualNumber = "";
@@ -77,8 +78,6 @@ namespace Uno
         private void Awake()
         {
             instance = this;
-            changeColorPanel.GetComponent<Image>().enabled = false;
-            changeColorPanel.gameObject.SetActive(false);
 
             unoFeedback.gameObject.SetActive(false);
             winnerPanel.gameObject.SetActive(false);
@@ -183,7 +182,7 @@ namespace Uno
            
         }
         void TakeNewCardEnemie()
-        { 
+        {
             Card myCard = cardsToDistributeInitial[UnityEngine.Random.Range(0, cardsToDistributeInitial.Count)];
             cardsToDistributeInitial.Remove(myCard);
             cardsToMachineInitial.Add(myCard);
@@ -321,12 +320,10 @@ namespace Uno
         }
         IEnumerator ChangeColorApearCoroutine()
         {
-            changeColorPanel.gameObject.SetActive(true);
-            changeColorPanel.GetComponent<Image>().raycastTarget = true;
+            SetChangingColorPanel(true);
 
             Vector2 iniSize = Vector2.zero;
             Vector2 finiSize = Vector2.one;
-
             float t = Time.time;
 
             while (Time.time <= t + 1f)
@@ -335,7 +332,6 @@ namespace Uno
                 yield return null;
             }
 
-            changeColorPanel.GetComponent<Image>().raycastTarget = false;
             changeColorPanel.localScale = finiSize;
         }
         public void ChangeColorSelection(string colorSelected)
@@ -359,6 +355,8 @@ namespace Uno
                 yield return null;
             }
             changeColorPanel.localScale = finiSize;
+
+            SetChangingColorPanel(false);
 
             ChangeTurn(true);
         }
@@ -480,6 +478,14 @@ namespace Uno
 
             unoFeedback.transform.localScale = finiSize;
             unoFeedback.gameObject.SetActive(false);
+        }
+
+        private void SetChangingColorPanel(bool state) {
+            cardsDeckBtn.interactable = !state;
+
+            for(int i = 0; i < cardsToPlayerInitial.Count; i++) {
+                cardsToPlayerInitial[i].SelectingColor = state;
+            }
         }
     }
 }

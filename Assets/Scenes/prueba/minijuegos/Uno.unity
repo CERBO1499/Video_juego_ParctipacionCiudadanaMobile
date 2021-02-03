@@ -11091,6 +11091,7 @@ MonoBehaviour:
   winnerPanel: {fileID: 1870699029}
   takeCardIndicator: {fileID: 975930747}
   unoFeedback: {fileID: 1613835343}
+  cardsDeckBtn: {fileID: 1413976855}
 --- !u!1 &1086407038
 GameObject:
   m_ObjectHideFlags: 0
@@ -13027,7 +13028,7 @@ GameObject:
   - component: {fileID: 1413976853}
   - component: {fileID: 1413976855}
   m_Layer: 5
-  m_Name: Pack of cards
+  m_Name: Deck of cards btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

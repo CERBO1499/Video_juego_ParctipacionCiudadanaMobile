@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 
 namespace Uno
 {
@@ -28,6 +28,7 @@ namespace Uno
         [SerializeField] List<Card> cardsToDistributeInitial;
         [SerializeField] List<Card> cardsToPlayerInitial;
         [SerializeField] List<Card> cardsToMachineInitial;
+        private List<Card> cardsUsed;
 
         [Header("Parents")]
         [SerializeField] Transform parentPlayer;
@@ -54,7 +55,7 @@ namespace Uno
         bool uno = false;
         bool playerTurn = true;
         Coroutine changeTurn;
-        
+
         public bool PplayerTurn
         {
             get { return playerTurn; }
@@ -68,16 +69,19 @@ namespace Uno
         public Card MyCurrentCard { get => myCurrentCard; set => myCurrentCard = value; }
         public bool PlayerTurn { get => playerTurn; set => playerTurn = value; }
         public List<Card> CardsToMachineInitial { get => cardsToMachineInitial; set => cardsToMachineInitial = value; }
+        public List<Card> CardsUsed { get => cardsUsed; set => cardsUsed = value; }
         #endregion
         #endregion
 
         #region Events        
-        
+
         #endregion
 
         private void Awake()
         {
             instance = this;
+
+            cardsUsed = new List<Card>();
 
             unoFeedback.gameObject.SetActive(false);
             winnerPanel.gameObject.SetActive(false);
@@ -100,7 +104,7 @@ namespace Uno
             myBaseCard.Prect.SetParent(PositionBoardCards);
             myBaseCard.Prect.position = PositionBoardCards.transform.position;
             myBaseCard.Prect.sizeDelta = new Vector2(452f, 965f);
-            myBaseCard.GetComponent<Image>().raycastTarget = false;
+            myBaseCard.IsActive = false;
 
             for (int i = 0; i < 7; i++)
             {
@@ -116,12 +120,12 @@ namespace Uno
             for (int i = 0; i < 7; i++)
             {
                 Card myCard = cardsToDistributeInitial[UnityEngine.Random.Range(0, cardsToDistributeInitial.Count)];
-                               
+
 
                 cardsToDistributeInitial.Remove(myCard);
                 cardsToMachineInitial.Add(myCard);
                 myCard.gameObject.GetComponent<Image>().sprite = spriteEnemy;
-                myCard.gameObject.GetComponent<Image>().raycastTarget = false;
+                myCard.IsActive = false;
                 myCard.Prect.sizeDelta = new Vector2(452f, 709f);
 
 
@@ -133,13 +137,20 @@ namespace Uno
         }
 
         public void ChangeTurn(bool turnChanged)
-        { 
-            if(cardsToPlayerInitial.Count <= 0 || CardsToMachineInitial.Count <= 0) {
+        {
+            if (cardsToPlayerInitial.Count <= 0 || CardsToMachineInitial.Count <= 0)
+            {
                 gameOver = true;
                 winnerPanel.gameObject.SetActive(true);
+                winnerPanel.GetComponentInChildren<Button>().GetComponentInChildren<TextMeshProUGUI>().text =
+                        "Menú";
+                winnerPanel.GetComponentInChildren<TextMeshProUGUI>().text = 
+                    cardsToPlayerInitial.Count <= 0 ? 
+                        "Felicitaciones Gamer, has ganado esta partida." : "No te rindas Gamer, vuelve a intentarlo.";
             }
 
-            if(gameOver == false) { 
+            if (gameOver == false)
+            {
                 if (turnChanged == true)
                 {
                     playerTurn = !playerTurn;
@@ -147,12 +158,17 @@ namespace Uno
                     if (playerTurn == false)
                     {
                         StartCoroutine(MachinePlayCoroutine());
-                    }            
+                    }
                 }
 
-                if(changeTurn != null) {
+                if (changeTurn != null)
+                {
                     StopCoroutine(changeTurn);
-                    Debug.Log("Detiene la animación.");
+                }
+
+                if (cardsToDistributeInitial.Count <= 0)
+                {
+                    cardsToDistributeInitial = RefillDeck();
                 }
 
                 changeTurn = StartCoroutine(ChangeTurnCoroutine());
@@ -179,7 +195,6 @@ namespace Uno
 
                 ChangeTurn(true);
             }
-           
         }
         void TakeNewCardEnemie()
         {
@@ -190,16 +205,18 @@ namespace Uno
             myCard.Prect.sizeDelta = new Vector2(452f, 709f);
             myCard.Prect.SetParent(parentMachine);
             myCard.gameObject.GetComponent<Image>().sprite = spriteEnemy;
-            myCard.gameObject.GetComponent<Image>().raycastTarget = false;
+            myCard.IsActive = false;
             myCard.gameObject.SetActive(true);
 
             ChangeTurn(true);
         }
         public void TakeTwoCards()
         {
+            int cardQuantity = Mathf.Clamp(cardsToDistributeInitial.Count, 0, 2);
+
             if (!PlayerTurn)
             {
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < cardQuantity; i++)
                 {
                     Card myCard = cardsToDistributeInitial[UnityEngine.Random.Range(0, cardsToDistributeInitial.Count)];
                     cardsToDistributeInitial.Remove(myCard);
@@ -212,7 +229,7 @@ namespace Uno
             }
             else
             {
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < cardQuantity; i++)
                 {
                     Card myCard = cardsToDistributeInitial[UnityEngine.Random.Range(0, cardsToDistributeInitial.Count)];
                     Sprite myCardImage = myCard.gameObject.GetComponent<Image>().sprite;
@@ -221,7 +238,7 @@ namespace Uno
                     myCard.Prect.sizeDelta = new Vector2(452f, 709f);
 
                     myCard.gameObject.GetComponent<Image>().sprite = spriteEnemy;
-                    myCard.gameObject.GetComponent<Image>().raycastTarget = false;
+                    myCard.IsActive = false;
                     myCard.Prect.SetParent(parentMachine);
                     myCard.gameObject.SetActive(true);
                 }
@@ -231,9 +248,11 @@ namespace Uno
         }
         public void TakeFourCards()
         {
+            int cardQuantity = Mathf.Clamp(cardsToDistributeInitial.Count, 0 , 4);
+
             if (!PlayerTurn)
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < cardQuantity; i++)
                 {
                     Card myCard = cardsToDistributeInitial[UnityEngine.Random.Range(0, cardsToDistributeInitial.Count)];
                     cardsToDistributeInitial.Remove(myCard);
@@ -246,7 +265,7 @@ namespace Uno
             }
             else
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < cardQuantity; i++)
                 {
                     Card myCard = cardsToDistributeInitial[UnityEngine.Random.Range(0, cardsToDistributeInitial.Count)];
                     Sprite myCardImage = myCard.gameObject.GetComponent<Image>().sprite;
@@ -255,7 +274,7 @@ namespace Uno
                     myCard.Prect.sizeDelta = new Vector2(452f, 709f);
 
                     myCard.gameObject.GetComponent<Image>().sprite = spriteEnemy;
-                    myCard.gameObject.GetComponent<Image>().raycastTarget = false;
+                    myCard.IsActive = false;
                     myCard.Prect.SetParent(parentMachine);
                     myCard.gameObject.SetActive(true);
                 }
@@ -280,9 +299,14 @@ namespace Uno
 
         IEnumerator ChangeTurnCoroutine()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSecondsRealtime(0.5f);
 
             RectTransform feedBack;
+
+            Vector2 iniSize = Vector2.zero;
+            float size = playerTurn == true ? 6f : 4f;
+            Vector2 finiSize = new Vector2(size, size);
+            float t = Time.time;
 
             feedBack = feedBackTurno[(playerTurn == true) ? 0 : 1];
             feedBackTurno[(playerTurn == true) ? 1 : 0].gameObject.SetActive(false);
@@ -297,17 +321,18 @@ namespace Uno
             {
                 takeCardIndicator.Stop();
 
-                if (cardsToPlayerInitial.Count == 1 && uno == false) {
+                if (cardsToPlayerInitial.Count == 1 && uno == false)
+                {
+                    winnerPanel.gameObject.SetActive(true);
+                    winnerPanel.GetComponentInChildren<Button>().GetComponentInChildren<TextMeshProUGUI>().text = 
+                        "Cerrar";
+                    winnerPanel.GetComponentInChildren<TextMeshProUGUI>().text = 
+                        "Usa el botón UNO antes de que empiece el otro turno.";
                     TakeFourCards();
                 }
             }
 
             feedBack.gameObject.SetActive(true);
-
-            Vector2 iniSize = Vector2.zero;
-            Vector2 finiSize = new Vector2(4f, 4f);
-
-            float t = Time.time;
 
             while (Time.time <= t + 3f)
             {
@@ -360,7 +385,8 @@ namespace Uno
             ChangeTurn(true);
         }
 
-        IEnumerator MachinePlayCoroutine() {
+        IEnumerator MachinePlayCoroutine()
+        {
             yield return new WaitForSeconds(2f);
 
             Card card = machine.PickCard();
@@ -403,11 +429,13 @@ namespace Uno
                 }
 
                 CardsToMachineInitial.Remove(card);
+                CardsUsed.Add(card);
                 card.IsActive = false;
             }
         }
 
-        void UpdateColorFrame() {
+        void UpdateColorFrame()
+        {
             switch (ActualColor)
             {
                 case "Amarillo":
@@ -432,16 +460,21 @@ namespace Uno
             }
         }
 
-        public void UserPlayed(Card _card) {
+        public void UserPlayed(Card _card)
+        {
             cardsToPlayerInitial.Remove(_card);
+            CardsUsed.Add(_card);
         }
 
-        private bool VerifyUserCards() {
+        private bool VerifyUserCards()
+        {
             bool areCardsAvailable = false;
 
-            for(int i = 0; i < cardsToPlayerInitial.Count; i++) { 
-                if(cardsToPlayerInitial[i].ColorCard.ToString() == actualColor || cardsToPlayerInitial[i].NumberCard.ToString() == actualNumber ||
-                    cardsToPlayerInitial[i].ColorCard.ToString() == ColorCard.Negro.ToString()) {
+            for (int i = 0; i < cardsToPlayerInitial.Count; i++)
+            {
+                if (cardsToPlayerInitial[i].ColorCard.ToString() == actualColor || cardsToPlayerInitial[i].NumberCard.ToString() == actualNumber ||
+                    cardsToPlayerInitial[i].ColorCard.ToString() == ColorCard.Negro.ToString())
+                {
                     areCardsAvailable = true;
                     break;
                 }
@@ -450,15 +483,18 @@ namespace Uno
             return areCardsAvailable;
         }
 
-        public void UnoBtn() {
-            if (uno == false) {
+        public void UnoBtn()
+        {
+            if (uno == false && cardsToPlayerInitial.Count <= 1)
+            {
                 StartCoroutine(UnoCoroutine());
                 uno = true;
                 Invoke("ResetUnoBtn", 1f);
             }
         }
 
-        private void ResetUnoBtn() { 
+        private void ResetUnoBtn()
+        {
             uno = false;
         }
 
@@ -480,13 +516,33 @@ namespace Uno
             unoFeedback.gameObject.SetActive(false);
         }
 
-        private void ActivateChangingColorPanel(bool state) {
-            //changeColorPanel.transform.GetComponentInParent<Transform>().gameObject.SetActive(state);
+        private void ActivateChangingColorPanel(bool state)
+        {
             cardsDeckBtn.interactable = !state;
 
-            for(int i = 0; i < cardsToPlayerInitial.Count; i++) {
+            for (int i = 0; i < cardsToPlayerInitial.Count; i++)
+            {
                 cardsToPlayerInitial[i].IsActive = !state;
             }
+        }
+
+        private List<Card> RefillDeck()
+        {
+            List<Card> shuffled = new List<Card>();
+
+            while (CardsUsed.Count > 0)
+            {
+                int random = UnityEngine.Random.Range(0, CardsUsed.Count);
+
+                var card = CardsUsed[random];
+                card.IsActive = true;
+                shuffled.Add(card);
+                CardsUsed.RemoveAt(random);
+            }
+
+            CardsUsed.Clear();
+
+            return shuffled;
         }
     }
 }

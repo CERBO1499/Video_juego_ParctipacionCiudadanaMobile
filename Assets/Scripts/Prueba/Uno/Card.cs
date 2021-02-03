@@ -40,15 +40,17 @@ namespace Uno
             MySprite = gameObject.GetComponent<Image>().sprite;
             rect = GetComponent<RectTransform>();
 
-            SelectingColor = false;
+            IsActive = true;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (GameManager.instance.PplayerTurn && SelectingColor == false)
+            if (GameManager.instance.PplayerTurn && IsActive == true)
             {
                 if (GameManager.instance.ActualColor == colorCard.ToString() || GameManager.instance.ActualNumber == numberCard.ToString() || colorCard == ColorCard.Negro)
                 {
+                    IsActive = false;
+
                     GameManager.instance.PlayerTurn = true;
 
                     rect.SetParent(GameManager.instance.PositionBoardCards);
@@ -88,6 +90,6 @@ namespace Uno
             }
         }
 
-        public bool SelectingColor { get; set; }
+        public bool IsActive { get; set; }
     }
 }

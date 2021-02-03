@@ -320,7 +320,7 @@ namespace Uno
         }
         IEnumerator ChangeColorApearCoroutine()
         {
-            SetChangingColorPanel(true);
+            ActivateChangingColorPanel(true);
 
             Vector2 iniSize = Vector2.zero;
             Vector2 finiSize = Vector2.one;
@@ -356,8 +356,7 @@ namespace Uno
             }
             changeColorPanel.localScale = finiSize;
 
-            SetChangingColorPanel(false);
-
+            ActivateChangingColorPanel(false);
             ChangeTurn(true);
         }
 
@@ -404,6 +403,7 @@ namespace Uno
                 }
 
                 CardsToMachineInitial.Remove(card);
+                card.IsActive = false;
             }
         }
 
@@ -480,11 +480,12 @@ namespace Uno
             unoFeedback.gameObject.SetActive(false);
         }
 
-        private void SetChangingColorPanel(bool state) {
+        private void ActivateChangingColorPanel(bool state) {
+            //changeColorPanel.transform.GetComponentInParent<Transform>().gameObject.SetActive(state);
             cardsDeckBtn.interactable = !state;
 
             for(int i = 0; i < cardsToPlayerInitial.Count; i++) {
-                cardsToPlayerInitial[i].SelectingColor = state;
+                cardsToPlayerInitial[i].IsActive = !state;
             }
         }
     }

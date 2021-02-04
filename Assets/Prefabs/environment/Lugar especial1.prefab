@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1925285306929044168}
-  - component: {fileID: 889152696}
   - component: {fileID: 7125216022084983130}
   - component: {fileID: 7638754456043034846}
+  - component: {fileID: 304838765172830283}
   m_Layer: 8
   m_Name: Lugar especial1
   m_TagString: Untagged
@@ -34,20 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &889152696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1925285306929044167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86320d67c5582f7488f89ac03e85b8b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UiPuntoEstrategico: {fileID: 0}
-  logrosManager: {fileID: 0}
 --- !u!65 &7125216022084983130
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -101,6 +87,20 @@ BillboardRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Billboard: {fileID: 0}
+--- !u!114 &304838765172830283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925285306929044167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86320d67c5582f7488f89ac03e85b8b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UiPuntoEstrategico: {fileID: 0}
+  logrosManager: {fileID: 0}
 --- !u!1 &6815443719439314217
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,8 +171,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 84487d73ca4b791498332d8f6858417f, type: 3}
-  m_Color: {r: 0.6862745, g: 0.5803922, b: 0.2901961, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 062ad3b1a3e3a624b869e543d5ad064d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

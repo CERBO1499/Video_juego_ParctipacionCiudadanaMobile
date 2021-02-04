@@ -72,6 +72,12 @@ public class Scenemanager : MonoBehaviour
     {
         SceneManager.LoadScene("Aldea Niños", LoadSceneMode.Single);
     }
+
+    public void ToMiCasaMiTerritorio()
+    {
+        SceneManager.LoadScene("Mi casa, mi territorio", LoadSceneMode.Single);
+    }
+
     public void ToRuleta()
     {
         SceneManager.LoadScene("Ruleta", LoadSceneMode.Single);

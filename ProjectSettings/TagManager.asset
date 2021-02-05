@@ -13,6 +13,7 @@ TagManager:
   - Letter
   - Images
   - Piece Domino
+  - Option To Select
   layers:
   - Default
   - TransparentFX

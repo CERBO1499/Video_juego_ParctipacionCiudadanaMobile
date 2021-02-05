@@ -28,7 +28,6 @@ namespace Uno
         [SerializeField] List<Card> cardsToDistributeInitial;
         [SerializeField] List<Card> cardsToPlayerInitial;
         [SerializeField] List<Card> cardsToMachineInitial;
-        private List<Card> cardsUsed;
 
         [Header("Parents")]
         [SerializeField] Transform parentPlayer;
@@ -73,8 +72,8 @@ namespace Uno
         #endregion
         #endregion
 
-        #region Events        
-
+        #region Components        
+        private List<Card> cardsUsed;
         #endregion
 
         private void Awake()
@@ -88,6 +87,8 @@ namespace Uno
         }
         private void Start()
         {
+            ActivitiesManager.Pinstance.ShowActivity(3);
+
             InitialDistributeCardRandom();
             changeTurn = StartCoroutine(ChangeTurnCoroutine());
         }

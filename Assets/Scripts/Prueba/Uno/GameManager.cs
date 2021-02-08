@@ -85,7 +85,7 @@ namespace Uno
 
             cardsUsed = new List<Card>();
 
-            questionIndex = 7;
+            questionIndex = 0;
 
             unoFeedback.gameObject.SetActive(false);
             winnerPanel.gameObject.SetActive(false);

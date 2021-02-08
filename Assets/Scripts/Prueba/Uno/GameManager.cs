@@ -7,7 +7,7 @@ using TMPro;
 
 namespace Uno
 {
-    #region Delegat
+    #region Delegate
     public delegate void ConcatenedAction(Action output);
     #endregion
 
@@ -85,7 +85,7 @@ namespace Uno
 
             cardsUsed = new List<Card>();
 
-            questionIndex = 0;
+            questionIndex = 7;
 
             unoFeedback.gameObject.SetActive(false);
             winnerPanel.gameObject.SetActive(false);
@@ -417,10 +417,14 @@ namespace Uno
                         ChangeTurn(false);
                         break;
                     case NumberCard.Questions:
-                        ActivitiesManager.Pinstance.ShowActivity(questionIndex);
-                        questionIndex++;
-                        //StartCoroutine(MachinePlayCoroutine());
-                        //ChangeTurn(false);
+                        if(questionIndex < ActivitiesManager.Pinstance.Pactivities.Length) { 
+                            ActivitiesManager.Pinstance.ShowActivity(questionIndex);
+                            questionIndex++;
+                        }
+                        else { 
+                            StartCoroutine(MachinePlayCoroutine());
+                            ChangeTurn(false);
+                        }
                         break;
                     case NumberCard.PlusFour:
                         GameManager.instance.TakeFourCards();

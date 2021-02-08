@@ -3,117 +3,120 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class OptionsLineRender : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
+namespace Uno
 {
-
-    #region Inforamtion
-    [SerializeField] Material material;
-    [SerializeField] RectTransform parent;
-    bool drag;
-    bool anchored;
-    LineRenderer line;
-    int point;
-    GameObject posibility;
-    ActivityLines activityLines;
-
-    #endregion
-
-    private void Awake()
+    public class OptionsLineRender : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     {
-        activityLines = GetComponentInParent<ActivityLines>();
-    }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        GameObject line = new GameObject("Line", typeof(LineRenderer), typeof(WebLine));
+        #region Inforamtion
+        [SerializeField] Material material;
+        [SerializeField] RectTransform parent;
+        bool drag;
+        bool anchored;
+        LineRenderer line;
+        int point;
+        GameObject posibility;
+        ActivityLines activityLines;
 
-        line.transform.localPosition = Vector3.zero;
+        #endregion
 
-        line.transform.localScale = Vector3.one;
-
-        line.transform.SetParent(parent);
-
-        this.line = line.GetComponent<LineRenderer>();
-
-        this.line.material = material;
-
-        this.line.sortingOrder = 1;
-
-        this.line.SetPosition(0, GetComponent<RectTransform>().position);
-
-        point = 1;
-
-        line.GetComponent<WebLine>().initialPosition = GetComponent<RectTransform>();
-
-        StartCoroutine(DragCoroutine(eventData));
-
-    }
-
-    void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
-    {
-        /* if (line.positionCount == 2)
-         {*/
-        if (posibility == null)
+        private void Awake()
         {
-            Destroy(line.gameObject);
-        }
-        else
-        {
-            activityLines.SelectOption(posibility);
-
-            anchored = false;
-
-            drag = false;
-
-            line = null;
+            activityLines = GetComponentInParent<ActivityLines>();
         }
 
-        /* }*/
-    }
-    IEnumerator DragCoroutine(PointerEventData pointerEventData)
-    {
-        drag = true;
-
-        while (drag && line != null)
+        public void OnPointerDown(PointerEventData eventData)
         {
-            Vector3 screenPoint = Input.mousePosition;
+            GameObject line = new GameObject("Line", typeof(LineRenderer), typeof(WebLine));
 
-            screenPoint.z = 90.0f;
+            line.transform.localPosition = Vector3.zero;
 
-            line.SetPosition(point, Camera.main.ScreenToWorldPoint(screenPoint));
+            line.transform.localScale = Vector3.one;
 
-            pointerEventData.position = Input.mousePosition;
+            line.transform.SetParent(parent);
 
-            List<RaycastResult> resoults = new List<RaycastResult>();
+            this.line = line.GetComponent<LineRenderer>();
 
-            EventSystem.current.RaycastAll(pointerEventData, resoults);
+            this.line.material = material;
 
-            bool anchored = false;
+            this.line.sortingOrder = 1;
 
-            posibility = null;
+            this.line.SetPosition(0, GetComponent<RectTransform>().position);
 
-            for (int i = 0; i < resoults.Count; i++)
+            point = 1;
+
+            line.GetComponent<WebLine>().initialPosition = GetComponent<RectTransform>();
+
+            StartCoroutine(DragCoroutine(eventData));
+
+        }
+
+        void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
+        {
+            /* if (line.positionCount == 2)
+             {*/
+            if (posibility == null)
             {
-                if (resoults[i].gameObject.tag == "Option To Select")
+                Destroy(line.gameObject);
+            }
+            else
+            {
+                activityLines.SelectOption(posibility);
+
+                anchored = false;
+
+                drag = false;
+
+                line = null;
+            }
+
+            /* }*/
+        }
+        IEnumerator DragCoroutine(PointerEventData pointerEventData)
+        {
+            drag = true;
+
+            while (drag && line != null)
+            {
+                Vector3 screenPoint = Input.mousePosition;
+
+                screenPoint.z = 90.0f;
+
+                line.SetPosition(point, Camera.main.ScreenToWorldPoint(screenPoint));
+
+                pointerEventData.position = Input.mousePosition;
+
+                List<RaycastResult> resoults = new List<RaycastResult>();
+
+                EventSystem.current.RaycastAll(pointerEventData, resoults);
+
+                bool anchored = false;
+
+                posibility = null;
+
+                for (int i = 0; i < resoults.Count; i++)
                 {
+                    if (resoults[i].gameObject.tag == "Option To Select")
+                    {
 
-                    posibility = resoults[i].gameObject;
+                        posibility = resoults[i].gameObject;
 
-                    line.SetPosition(point, resoults[i].gameObject.GetComponent<RectTransform>().position);
+                        line.SetPosition(point, resoults[i].gameObject.GetComponent<RectTransform>().position);
 
-                    line.GetComponent<WebLine>().finalPosition = resoults[i].gameObject.GetComponent<RectTransform>();
+                        line.GetComponent<WebLine>().finalPosition = resoults[i].gameObject.GetComponent<RectTransform>();
 
-                    anchored = true;
+                        anchored = true;
 
-                    break;
+                        break;
+                    }
+
+                    this.anchored = anchored;
+
+                    yield return null;
                 }
-
-                this.anchored = anchored;
 
                 yield return null;
             }
-
-            yield return null;
         }
     }
 }

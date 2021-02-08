@@ -3,34 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ActivityAutonomy : Activity
+namespace Uno
 {
-    private bool selectionMade;
-    private Toggle[] toggles;
-    private Image[] images;
+    public class ActivityAutonomy : Activity
+    {
+        private bool selectionMade;
+        private Toggle[] toggles;
+        private Image[] images;
 
-    private void Awake() {
-        toggles = GetComponentsInChildren<Toggle>();
+        private void Awake()
+        {
+            toggles = GetComponentsInChildren<Toggle>();
 
-        images = new Image[toggles.Length];
+            images = new Image[toggles.Length];
 
-        for(int i = 0; i < images.Length; i++) {
-            images[i] = toggles[i].GetComponentInChildren<Image>();
+            for (int i = 0; i < images.Length; i++)
+            {
+                images[i] = toggles[i].GetComponentInChildren<Image>();
+            }
+
+            selectionMade = false;
         }
 
-        selectionMade = false;
-    }
+        public void SelectionMade(Image tgglBackground)
+        {
+            for (int i = 0; i < images.Length; i++)
+            {
+                images[i].color = Vector4.zero;
+            }
 
-    public void SelectionMade(Image tgglBackground) {
-        for(int i = 0; i < images.Length; i++) {
-            images[i].color = Vector4.zero;
+            selectionMade = true;
+            tgglBackground.color = new Color(0f, 1f, 0f, 0.5f);
         }
 
-        selectionMade = true;
-        tgglBackground.color = new Color(0f, 1f, 0f, 0.5f);
-    }
-
-    public override bool VerifyWinCondition() {
-        return selectionMade;
+        public override bool VerifyWinCondition()
+        {
+            return selectionMade;
+        }
     }
 }

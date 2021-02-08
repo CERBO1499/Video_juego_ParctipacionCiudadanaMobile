@@ -3,41 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-enum NSelectionType { Button, Toggle }
-public class MultipleSelectionBtns : MonoBehaviour
+namespace Uno
 {
-    #region Components
-    private Button[] toggles;
-    #endregion
-
-    #region Information
-    private bool isAnswered;
-    #endregion
-
-    #region Properties
-    private bool PisAnswered { get => isAnswered; }
-    #endregion
-
-    private void Awake()
+    enum NSelectionType { Button, Toggle }
+    public class MultipleSelectionBtns : MonoBehaviour
     {
-        toggles = GetComponentsInChildren<Button>();
+        #region Components
+        private Button[] toggles;
+        #endregion
 
-        isAnswered = false;
+        #region Information
+        private bool isAnswered;
+        #endregion
 
-        TurnOffOptions();
-    }
+        #region Properties
+        private bool PisAnswered { get => isAnswered; }
+        #endregion
 
-    public void SelectOption(Button tggl)
-    {
-        isAnswered = true;
+        private void Awake()
+        {
+            toggles = GetComponentsInChildren<Button>();
 
-        TurnOffOptions();
-    }
+            isAnswered = false;
 
-    protected void TurnOffOptions()
-    {
-        for (int i = 0; i < toggles.Length; i++) {
-            
+            TurnOffOptions();
+        }
+
+        public void SelectOption(Button tggl)
+        {
+            isAnswered = true;
+
+            TurnOffOptions();
+        }
+
+        protected void TurnOffOptions()
+        {
+            for (int i = 0; i < toggles.Length; i++)
+            {
+
+            }
         }
     }
 }

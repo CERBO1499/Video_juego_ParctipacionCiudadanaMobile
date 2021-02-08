@@ -4,42 +4,51 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ActivityWearing : Activity
+namespace Uno
 {
-    private bool selectionMade;
-    private Toggle[] toggles;
-    private Image[] images;
-    private TMP_InputField inputField;
-
-    private void Awake()
+    public class ActivityWearing : Activity
     {
-        toggles = GetComponentsInChildren<Toggle>();
+        #region Constants
+        const int MIN_CHARACTERES = 1;
+        #endregion
 
-        inputField = GetComponentInChildren<TMP_InputField>();
+        #region Information
+        private bool selectionMade;
+        private Toggle[] toggles;
+        private Image[] images;
+        private TMP_InputField inputField;
+        #endregion
 
-        images = new Image[toggles.Length];
-
-        for (int i = 0; i < images.Length; i++)
+        private void Awake()
         {
-            images[i] = toggles[i].GetComponentInChildren<Image>();
+            toggles = GetComponentsInChildren<Toggle>();
+
+            inputField = GetComponentInChildren<TMP_InputField>();
+
+            images = new Image[toggles.Length];
+
+            for (int i = 0; i < images.Length; i++)
+            {
+                images[i] = toggles[i].GetComponentInChildren<Image>();
+            }
+
+            selectionMade = false;
         }
 
-        selectionMade = false;
-    }
-
-    public void SelectionMade(Image tgglBackground)
-    {
-        for (int i = 0; i < images.Length; i++)
+        public void SelectionMade(Image tgglBackground)
         {
-            images[i].color = Vector4.zero;
+            for (int i = 0; i < images.Length; i++)
+            {
+                images[i].color = Vector4.zero;
+            }
+
+            selectionMade = true;
+            tgglBackground.color = new Color(0f, 1f, 0f, 0.5f);
         }
 
-        selectionMade = true;
-        tgglBackground.color = new Color(0f, 1f, 0f, 0.5f);
-    }
-
-    public override bool VerifyWinCondition()
-    {
-        return selectionMade == true && inputField.text.Length >= 15;
+        public override bool VerifyWinCondition()
+        {
+            return selectionMade == true && inputField.text.Length >= MIN_CHARACTERES;
+        }
     }
 }

@@ -75,6 +75,14 @@ namespace Uno
                         case NumberCard.Questions:
                             ActivitiesManager.Pinstance.ShowActivity(GameManager.questionIndex);
                             GameManager.questionIndex++;
+                            if (GameManager.questionIndex < ActivitiesManager.Pinstance.Pactivities.Length) {
+                                ActivitiesManager.Pinstance.ShowActivity(GameManager.questionIndex);
+                                GameManager.questionIndex++;
+                            }
+                            else {
+                                GameManager.instance.ChangeTurn(false);
+                            }
+
                             //GameManager.instance.ChangeTurn(false);
                             break;
                         case NumberCard.PlusFour:

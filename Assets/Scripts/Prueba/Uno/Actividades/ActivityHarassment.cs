@@ -3,22 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class ActivityHarassment : Activity
+namespace Uno
 {
-    private bool selectionMade;
-    TMP_InputField inputField;
-
-    private void Awake()
+    public class ActivityHarassment : Activity
     {
-        selectionMade = false;
-        inputField = GetComponentInChildren<TMP_InputField>();
-    }
+        #region Constants
+        const int MIN_CHARACTERES = 1;
+        #endregion
 
-    public void SelectionMade() {
-        selectionMade = true;
-    }
+        #region Information
+        private bool selectionMade;
+        TMP_InputField inputField;
+        #endregion
 
-    public override bool VerifyWinCondition() {
-        return selectionMade == true && inputField.text.Length >= 15;
+        private void Awake()
+        {
+            selectionMade = false;
+            inputField = GetComponentInChildren<TMP_InputField>();
+        }
+
+        public void SelectionMade()
+        {
+            selectionMade = true;
+        }
+
+        public override bool VerifyWinCondition()
+        {
+            return selectionMade == true && inputField.text.Length >= MIN_CHARACTERES;
+        }
     }
 }

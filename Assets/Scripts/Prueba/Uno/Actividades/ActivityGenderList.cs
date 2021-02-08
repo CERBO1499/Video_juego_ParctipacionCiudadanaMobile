@@ -4,29 +4,32 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class ActivityGenderList : Activity
+namespace Uno
 {
-    #region Components
-    GenderListBtnLine[] btnLines;
-    #endregion
-
-    private void Awake()
+    public class ActivityGenderList : Activity
     {
-        btnLines = GetComponentsInChildren<GenderListBtnLine>();
-    }
+        #region Components
+        GenderListBtnLine[] btnLines;
+        #endregion
 
-    public override bool VerifyWinCondition()
-    {
-        int questionsAnswered = 0;
-
-        for (int i = 0; i < btnLines.Length; i++)
+        private void Awake()
         {
-            if (btnLines[i].PisAnswered == true)
-            {
-                questionsAnswered++;
-            }
+            btnLines = GetComponentsInChildren<GenderListBtnLine>();
         }
 
-        return questionsAnswered == btnLines.Length;
+        public override bool VerifyWinCondition()
+        {
+            int questionsAnswered = 0;
+
+            for (int i = 0; i < btnLines.Length; i++)
+            {
+                if (btnLines[i].PisAnswered == true)
+                {
+                    questionsAnswered++;
+                }
+            }
+
+            return questionsAnswered == btnLines.Length;
+        }
     }
 }

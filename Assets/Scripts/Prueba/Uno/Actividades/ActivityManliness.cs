@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+namespace Uno { 
 public class ActivityManliness : Activity
-{
-    TMP_InputField inputField;
+    {
+        #region Constants
+        const int MIN_CHARACTERES = 1;
+        #endregion
 
-    private void Awake() {
-        inputField = GetComponentInChildren<TMP_InputField>();
-    }
+        #region Information
+        TMP_InputField inputField;
+        #endregion
 
-    public override bool VerifyWinCondition() {
-        return inputField.text.Length >= 25;
+        private void Awake() {
+            inputField = GetComponentInChildren<TMP_InputField>();
+        }
+
+        public override bool VerifyWinCondition() {
+            return inputField.text.Length >= MIN_CHARACTERES;
+        }
     }
 }

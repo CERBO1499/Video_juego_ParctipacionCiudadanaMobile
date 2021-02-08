@@ -4,110 +4,112 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PieceCloth : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+namespace Uno
 {
-    #region Information
-    bool isInposition;
-    bool drag;
-    GameObject posibility;
-    Coroutine dragCoroutine;
-    KeeperBody actualKeeper;
-    #endregion
-
-    #region Components
-    RectTransform rect;
-    Vector3 initialPosition;
-    ActivityLines activityLines;
-    #endregion
-
-    #region EncapsulatedFields
-    public RectTransform Prect { get => rect; set => rect = value; }
-    public Vector3 PinitialPosition { get => initialPosition; set => initialPosition = value; }
-    #endregion
-
-    private void Awake()
+    public class PieceCloth : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        rect = GetComponent<RectTransform>();
+        #region Information
+        bool isInposition;
+        bool drag;
+        GameObject posibility;
+        Coroutine dragCoroutine;
+        KeeperBody actualKeeper;
+        #endregion
 
-        activityLines = GetComponentInParent<ActivityLines>();
+        #region Components
+        RectTransform rect;
+        Vector3 initialPosition;
+        ActivityLines activityLines;
+        #endregion
 
-        initialPosition = transform.localPosition;
+        #region EncapsulatedFields
+        public RectTransform Prect { get => rect; set => rect = value; }
+        public Vector3 PinitialPosition { get => initialPosition; set => initialPosition = value; }
+        #endregion
 
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        
-        dragCoroutine = StartCoroutine(DragCoroutine(eventData));
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        drag = false;
-
-        if (isInposition)
+        private void Awake()
         {
-            actualKeeper.isKeeped = false;
-            isInposition = false;
-            actualKeeper.GetComponent<Image>().raycastTarget = true;
-            rect.localPosition = initialPosition;
+            rect = GetComponent<RectTransform>();
+
+            activityLines = GetComponentInParent<ActivityLines>();
+
+            initialPosition = transform.localPosition;
+
         }
-        else
+
+        public void OnPointerDown(PointerEventData eventData)
         {
-            if (posibility == null)
+
+            dragCoroutine = StartCoroutine(DragCoroutine(eventData));
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            drag = false;
+
+            if (isInposition)
             {
+                actualKeeper.isKeeped = false;
+                isInposition = false;
+                actualKeeper.GetComponent<Image>().raycastTarget = true;
                 rect.localPosition = initialPosition;
             }
             else
             {
-                actualKeeper = posibility.GetComponent<KeeperBody>();
-                if (!actualKeeper.IsKeeped)
+                if (posibility == null)
                 {
-                    activityLines.SelectOption(posibility);
-                    rect.position = posibility.GetComponent<RectTransform>().position;
-                    actualKeeper.IsKeeped = true;
-                    isInposition = true;
-                    actualKeeper.GetComponent<Image>().raycastTarget = false;
+                    rect.localPosition = initialPosition;
                 }
                 else
-                    rect.localPosition = initialPosition;
-            }
-        }
-    }
-
-    IEnumerator DragCoroutine(PointerEventData pointerEventData)
-    {
-        drag = true;
-
-        while (drag)
-        {
-            Vector3 screenPoint = Input.mousePosition;
-
-            screenPoint.z = 90.0f;
-
-            rect.position = Camera.main.ScreenToWorldPoint(screenPoint);
-
-            pointerEventData.position = Input.mousePosition;
-
-            List<RaycastResult> resoults = new List<RaycastResult>();
-
-            EventSystem.current.RaycastAll(pointerEventData, resoults);
-
-            posibility = null;
-
-            for (int i = 0; i < resoults.Count; i++)
-            {
-                if (resoults[i].gameObject.tag == "keeper")
                 {
-                    posibility = resoults[i].gameObject;
-
-                    break;
+                    actualKeeper = posibility.GetComponent<KeeperBody>();
+                    if (!actualKeeper.IsKeeped)
+                    {
+                        activityLines.SelectOption(posibility);
+                        rect.position = posibility.GetComponent<RectTransform>().position;
+                        actualKeeper.IsKeeped = true;
+                        isInposition = true;
+                        actualKeeper.GetComponent<Image>().raycastTarget = false;
+                    }
+                    else
+                        rect.localPosition = initialPosition;
                 }
-
             }
-            yield return null;
         }
 
-    }
+        IEnumerator DragCoroutine(PointerEventData pointerEventData)
+        {
+            drag = true;
 
+            while (drag)
+            {
+                Vector3 screenPoint = Input.mousePosition;
+
+                screenPoint.z = 90.0f;
+
+                rect.position = Camera.main.ScreenToWorldPoint(screenPoint);
+
+                pointerEventData.position = Input.mousePosition;
+
+                List<RaycastResult> resoults = new List<RaycastResult>();
+
+                EventSystem.current.RaycastAll(pointerEventData, resoults);
+
+                posibility = null;
+
+                for (int i = 0; i < resoults.Count; i++)
+                {
+                    if (resoults[i].gameObject.tag == "keeper")
+                    {
+                        posibility = resoults[i].gameObject;
+
+                        break;
+                    }
+
+                }
+                yield return null;
+            }
+
+        }
+    }
 }

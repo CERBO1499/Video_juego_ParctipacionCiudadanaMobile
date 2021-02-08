@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeeperBody : MonoBehaviour
+namespace Uno
 {
-    #region Information
-    public bool isKeeped;
-    #endregion
+    public class KeeperBody : MonoBehaviour
+    {
+        #region Information
+        public bool isKeeped;
+        #endregion
 
-    #region EncapsulatedFields
-    public bool IsKeeped { get => isKeeped; set => isKeeped = value; }
-    #endregion
+        #region EncapsulatedFields
+        public bool IsKeeped { get => isKeeped; set => isKeeped = value; }
+        #endregion
+    }
 }

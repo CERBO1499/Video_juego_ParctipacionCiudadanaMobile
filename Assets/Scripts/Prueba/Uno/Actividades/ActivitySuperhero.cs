@@ -2,26 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActivitySuperhero : Activity
+namespace Uno
 {
-    #region Components
-    private KeeperBody[] options;
-    #endregion
-
-    private void Awake()
+    public class ActivitySuperhero : Activity
     {
-        options = GetComponentsInChildren<KeeperBody>();
-    }
+        #region Components
+        private KeeperBody[] options;
+        #endregion
 
-    public override bool VerifyWinCondition()
-    {
-        int keepedCount = 0;
-
-        for (int i = 0; i < options.Length; i++)
+        private void Awake()
         {
-            if (options[i].IsKeeped == true) keepedCount++;
+            options = GetComponentsInChildren<KeeperBody>();
         }
 
-        return keepedCount == options.Length;
+        public override bool VerifyWinCondition()
+        {
+            int keepedCount = 0;
+
+            for (int i = 0; i < options.Length; i++)
+            {
+                if (options[i].IsKeeped == true) keepedCount++;
+            }
+
+            return keepedCount == options.Length;
+        }
     }
 }

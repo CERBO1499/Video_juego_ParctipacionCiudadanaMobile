@@ -140,7 +140,7 @@ namespace Diverdomino
             doublePiece.Prect.SetParent(pieces);
             doublePiece.gameObject.SetActive(true);
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 13; i++)
             {
                 PieceDomino myPiece = piecesToDistribute[Random.Range(0, piecesToDistribute.Count)];
                 piecesToDistribute.Remove(myPiece);

@@ -90,7 +90,7 @@ public class Scenemanager : MonoBehaviour
 
     public void ToUnoGame()
     {
-        SceneManager.LoadScene("Uno", LoadSceneMode.Single);
+        SceneManager.LoadScene("Uno1", LoadSceneMode.Single);
     }
     public void ToMainMenuWithSemilla()
     {

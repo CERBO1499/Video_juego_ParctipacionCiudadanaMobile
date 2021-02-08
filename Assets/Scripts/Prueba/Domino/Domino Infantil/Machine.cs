@@ -129,7 +129,7 @@ namespace Diverdomino
         IEnumerator WaitSecsBetweenPlayers() {
             yield return new WaitForSeconds(Random.Range(SECS_BETWEEN_PLAYERS_MIN, SECS_BETWEEN_PLAYERS_MAX));
 
-            /*if (enemyTurn == true && GameManager.instance.GameOver == false)
+            if (enemyTurn == true && GameManager.instance.GameOver == false)
             {
                 var random = Random.Range(0, 2);
                 bool validPiece = PlayPiece(random == 0 ? Side.Izq : Side.Dere);
@@ -137,9 +137,7 @@ namespace Diverdomino
                 if (validPiece == false)
                     if (PlayPiece(random == 0 ? Side.Dere : Side.Izq) == false)
                         GameManager.instance.PassTurnMachine();
-            }*/
-
-            GameManager.instance.PassTurnMachine();
+            }            
         }
 
         void PassTurn() {

@@ -67,13 +67,13 @@ namespace Diverdomino
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (isInPosition)
-                img.color = new Color(1f, 1f, 1f, 0.5f);
+           /* if (isInPosition)
+                img.color = new Color(1f, 1f, 1f, 0.5f);*/
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            img.color = Color.white;
+         /*   img.color = Color.white;*/
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -209,7 +209,6 @@ namespace Diverdomino
 
                     OnWrongPiece();
 
-                    Debug.Log("PRINTED!");
                 }
                 else
                 {

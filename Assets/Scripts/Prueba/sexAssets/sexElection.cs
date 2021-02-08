@@ -6,29 +6,19 @@ public class sexElection : MonoBehaviour
 {
     [SerializeField] GameObject hombre,mujer;
     public static short sexo = 0;  //0 = hombre, 1=mujer
-    public static bool inicio=true;
 
 
     private void Awake()
     {
-        if (inicio == false)
-        {
-            if (sexo == 0)
-            {
-                Destroy(mujer);
-                hombre.SetActive(true);
-            }
-            else
-            {
-                Destroy(hombre);
-                mujer.SetActive(true);
-            }
-        }
+        hombre.SetActive(false);
+        mujer.SetActive(false);
+
+        if (JsonContainer.instance.Pcharacter.Genero == "0")
+            mujer.SetActive(true);
+        else
+            hombre.SetActive(true);
     }
-    private void Start()
-    {
-        inicio = false;
-    }
+
     //metodos en menú escoger personaje:
     public void CambioSexo()
     {

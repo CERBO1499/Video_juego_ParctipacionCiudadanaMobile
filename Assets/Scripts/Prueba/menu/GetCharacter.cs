@@ -123,8 +123,6 @@ public class GetCharacter : MonoBehaviour
                 selectionCharacter.NumeroZapato = int.Parse(JsonContainer.instance.Pcharacter.Zapatos);
             }
 
-            sexElection.inicio = false;
-
             StartCoroutine(SendSession.SendSessionCoroutine(JsonContainer.instance.Pcharacter.IdUsuaio));
 
             SceneManager.LoadScene("main");

@@ -53,7 +53,7 @@ public class Cameraman : MonoBehaviour
 
     IEnumerator SendPhotoCoroutine(Action output = null)
     {
-        UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/Personaje", "POST");
+        UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/Personaje", (JsonContainer.instance.Pcharacter.IdPersonaje == "") ? "POST" : "PUT");
 
         JsonContainer.instance.Pcharacter = CreateJsonCharacter();
 
@@ -73,7 +73,8 @@ public class Cameraman : MonoBehaviour
         {
             Debug.Log("Set Character: " + request.responseCode);
 
-            JsonContainer.instance.Pcharacter.IdPersonaje = request.downloadHandler.text;
+            if(request.downloadHandler.text != "0")
+                JsonContainer.instance.Pcharacter.IdPersonaje = request.downloadHandler.text;
 
             output?.Invoke();
         }
@@ -83,7 +84,7 @@ public class Cameraman : MonoBehaviour
     {
         JsonCharacter jsonCharacter = new JsonCharacter
         {
-            IdPersonaje = "0",
+            IdPersonaje = (JsonContainer.instance.Pcharacter.IdPersonaje == "") ? "0" : JsonContainer.instance.Pcharacter.IdPersonaje,
             IdUsuaio = (JsonContainer.instance.Pid.IdUsuaio != "") ? JsonContainer.instance.Pid.IdUsuaio : JsonContainer.instance.Pcharacter.IdUsuaio,
             Genero = (sexElection.sexo == 0) ? "1" : "0",
             Cabello = (sexElection.sexo == 1) ? selectionFemeleC.NumeroPeloM.ToString() : selectionCharacter.NumeroPelo.ToString(),

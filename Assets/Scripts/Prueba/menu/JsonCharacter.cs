@@ -10,7 +10,7 @@ public class JsonCharacter
     public string Camisa;
     public string Pantalon;
     public string Zapatos;
-    public string Genero;
+    public string Genero = "1";
     public string Semillas;
     public string IdUsuaio;
     public string FotoPerfil;

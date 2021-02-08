@@ -43,7 +43,7 @@ public abstract class Activity : MonoBehaviour
                 break;
 
             case 1:
-                PfeedbackTxt.text = "Debes responder todas las preguntas.";
+                PfeedbackTxt.text = "Debes responder las preguntas por completo.";
                 break;
 
             default:

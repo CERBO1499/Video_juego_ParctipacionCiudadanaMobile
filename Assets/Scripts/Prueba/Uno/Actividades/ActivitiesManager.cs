@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Uno;
 
 public class ActivitiesManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ActivitiesManager : MonoBehaviour
 
     #region Components
     [SerializeField] GameObject feedbackPanel;
+    [SerializeField] GameObject confirmButton;
 
     private Image activitiesPanel;
     private Activity[] activities;
@@ -38,6 +40,7 @@ public class ActivitiesManager : MonoBehaviour
         }
 
         feedbackPanel.SetActive(false);
+        confirmButton.SetActive(false);
     }
 
     /// <summary>
@@ -46,11 +49,11 @@ public class ActivitiesManager : MonoBehaviour
     /// <param name="activityID">Activitie's name.</param>
     public void ShowActivity(int activityID)
     {
-
         for (int i = 0; i < activities.Length; i++)
         {
             if (activityID == activities[i].PactivityID)
             {
+                confirmButton.SetActive(true);
                 activities[i].IsActive(true);
                 CurrentActivity = activities[i];
                 activitiesPanel.raycastTarget = true;
@@ -68,6 +71,8 @@ public class ActivitiesManager : MonoBehaviour
         {
             CurrentActivity.Pdone = CurrentActivity.VerifyWinCondition();
             CurrentActivity.GiveFeedback((CurrentActivity.Pdone ? 0 : 1), feedbackPanel);
+
+            //Debug.Log($"La actividad {CurrentActivity.GetType()} se encuentra en estado: {CurrentActivity.Pdone}");
         }
     }
 
@@ -80,6 +85,12 @@ public class ActivitiesManager : MonoBehaviour
 
         if (CurrentActivity.Pdone == true)
         {
+            Uno.GameManager.instance.ChangeTurn(false);
+
+            if (GameManager.instance.PlayerTurn == false) {
+                StartCoroutine(Uno.GameManager.instance.MachinePlayCoroutine());
+            }
+         
             activitiesPanel.raycastTarget = false;
 
             foreach (Transform obj in gameObject.transform)

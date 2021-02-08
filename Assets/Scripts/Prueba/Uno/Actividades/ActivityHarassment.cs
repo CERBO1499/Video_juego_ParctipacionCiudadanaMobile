@@ -19,6 +19,6 @@ public class ActivityHarassment : Activity
     }
 
     public override bool VerifyWinCondition() {
-        return selectionMade && inputField.text.Length > 0;
+        return selectionMade == true && inputField.text.Length >= 15;
     }
 }

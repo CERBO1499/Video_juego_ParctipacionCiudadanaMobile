@@ -13,8 +13,11 @@ namespace Uno
 
     public class GameManager : MonoBehaviour
     {
+    #pragma warning disable CS0649
+
         #region Statics
         public static GameManager instance;
+        public static int questionIndex;
         #endregion
         #region Information 
         [Header("Cards colors")]
@@ -82,13 +85,13 @@ namespace Uno
 
             cardsUsed = new List<Card>();
 
+            questionIndex = 0;
+
             unoFeedback.gameObject.SetActive(false);
             winnerPanel.gameObject.SetActive(false);
         }
         private void Start()
         {
-            ActivitiesManager.Pinstance.ShowActivity(3);
-
             InitialDistributeCardRandom();
             changeTurn = StartCoroutine(ChangeTurnCoroutine());
         }
@@ -386,7 +389,7 @@ namespace Uno
             ChangeTurn(true);
         }
 
-        IEnumerator MachinePlayCoroutine()
+        public IEnumerator MachinePlayCoroutine()
         {
             yield return new WaitForSeconds(2f);
 
@@ -414,8 +417,10 @@ namespace Uno
                         ChangeTurn(false);
                         break;
                     case NumberCard.Questions:
-                        StartCoroutine(MachinePlayCoroutine());
-                        ChangeTurn(false);
+                        ActivitiesManager.Pinstance.ShowActivity(questionIndex);
+                        questionIndex++;
+                        //StartCoroutine(MachinePlayCoroutine());
+                        //ChangeTurn(false);
                         break;
                     case NumberCard.PlusFour:
                         GameManager.instance.TakeFourCards();

@@ -14,8 +14,14 @@ public class OptionsLineRender : MonoBehaviour, IPointerUpHandler, IPointerDownH
     LineRenderer line;
     int point;
     GameObject posibility;
+    ActivityLines activityLines;
 
     #endregion
+
+    private void Awake()
+    {
+        activityLines = GetComponentInParent<ActivityLines>();
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -53,6 +59,7 @@ public class OptionsLineRender : MonoBehaviour, IPointerUpHandler, IPointerDownH
         }
         else
         {
+            activityLines.SelectOption(posibility);
 
             anchored = false;
 

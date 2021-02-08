@@ -17,6 +17,7 @@ public class PieceCloth : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     #region Components
     RectTransform rect;
     Vector3 initialPosition;
+    ActivityLines activityLines;
     #endregion
 
     #region EncapsulatedFields
@@ -27,6 +28,8 @@ public class PieceCloth : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
+
+        activityLines = GetComponentInParent<ActivityLines>();
 
         initialPosition = transform.localPosition;
 
@@ -44,25 +47,23 @@ public class PieceCloth : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (isInposition)
         {
-            
-                actualKeeper.isKeeped = false;
-                isInposition = false;
-                actualKeeper.GetComponent<Image>().raycastTarget = true;
-                rect.localPosition = initialPosition;
-
+            actualKeeper.isKeeped = false;
+            isInposition = false;
+            actualKeeper.GetComponent<Image>().raycastTarget = true;
+            rect.localPosition = initialPosition;
         }
         else
         {
             if (posibility == null)
             {
                 rect.localPosition = initialPosition;
-
             }
             else
             {
                 actualKeeper = posibility.GetComponent<KeeperBody>();
                 if (!actualKeeper.IsKeeped)
                 {
+                    activityLines.SelectOption(posibility);
                     rect.position = posibility.GetComponent<RectTransform>().position;
                     actualKeeper.IsKeeped = true;
                     isInposition = true;
@@ -71,7 +72,6 @@ public class PieceCloth : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 else
                     rect.localPosition = initialPosition;
             }
-
         }
     }
 

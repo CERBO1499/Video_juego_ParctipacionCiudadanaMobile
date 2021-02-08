@@ -73,7 +73,9 @@ namespace Uno
                             GameManager.instance.ChangeTurn(false);
                             break;
                         case NumberCard.Questions:
-                            GameManager.instance.ChangeTurn(false);
+                            ActivitiesManager.Pinstance.ShowActivity(GameManager.questionIndex);
+                            GameManager.questionIndex++;
+                            //GameManager.instance.ChangeTurn(false);
                             break;
                         case NumberCard.PlusFour:
                             GameManager.instance.TakeFourCards();

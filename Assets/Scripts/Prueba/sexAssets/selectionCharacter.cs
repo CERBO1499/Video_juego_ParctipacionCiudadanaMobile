@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class selectionCharacter : MonoBehaviour
@@ -17,11 +17,19 @@ public class selectionCharacter : MonoBehaviour
     //
 
     [SerializeField] GameObject pelo; //el papa de los objetos disponibles de esta categoria
+    [SerializeField] GameObject peloBlock;
     [SerializeField] GameObject accesorio;
+    [SerializeField] GameObject accesorioBlock;
     [SerializeField] GameObject cara;
+    [SerializeField] GameObject caraBlock;
     [SerializeField] GameObject camisa;
+    [SerializeField] GameObject camisaBlock;
     [SerializeField] GameObject pantalon;
+    [SerializeField] GameObject pantalonBlock;
     [SerializeField] GameObject zapato;
+    [SerializeField] GameObject zapatoBlock;
+    [Space]
+    [SerializeField] Personalization.Restrictions restrictions;
 
 
     List<GameObject> pelucas = new List<GameObject>();
@@ -66,8 +74,8 @@ public class selectionCharacter : MonoBehaviour
         {
             zapatos.Add(child.gameObject);
         }
-        //ya guardamos aca arriba todos los hijos de los papas en las listas de ellos mismos, entonces tenemos el count
 
+        //ya guardamos aca arriba todos los hijos de los papas en las listas de ellos mismos, entonces tenemos el count
     }
 
     private void Start()
@@ -141,203 +149,394 @@ public class selectionCharacter : MonoBehaviour
 
     }
 
-
-
-
     public void NextHair()
     {
-        if (NumeroPelo + 1 != pelucas.Count)
-        {
+        int numeroPelo = Enumerable.Range(0, pelucas.Count).First(pelo => pelucas[pelo].activeSelf);
 
-            pelucas[NumeroPelo + 1].SetActive(true);
-            pelucas[NumeroPelo].SetActive(false);
-            NumeroPelo++;
+        if (numeroPelo + 1 < pelucas.Count)
+        {
+            pelucas[numeroPelo].SetActive(false);
+
+            numeroPelo++;
+
+            pelucas[numeroPelo].SetActive(true);
+
+            NumeroPelo = (numeroPelo < 3) ? numeroPelo : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.pelo, numeroPelo]) ? numeroPelo : NumeroPelo);
+
+            if (NumeroPelo != numeroPelo)
+                peloBlock.SetActive(true);
+            else
+                peloBlock.SetActive(false);
         }
         else  //si ya no tiene mas posiciones en la lista hacia adelante entonces vuelva a la pos 0.
         {
-            pelucas[0].SetActive(true);
-            pelucas[NumeroPelo].SetActive(false);
-            NumeroPelo = 0;
+            pelucas[numeroPelo].SetActive(false);
+
+            numeroPelo = 0;
+
+            pelucas[numeroPelo].SetActive(true);
+
+            NumeroPelo = numeroPelo;
+
+            if (peloBlock.activeSelf)
+                peloBlock.SetActive(false);
         }
     }
     public void PrevHair()
     {
-        if (NumeroPelo - 1 != -1)
-        {
+        int numeroPelo = Enumerable.Range(0, pelucas.Count).First(pelo => pelucas[pelo].activeSelf);
 
-            pelucas[NumeroPelo - 1].SetActive(true);
-            pelucas[NumeroPelo].SetActive(false);
-            NumeroPelo--;
+        if (numeroPelo - 1 > -1)
+        {
+            pelucas[numeroPelo].SetActive(false);
+
+            numeroPelo--;
+
+            pelucas[numeroPelo].SetActive(true);
+
+            NumeroPelo = (numeroPelo < 3) ? numeroPelo : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.pelo, numeroPelo]) ? numeroPelo : NumeroPelo);
+
+            if (NumeroPelo != numeroPelo)
+                peloBlock.SetActive(true);
+            else
+                peloBlock.SetActive(false);
+
         }
         else  //si ya no tiene mas posiciones en la lista hacia adelante entonces vuelva a la pos 0.
         {
+            pelucas[numeroPelo].SetActive(false);
+
             pelucas[pelucas.Count - 1].SetActive(true);
-            pelucas[NumeroPelo].SetActive(false);
-            NumeroPelo = pelucas.Count - 1;
+
+            if(restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.pelo, numeroPelo])
+                NumeroPelo = pelucas.Count - 1;
+            else
+                peloBlock.SetActive(true);
         }
     }
 
     public void NextAccesorio()
     {
-        if (NumeroAccesorio + 1 != accesorios.Count)
-        {
+        int numeroAccesorio = Enumerable.Range(0, accesorios.Count).First(accersorio => accesorios[accersorio].activeSelf);
 
-            accesorios[NumeroAccesorio + 1].SetActive(true);
-            accesorios[NumeroAccesorio].SetActive(false);
-            NumeroAccesorio++;
+        if (numeroAccesorio + 1 < accesorios.Count)
+        {
+            accesorios[numeroAccesorio].SetActive(false);
+
+            numeroAccesorio++;
+
+            accesorios[numeroAccesorio].SetActive(true);
+
+            NumeroAccesorio = (numeroAccesorio < 3) ? numeroAccesorio : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.accesorios, numeroAccesorio]) ? numeroAccesorio : NumeroAccesorio);
+
+            if (NumeroAccesorio != numeroAccesorio)
+                accesorioBlock.SetActive(true);
+            else
+                accesorioBlock.SetActive(false);
         }
         else  //si ya no tiene mas posiciones en la lista hacia adelante entonces vuelva a la pos 0.
         {
-            accesorios[0].SetActive(true);
-            accesorios[NumeroAccesorio].SetActive(false);
-            NumeroAccesorio = 0;
+            accesorios[numeroAccesorio].SetActive(false);
+
+            numeroAccesorio = 0;
+
+            accesorios[numeroAccesorio].SetActive(true);
+
+            NumeroAccesorio = numeroAccesorio;
+
+            if (accesorioBlock.activeSelf)
+                accesorioBlock.SetActive(false);
         }
     }
     public void PrevAccesorio()
     {
-        if (NumeroAccesorio - 1 != -1)
-        {
+        int numeroAccesorio = Enumerable.Range(0, accesorios.Count).First(accersorio => accesorios[accersorio].activeSelf);
 
-            accesorios[NumeroAccesorio - 1].SetActive(true);
-            accesorios[NumeroAccesorio].SetActive(false);
-            NumeroAccesorio--;
+        if (numeroAccesorio - 1 > -1)
+        {
+            accesorios[numeroAccesorio].SetActive(false);
+
+            numeroAccesorio--;
+
+            accesorios[numeroAccesorio].SetActive(true);
+
+            NumeroAccesorio = (numeroAccesorio < 3) ? numeroAccesorio : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.accesorios, numeroAccesorio]) ? numeroAccesorio : NumeroAccesorio);
+
+            if (NumeroAccesorio != numeroAccesorio)
+                accesorioBlock.SetActive(true);
+            else
+                accesorioBlock.SetActive(false);
+
         }
         else  //si ya no tiene mas posiciones en la lista hacia adelante entonces vuelva a la pos 0.
         {
+            accesorios[numeroAccesorio].SetActive(false);
+
             accesorios[accesorios.Count - 1].SetActive(true);
-            accesorios[NumeroAccesorio].SetActive(false);
-            NumeroAccesorio = accesorios.Count - 1;
+
+            if (restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.accesorios, numeroAccesorio])
+                NumeroAccesorio = accesorios.Count - 1;
+            else
+                accesorioBlock.SetActive(true);
         }
     }
 
     public void NextFace()
     {
-        if (NumeroCara + 1 != caras.Count)
-        {
+        int numeroCara = Enumerable.Range(0, caras.Count).First(cara => caras[cara].activeSelf);
 
-            caras[NumeroCara + 1].SetActive(true);
-            caras[NumeroCara].SetActive(false);
-            NumeroCara++;
+        if (numeroCara + 1 < caras.Count)
+        {
+            caras[numeroCara].SetActive(false);
+
+            numeroCara++;
+
+            caras[numeroCara].SetActive(true);
+
+            NumeroCara = (numeroCara < 3) ? numeroCara : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.cara, numeroCara]) ? numeroCara : NumeroCara);
+
+            if (NumeroCara != numeroCara)
+                caraBlock.SetActive(true);
+            else
+                caraBlock.SetActive(false);
         }
         else  //si ya no tiene mas posiciones en la lista hacia adelante entonces vuelva a la pos 0.
         {
-            caras[0].SetActive(true);
-            caras[NumeroCara].SetActive(false);
-            NumeroCara = 0;
+            caras[numeroCara].SetActive(false);
+
+            numeroCara = 0;
+
+            caras[numeroCara].SetActive(true);
+
+            NumeroCara = numeroCara;
+
+            if (caraBlock.activeSelf)
+                caraBlock.SetActive(false);
         }
     }
     public void PrevFace()
     {
-        if (NumeroCara - 1 != -1)
+        int numeroCara = Enumerable.Range(0, caras.Count).First(cara => caras[cara].activeSelf);
+
+        if (numeroCara - 1 > -1)
         {
-            caras[NumeroCara - 1].SetActive(true);
-            caras[NumeroCara].SetActive(false);
-            NumeroCara--;
+            caras[numeroCara].SetActive(false);
+
+            numeroCara--;
+
+            caras[numeroCara].SetActive(true);
+
+            NumeroCara = (numeroCara < 3) ? numeroCara : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.cara, numeroCara]) ? numeroCara : NumeroCara);
+
+            if (NumeroCara != numeroCara)
+                caraBlock.SetActive(true);
+            else
+                caraBlock.SetActive(false);
         }
-        else
+        else  //si ya no tiene mas posiciones en la lista hacia adelante entonces vuelva a la pos 0.
         {
+            caras[numeroCara].SetActive(false);
+
             caras[caras.Count - 1].SetActive(true);
-            caras[NumeroCara].SetActive(false);
-            NumeroCara = caras.Count - 1;
+
+            if (restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.cara, numeroCara])
+                NumeroCara = caras.Count - 1;
+            else
+                caraBlock.SetActive(true);
         }
     }
 
     public void NextCamisa()
     {
-        if (NumeroCamisa + 1 != camisas.Count)
-        {
+        int numeroCamisa = Enumerable.Range(0, camisas.Count).First(camisa => camisas[camisa].activeSelf);
 
-            camisas[NumeroCamisa + 1].SetActive(true);
-            camisas[NumeroCamisa].SetActive(false);
-            NumeroCamisa++;
+        if (numeroCamisa + 1 < camisas.Count)
+        {
+            camisas[numeroCamisa].SetActive(false);
+
+            numeroCamisa++;
+
+            camisas[numeroCamisa].SetActive(true);
+
+            NumeroCamisa = (numeroCamisa < 3) ? numeroCamisa : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.camisa, numeroCamisa]) ? numeroCamisa : NumeroCamisa);
+
+            if (NumeroCamisa != numeroCamisa)
+                camisaBlock.SetActive(true);
+            else
+                camisaBlock.SetActive(false);
         }
         else  //si ya no tiene mas posiciones en la lista hacia adelante entonces vuelva a la pos 0.
         {
-            camisas[0].SetActive(true);
-            camisas[NumeroCamisa].SetActive(false);
-            NumeroCamisa = 0;
+            camisas[numeroCamisa].SetActive(false);
+
+            numeroCamisa = 0;
+
+            camisas[numeroCamisa].SetActive(true);
+
+            NumeroCamisa = numeroCamisa;
+
+            if (camisaBlock.activeSelf)
+                camisaBlock.SetActive(false);
         }
     }
 
     public void PrevCamisa()
     {
-        if (NumeroCamisa - 1 != -1)
+        int numeroCamisa = Enumerable.Range(0, camisas.Count).First(camisa => camisas[camisa].activeSelf);
+
+        if (numeroCamisa - 1 > -1)
         {
-            camisas[NumeroCamisa - 1].SetActive(true);
-            camisas[NumeroCamisa].SetActive(false);
-            NumeroCamisa--;
+            camisas[numeroCamisa].SetActive(false);
+
+            numeroCamisa--;
+
+            camisas[numeroCamisa].SetActive(true);
+
+            NumeroCamisa = (numeroCamisa < 3) ? numeroCamisa : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.camisa, numeroCamisa]) ? numeroCamisa : NumeroCamisa);
+
+            if (NumeroCamisa != numeroCamisa)
+                camisaBlock.SetActive(true);
+            else
+                camisaBlock.SetActive(false);
         }
-        else
+        else  //si ya no tiene mas posiciones en la lista hacia adelante entonces vuelva a la pos 0.
         {
+            camisas[numeroCamisa].SetActive(false);
+
             camisas[camisas.Count - 1].SetActive(true);
-            camisas[NumeroCamisa].SetActive(false);
-            NumeroCamisa = camisas.Count - 1;
+
+            if (restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.camisa, numeroCamisa])
+                NumeroCamisa = camisas.Count - 1;
+            else
+                camisaBlock.SetActive(true);
         }
     }
     public void NextPantalon()
     {
-        if (NumeroPantalon + 1 != pantalones.Count)
-        {
+        int numeroPantalon = Enumerable.Range(0, pantalones.Count).First(pantalon => pantalones[pantalon].activeSelf);
 
-            pantalones[NumeroPantalon + 1].SetActive(true);
-            pantalones[NumeroPantalon].SetActive(false);
-            NumeroPantalon++;
+        if (numeroPantalon + 1 < pantalones.Count)
+        {
+            pantalones[numeroPantalon].SetActive(false);
+
+            numeroPantalon++;
+
+            pantalones[numeroPantalon].SetActive(true);
+
+            NumeroPantalon = (numeroPantalon < 3) ? numeroPantalon : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.pantalon, numeroPantalon]) ? numeroPantalon : NumeroPantalon);
+
+            if (NumeroPantalon != numeroPantalon)
+                pantalonBlock.SetActive(true);
+            else
+                pantalonBlock.SetActive(false);
         }
         else  //si ya no tiene mas posiciones en la lista hacia adelante entonces vuelva a la pos 0.
         {
-            pantalones[0].SetActive(true);
-            pantalones[NumeroPantalon].SetActive(false);
-            NumeroPantalon = 0;
+            pantalones[numeroPantalon].SetActive(false);
+
+            numeroPantalon = 0;
+
+            pantalones[numeroPantalon].SetActive(true);
+
+            NumeroPantalon = numeroPantalon;
+
+            if (pantalonBlock.activeSelf)
+                pantalonBlock.SetActive(false);
         }
     }
     public void PrevPantalon()
     {
-        if (NumeroPantalon - 1 != -1)
+        int numeroPantalon = Enumerable.Range(0, pantalones.Count).First(pantalon => pantalones[pantalon].activeSelf);
+
+        if (numeroPantalon - 1 > -1)
         {
-            pantalones[NumeroPantalon - 1].SetActive(true);
-            pantalones[NumeroPantalon].SetActive(false);
-            NumeroPantalon--;
+            pantalones[numeroPantalon].SetActive(false);
+
+            numeroPantalon--;
+
+            pantalones[numeroPantalon].SetActive(true);
+
+            NumeroPantalon = (numeroPantalon < 3) ? numeroPantalon : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.pantalon, numeroPantalon]) ? numeroPantalon : NumeroPantalon);
+
+            if (NumeroPantalon != numeroPantalon)
+                pantalonBlock.SetActive(true);
+            else
+                pantalonBlock.SetActive(false);
         }
-        else
+        else  //si ya no tiene mas posiciones en la lista hacia adelante entonces vuelva a la pos 0.
         {
+            pantalones[numeroPantalon].SetActive(false);
+
             pantalones[pantalones.Count - 1].SetActive(true);
-            pantalones[NumeroPantalon].SetActive(false);
-            NumeroPantalon = pantalones.Count - 1;
+
+            if (restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.pantalon, numeroPantalon])
+                NumeroPantalon = pantalones.Count - 1;
+            else
+                pantalonBlock.SetActive(true);
         }
     }
     public void NextZapato()
     {
-        if (NumeroZapato + 1 != zapatos.Count)
-        {
+        int numeroZapato = Enumerable.Range(0, zapatos.Count).First(zapato => zapatos[zapato].activeSelf);
 
-            zapatos[NumeroZapato + 1].SetActive(true);
-            zapatos[NumeroZapato].SetActive(false);
-            NumeroZapato++;
+        if (numeroZapato + 1 < zapatos.Count)
+        {
+            zapatos[numeroZapato].SetActive(false);
+
+            numeroZapato++;
+
+            zapatos[numeroZapato].SetActive(true);
+
+            NumeroZapato = (numeroZapato < 3) ? numeroZapato : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.zapatos, numeroZapato]) ? numeroZapato : NumeroZapato);
+
+            if (NumeroZapato != numeroZapato)
+                zapatoBlock.SetActive(true);
+            else
+                zapatoBlock.SetActive(false);
         }
         else  //si ya no tiene mas posiciones en la lista hacia adelante entonces vuelva a la pos 0.
         {
-            zapatos[0].SetActive(true);
-            zapatos[NumeroZapato].SetActive(false);
-            NumeroZapato = 0;
+            zapatos[numeroZapato].SetActive(false);
+
+            numeroZapato = 0;
+
+            zapatos[numeroZapato].SetActive(true);
+
+            NumeroZapato = numeroZapato;
+
+            if (zapatoBlock.activeSelf)
+                zapatoBlock.SetActive(false);
         }
     }
     public void PrevZapato()
     {
-        if (NumeroZapato - 1 != -1)
+        int numeroZapato = Enumerable.Range(0, zapatos.Count).First(zapato => zapatos[zapato].activeSelf);
+
+        if (numeroZapato - 1 > -1)
         {
-            zapatos[NumeroZapato - 1].SetActive(true);
-            zapatos[NumeroZapato].SetActive(false);
-            NumeroZapato--;
+            zapatos[numeroZapato].SetActive(false);
+
+            numeroZapato--;
+
+            zapatos[numeroZapato].SetActive(true);
+
+            NumeroZapato = (numeroZapato < 3) ? numeroZapato : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.zapatos, numeroZapato]) ? numeroZapato : NumeroZapato);
+
+            if (NumeroZapato != numeroZapato)
+                zapatoBlock.SetActive(true);
+            else
+                zapatoBlock.SetActive(false);
         }
-        else
+        else  //si ya no tiene mas posiciones en la lista hacia adelante entonces vuelva a la pos 0.
         {
+            zapatos[numeroZapato].SetActive(false);
+
             zapatos[zapatos.Count - 1].SetActive(true);
-            zapatos[NumeroZapato].SetActive(false);
-            NumeroZapato = zapatos.Count - 1;
+
+            if (restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.zapatos, numeroZapato])
+                NumeroZapato = zapatos.Count - 1;
+            else
+                zapatoBlock.SetActive(true);
         }
     }
-
-
-
-
 }

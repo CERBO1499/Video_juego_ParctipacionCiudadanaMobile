@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace CasaTerritorio
 {
@@ -18,15 +15,16 @@ namespace CasaTerritorio
 
         #region Information
         bool isEraseable;
+        bool areQuestionsAnswered;
         #endregion
 
         #region Components
-        [SerializeField] private RectTransform parentCopies;
-
-        [SerializeField] private int panelToActivate;
-        [Header("Panel")]
-        [SerializeField] private Image roomsPanel;
+        [SerializeField] private Image initialPanel;
+        [SerializeField] private GameObject fedbackPanel;
+        [Header("Room panel")]
         [SerializeField] private Image title;
+        [SerializeField] private Image roomsPanel;
+        [SerializeField] private Image messagesPanel;
         [SerializeField] private RoomElements[] rooms;
         #endregion
 
@@ -36,6 +34,8 @@ namespace CasaTerritorio
 
         #region Properties
         public RoomElements PcurrentRoom { get => rooms[PcurrentRoomIndex]; }
+        public GameObject PcurrentGrabbedObject { get; private set; }
+
 
         private int PcurrentRoomIndex { get; set; }
         #endregion
@@ -45,20 +45,38 @@ namespace CasaTerritorio
             instance = this;
 
             isEraseable = false;
+            areQuestionsAnswered = false;
 
             roomsPanel.gameObject.SetActive(false);
+            initialPanel.gameObject.SetActive(true);
 
             ObjectToPut.OnGrabbingObject += UpdateCurrentGrabbedObject;
         }
 
         public void PanelActivate(int roomIndex)
         {
-            PcurrentRoomIndex = roomIndex;
+            areQuestionsAnswered = false;
 
-            foreach (Transform obj in roomsPanel.transform)
+            foreach (RoomElements room in rooms)
             {
-                if (obj.CompareTag("Images") == false) obj.gameObject.SetActive(false);
+                room.copiesPanel.gameObject.SetActive(false);
             }
+
+            TurnOffChildrenGameObjects(roomsPanel.transform, "Images");
+            TurnOffChildrenGameObjects(messagesPanel.transform, "Images");
+
+
+            messagesPanel.gameObject.SetActive(true);
+
+            var introID = messagesPanel.transform.GetChild(0).CompareTag("Finish") == true ? 1 : 0;
+            var intro = messagesPanel.transform.GetChild(introID);
+            var introImgs = intro.GetComponentsInChildren<Image>();
+            intro.gameObject.SetActive(true);
+            introImgs[1].sprite = rooms[roomIndex].intro;
+            introImgs[0].sprite = rooms[roomIndex].introBackground;
+
+
+            PcurrentRoomIndex = roomIndex;
 
             roomIndex = Mathf.Clamp(roomIndex, 0, rooms.Length - 1);
 
@@ -66,6 +84,7 @@ namespace CasaTerritorio
             title.sprite = rooms[roomIndex].title;
             roomsPanel.sprite = rooms[roomIndex].roomBackground;
             rooms[roomIndex].objectsScroll.SetActive(true);
+            rooms[roomIndex].copiesPanel.gameObject.SetActive(true);
         }
 
         private void UpdateCurrentGrabbedObject(Image grabbedObject)
@@ -75,15 +94,7 @@ namespace CasaTerritorio
 
         public void TurnOffCurrentGrabbedObject()
         {
-            //Invoke("WaitToErase", TIME_TO_ERASE);
-            StartCoroutine(WaitToEraseCoroutine());
-        }
-
-        IEnumerator WaitToEraseCoroutine()
-        {
-            yield return new WaitForSecondsRealtime(TIME_TO_ERASE);
-
-            WaitToErase();
+            Invoke("WaitToErase", TIME_TO_ERASE);
         }
 
         public void PointerState(bool state)
@@ -106,11 +117,71 @@ namespace CasaTerritorio
                 if (isEraseable == true)
                 {
                     isEraseable = false;
-                    PcurrentGrabbedObject.SetActive(false);
+                    if(PcurrentGrabbedObject != null) PcurrentGrabbedObject.SetActive(false);
                 }
             }
         }
 
-        public GameObject PcurrentGrabbedObject { get; private set; }
+        void TurnOffChildrenGameObjects(Transform parent) { 
+            foreach(Transform obj in parent.transform) {
+                obj.gameObject.SetActive(false);
+            }
+        }
+        void TurnOffChildrenGameObjects(Transform parent, string dontTurnOffTag)
+        {
+            foreach (Transform obj in parent)
+            {
+                if(obj.CompareTag(dontTurnOffTag) != true) obj.gameObject.SetActive(false);
+            }
+        }
+
+        public void EndRoom() {
+            areQuestionsAnswered = true;
+
+            int outroID = messagesPanel.transform.GetChild(0).CompareTag("Finish") == true ? 0 : 1;
+
+            messagesPanel.gameObject.SetActive(true);
+            messagesPanel.transform.GetChild(outroID).gameObject.SetActive(true);
+            messagesPanel.transform.GetChild(outroID == 0 ? 1 : 0).gameObject.SetActive(false);
+        }
+
+        public void SendAnsweredQuestions(GameObject outro) {
+            var inputFields = outro.GetComponentsInChildren<TMP_InputField>();
+            int completedFields = 0;
+
+            if (areQuestionsAnswered) { 
+                for(int i = 0; i < inputFields.Length; i++) { 
+                    if(inputFields[i].text.Length >= 1) {
+                        completedFields++;
+                    }
+                }
+
+                areQuestionsAnswered = completedFields == inputFields.Length;
+
+                if (areQuestionsAnswered)
+                {
+                    initialPanel.gameObject.SetActive(true);
+                    roomsPanel.gameObject.SetActive(false);
+
+                    for (int i = 0; i < inputFields.Length; i++)
+                    {
+                        inputFields[i].text = "";
+                    }
+                }
+                else {
+                    fedbackPanel.SetActive(true);
+                }
+            }
+            else {
+                messagesPanel.gameObject.SetActive(false);
+            }
+
+            areQuestionsAnswered = true;
+        }
+
+        public void SetAnsweringQuestionsFalse() {
+            areQuestionsAnswered = false;
+        }
+
     }
 }

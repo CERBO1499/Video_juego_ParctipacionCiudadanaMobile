@@ -90,11 +90,19 @@ public class Scenemanager : MonoBehaviour
 
     public void ToUnoGame()
     {
-        SceneManager.LoadScene("Uno1", LoadSceneMode.Single);
+        SceneManager.LoadScene("Uno 1", LoadSceneMode.Single);
     }
     public void ToMainMenuWithSemilla()
     {
         ControlSemilla.SumarSemilla(10, () =>
+        {
+            SceneManager.LoadScene("main", LoadSceneMode.Single);
+        });
+    }
+
+    public void ToMainMenuWithSemilla(int semillas)
+    {
+        ControlSemilla.SumarSemilla(semillas, () =>
         {
             SceneManager.LoadScene("main", LoadSceneMode.Single);
         });

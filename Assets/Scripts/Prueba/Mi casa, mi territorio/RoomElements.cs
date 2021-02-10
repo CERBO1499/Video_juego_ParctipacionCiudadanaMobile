@@ -12,4 +12,5 @@ public struct RoomElements
     public Sprite roomBackground;
     public GameObject objectsScroll;
     public RectTransform copiesPanel;
+    public UnityEngine.UI.Button btn;
 }

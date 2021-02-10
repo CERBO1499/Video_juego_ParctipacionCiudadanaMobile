@@ -26,6 +26,7 @@ namespace CasaTerritorio
         [SerializeField] private Image roomsPanel;
         [SerializeField] private Image messagesPanel;
         [SerializeField] private RoomElements[] rooms;
+        [SerializeField] public GameObject end;
         #endregion
 
         #region Statics
@@ -167,6 +168,17 @@ namespace CasaTerritorio
                     {
                         inputFields[i].text = "";
                     }
+
+                    int roomsCount = 0;
+
+                    for (int i = 0; i < rooms.Length; i++)
+                    {
+                        if (!rooms[i].btn.gameObject.activeSelf)
+                            roomsCount++;
+                    }
+
+                    if (roomsCount == 4)
+                        end.SetActive(true);
                 }
                 else {
                     fedbackPanel.SetActive(true);
@@ -183,5 +195,9 @@ namespace CasaTerritorio
             areQuestionsAnswered = false;
         }
 
+        public void ToMain()
+        {
+            GetComponent<Scenemanager>().ToMainMenuWithSemilla(40);
+        }
     }
 }

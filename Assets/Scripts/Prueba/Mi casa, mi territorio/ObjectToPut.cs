@@ -50,6 +50,16 @@ namespace CasaTerritorio
 
         IEnumerator DragCoroutine(PointerEventData pointerEventData)
         {
+            float mousePosition = Input.mousePosition.x;
+
+            float t = Time.time;
+
+            while (Time.time <= t + 0.05f)
+                yield return null;
+
+            if (Math.Abs(Input.mousePosition.x - mousePosition) >= 10f)
+                yield break;
+
             if (takeFromScroll == true) CopyImage();
             else myObjCopy = GetComponent<Image>();
 
@@ -67,9 +77,12 @@ namespace CasaTerritorio
 
                 pointerEventData.position = Input.mousePosition;
 
-                drag = Input.touchCount > 0;
-
                 yield return null;
+
+                if (Application.platform == RuntimePlatform.Android)
+                    drag = Input.touchCount > 0;
+                else
+                    drag = Input.GetMouseButton(0);
             }
 
             drag = true;

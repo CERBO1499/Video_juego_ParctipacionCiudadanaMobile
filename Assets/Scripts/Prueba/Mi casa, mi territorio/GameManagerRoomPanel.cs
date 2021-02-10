@@ -173,7 +173,7 @@ namespace CasaTerritorio
 
                     for (int i = 0; i < rooms.Length; i++)
                     {
-                        if (!rooms[i].btn.gameObject.activeSelf)
+                        if (!rooms[i].btn.interactable)
                             roomsCount++;
                     }
 

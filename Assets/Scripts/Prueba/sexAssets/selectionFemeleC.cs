@@ -160,7 +160,7 @@ public class selectionFemeleC : MonoBehaviour
 
             pelucas[numeroPelo].SetActive(true);
 
-            NumeroPeloM = (numeroPelo < 3) ? numeroPelo : ((restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.pelo, numeroPelo]) ? numeroPelo : NumeroPeloM);
+            NumeroPeloM = (numeroPelo < 3) ? numeroPelo : ((restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.pelo, numeroPelo]) ? numeroPelo : NumeroPeloM);
 
             if (NumeroPeloM != numeroPelo)
                 peloBlock.SetActive(true);
@@ -193,7 +193,7 @@ public class selectionFemeleC : MonoBehaviour
 
             pelucas[numeroPelo].SetActive(true);
 
-            NumeroPeloM = (numeroPelo < 3) ? numeroPelo : ((restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.pelo, numeroPelo]) ? numeroPelo : NumeroPeloM);
+            NumeroPeloM = (numeroPelo < 3) ? numeroPelo : ((restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.pelo, numeroPelo]) ? numeroPelo : NumeroPeloM);
 
             if (NumeroPeloM != numeroPelo)
                 peloBlock.SetActive(true);
@@ -207,7 +207,7 @@ public class selectionFemeleC : MonoBehaviour
 
             pelucas[pelucas.Count - 1].SetActive(true);
 
-            if (restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.pelo, numeroPelo])
+            if (restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.pelo, numeroPelo])
                 NumeroPeloM = pelucas.Count - 1;
             else
                 peloBlock.SetActive(true);
@@ -226,7 +226,7 @@ public class selectionFemeleC : MonoBehaviour
 
             accesorios[numeroAccesorio].SetActive(true);
 
-            NumeroAccesorioM = (numeroAccesorio < 3) ? numeroAccesorio : ((restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.accesorios, numeroAccesorio]) ? numeroAccesorio : NumeroAccesorioM);
+            NumeroAccesorioM = (numeroAccesorio < 3) ? numeroAccesorio : ((restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.accesorios, numeroAccesorio]) ? numeroAccesorio : NumeroAccesorioM);
 
             if (NumeroAccesorioM != numeroAccesorio)
                 accesorioBlock.SetActive(true);
@@ -259,7 +259,7 @@ public class selectionFemeleC : MonoBehaviour
 
             accesorios[numeroAccesorio].SetActive(true);
 
-            NumeroAccesorioM = (numeroAccesorio < 3) ? numeroAccesorio : ((restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.accesorios, numeroAccesorio]) ? numeroAccesorio : NumeroAccesorioM);
+            NumeroAccesorioM = (numeroAccesorio < 3) ? numeroAccesorio : ((restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.accesorios, numeroAccesorio]) ? numeroAccesorio : NumeroAccesorioM);
 
             if (NumeroAccesorioM != numeroAccesorio)
                 accesorioBlock.SetActive(true);
@@ -273,7 +273,7 @@ public class selectionFemeleC : MonoBehaviour
 
             accesorios[accesorios.Count - 1].SetActive(true);
 
-            if (restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.accesorios, numeroAccesorio])
+            if (restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.accesorios, numeroAccesorio])
                 NumeroAccesorioM = accesorios.Count - 1;
             else
                 accesorioBlock.SetActive(true);
@@ -292,7 +292,7 @@ public class selectionFemeleC : MonoBehaviour
 
             caras[numeroCara].SetActive(true);
 
-            NumeroCaraM = (numeroCara < 3) ? numeroCara : ((restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.cara, numeroCara]) ? numeroCara : NumeroCaraM);
+            NumeroCaraM = (numeroCara < 3) ? numeroCara : ((restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.cara, numeroCara]) ? numeroCara : NumeroCaraM);
 
             if (NumeroCaraM != numeroCara)
                 caraBlock.SetActive(true);
@@ -325,7 +325,7 @@ public class selectionFemeleC : MonoBehaviour
 
             caras[numeroCara].SetActive(true);
 
-            NumeroCaraM = (numeroCara < 3) ? numeroCara : ((restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.cara, numeroCara]) ? numeroCara : NumeroCaraM);
+            NumeroCaraM = (numeroCara < 3) ? numeroCara : ((restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.cara, numeroCara]) ? numeroCara : NumeroCaraM);
 
             if (NumeroCaraM != numeroCara)
                 caraBlock.SetActive(true);
@@ -338,7 +338,7 @@ public class selectionFemeleC : MonoBehaviour
 
             caras[caras.Count - 1].SetActive(true);
 
-            if (restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.cara, numeroCara])
+            if (restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.cara, numeroCara])
                 NumeroCaraM = caras.Count - 1;
             else
                 caraBlock.SetActive(true);
@@ -357,7 +357,7 @@ public class selectionFemeleC : MonoBehaviour
 
             camisas[numeroCamisa].SetActive(true);
 
-            NumeroCamisaM = (numeroCamisa < 3) ? numeroCamisa : ((restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.camisa, numeroCamisa]) ? numeroCamisa : NumeroCamisaM);
+            NumeroCamisaM = (numeroCamisa < 3) ? numeroCamisa : ((restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.camisa, numeroCamisa]) ? numeroCamisa : NumeroCamisaM);
 
             if (NumeroCamisaM != numeroCamisa)
                 camisaBlock.SetActive(true);
@@ -391,7 +391,7 @@ public class selectionFemeleC : MonoBehaviour
 
             camisas[numeroCamisa].SetActive(true);
 
-            NumeroCamisaM = (numeroCamisa < 3) ? numeroCamisa : ((restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.camisa, numeroCamisa]) ? numeroCamisa : NumeroCamisaM);
+            NumeroCamisaM = (numeroCamisa < 3) ? numeroCamisa : ((restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.camisa, numeroCamisa]) ? numeroCamisa : NumeroCamisaM);
 
             if (NumeroCamisaM != numeroCamisa)
                 camisaBlock.SetActive(true);
@@ -404,7 +404,7 @@ public class selectionFemeleC : MonoBehaviour
 
             camisas[camisas.Count - 1].SetActive(true);
 
-            if (restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.camisa, numeroCamisa])
+            if (restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.camisa, numeroCamisa])
                 NumeroCamisaM = camisas.Count - 1;
             else
                 camisaBlock.SetActive(true);
@@ -422,7 +422,7 @@ public class selectionFemeleC : MonoBehaviour
 
             pantalones[numeroPantalon].SetActive(true);
 
-            NumeroPantalonM = (numeroPantalon < 3) ? numeroPantalon : ((restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.pantalon, numeroPantalon]) ? numeroPantalon : NumeroPantalonM);
+            NumeroPantalonM = (numeroPantalon < 3) ? numeroPantalon : ((restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.pantalon, numeroPantalon]) ? numeroPantalon : NumeroPantalonM);
 
             if (NumeroPantalonM != numeroPantalon)
                 pantalonBlock.SetActive(true);
@@ -455,7 +455,7 @@ public class selectionFemeleC : MonoBehaviour
 
             pantalones[numeroPantalon].SetActive(true);
 
-            NumeroPantalonM = (numeroPantalon < 3) ? numeroPantalon : ((restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.pantalon, numeroPantalon]) ? numeroPantalon : NumeroPantalonM);
+            NumeroPantalonM = (numeroPantalon < 3) ? numeroPantalon : ((restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.pantalon, numeroPantalon]) ? numeroPantalon : NumeroPantalonM);
 
             if (NumeroPantalonM != numeroPantalon)
                 pantalonBlock.SetActive(true);
@@ -468,7 +468,7 @@ public class selectionFemeleC : MonoBehaviour
 
             pantalones[pantalones.Count - 1].SetActive(true);
 
-            if (restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.pantalon, numeroPantalon])
+            if (restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.pantalon, numeroPantalon])
                 NumeroPantalonM = pantalones.Count - 1;
             else
                 pantalonBlock.SetActive(true);
@@ -486,7 +486,7 @@ public class selectionFemeleC : MonoBehaviour
 
             zapatos[numeroZapato].SetActive(true);
 
-            NumeroZapatoM = (numeroZapato < 3) ? numeroZapato : ((restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.zapatos, numeroZapato]) ? numeroZapato : NumeroZapatoM);
+            NumeroZapatoM = (numeroZapato < 3) ? numeroZapato : ((restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.zapatos, numeroZapato]) ? numeroZapato : NumeroZapatoM);
 
             if (NumeroZapatoM != numeroZapato)
                 zapatoBlock.SetActive(true);
@@ -519,7 +519,7 @@ public class selectionFemeleC : MonoBehaviour
 
             zapatos[numeroZapato].SetActive(true);
 
-            NumeroZapatoM = (numeroZapato < 3) ? numeroZapato : ((restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.zapatos, numeroZapato]) ? numeroZapato : NumeroZapatoM);
+            NumeroZapatoM = (numeroZapato < 3) ? numeroZapato : ((restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.zapatos, numeroZapato]) ? numeroZapato : NumeroZapatoM);
 
             if (NumeroZapatoM != numeroZapato)
                 zapatoBlock.SetActive(true);
@@ -532,7 +532,7 @@ public class selectionFemeleC : MonoBehaviour
 
             zapatos[zapatos.Count - 1].SetActive(true);
 
-            if (restrictions[Personalization.Restrictions.Sex.female, Personalization.Restrictions.Type.zapatos, numeroZapato])
+            if (restrictions[Personalization.Restrictions.Sex.F, Personalization.Restrictions.Type.zapatos, numeroZapato])
                 NumeroZapatoM = zapatos.Count - 1;
             else
                 zapatoBlock.SetActive(true);

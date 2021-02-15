@@ -5,7 +5,7 @@ namespace Personalization
     [System.Serializable]
     public class Items
     {
-        public Character male;
-        public Character female;
+        public H H;
+        public M M;
     }
 }

@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class selectionCharacter : MonoBehaviour
 {
@@ -29,6 +33,18 @@ public class selectionCharacter : MonoBehaviour
     [SerializeField] GameObject zapato;
     [SerializeField] GameObject zapatoBlock;
     [Space]
+    System.Action semillasBuyMethod;
+    [SerializeField] GameObject semillasPanel;
+    [SerializeField] TMPro.TextMeshProUGUI semillasTxt;
+    [SerializeField] TMPro.TextMeshProUGUI totalSemillasTxt;
+    [SerializeField] UnityEngine.UI.Button buyBtn;
+    [SerializeField] UnityEngine.UI.Button closeBtn;
+    [Space]
+    public static System.Action buy;
+    public void Buy()
+    {
+        buy?.Invoke();
+    }
     [SerializeField] Personalization.Restrictions restrictions;
 
 
@@ -50,6 +66,16 @@ public class selectionCharacter : MonoBehaviour
 
     private void Awake()
     {
+        if (JsonContainer.instance.Pcharacter.IdPersonaje == "")
+        {
+            peloBlock.GetComponent<RectTransform>().GetChild(0).gameObject.SetActive(false);
+            accesorioBlock.GetComponent<RectTransform>().GetChild(0).gameObject.SetActive(false);
+            caraBlock.GetComponent<RectTransform>().GetChild(0).gameObject.SetActive(false);
+            camisaBlock.GetComponent<RectTransform>().GetChild(0).gameObject.SetActive(false);
+            pantalonBlock.GetComponent<RectTransform>().GetChild(0).gameObject.SetActive(false);
+            zapatoBlock.GetComponent<RectTransform>().GetChild(0).gameObject.SetActive(false);
+        }
+
         foreach (Transform child in pelo.transform)
         {
             pelucas.Add(child.gameObject);
@@ -75,7 +101,28 @@ public class selectionCharacter : MonoBehaviour
             zapatos.Add(child.gameObject);
         }
 
+        StartCoroutine(GetInventoryCoroutine());
         //ya guardamos aca arriba todos los hijos de los papas en las listas de ellos mismos, entonces tenemos el count
+    }
+
+    IEnumerator GetInventoryCoroutine()
+    {
+        UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/Tienda/" + JsonContainer.instance.Pcharacter.IdUsuaio, "Get");
+
+        request.downloadHandler = new DownloadHandlerBuffer();
+
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.isNetworkError)
+            Debug.Log(request.error);
+        else
+        {
+            Debug.Log("Get inventory: " + request.responseCode);
+
+            restrictions.items =  JsonConvert.DeserializeObject<Personalization.Items>(request.downloadHandler.text);
+        }
     }
 
     private void Start()
@@ -161,7 +208,7 @@ public class selectionCharacter : MonoBehaviour
 
             pelucas[numeroPelo].SetActive(true);
 
-            NumeroPelo = (numeroPelo < 3) ? numeroPelo : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.pelo, numeroPelo]) ? numeroPelo : NumeroPelo);
+            NumeroPelo = (numeroPelo < 3) ? numeroPelo : ((restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.pelo, numeroPelo]) ? numeroPelo : NumeroPelo);
 
             if (NumeroPelo != numeroPelo)
                 peloBlock.SetActive(true);
@@ -194,7 +241,7 @@ public class selectionCharacter : MonoBehaviour
 
             pelucas[numeroPelo].SetActive(true);
 
-            NumeroPelo = (numeroPelo < 3) ? numeroPelo : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.pelo, numeroPelo]) ? numeroPelo : NumeroPelo);
+            NumeroPelo = (numeroPelo < 3) ? numeroPelo : ((restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.pelo, numeroPelo]) ? numeroPelo : NumeroPelo);
 
             if (NumeroPelo != numeroPelo)
                 peloBlock.SetActive(true);
@@ -208,10 +255,68 @@ public class selectionCharacter : MonoBehaviour
 
             pelucas[pelucas.Count - 1].SetActive(true);
 
-            if(restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.pelo, numeroPelo])
+            if(restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.pelo, numeroPelo])
                 NumeroPelo = pelucas.Count - 1;
             else
                 peloBlock.SetActive(true);
+        }
+    }
+
+    public void BuyHair()
+    {
+        semillasTxt.text = JsonContainer.instance.Pcharacter.Semillas;
+
+        totalSemillasTxt.text = (int.Parse(JsonContainer.instance.Pcharacter.Semillas) - 200).ToString();
+
+        buyBtn.interactable = true;
+
+        if (int.Parse(totalSemillasTxt.text) <= 0)
+        {
+            buyBtn.interactable = false;
+
+            totalSemillasTxt.color = Color.red;
+        }
+        else
+            buy = () =>
+            {
+                buyBtn.interactable = false;
+
+                closeBtn.interactable = false;
+
+                StartCoroutine(BoyHairCoroutine());
+            };
+
+        semillasPanel.SetActive(true);
+    }
+
+    IEnumerator BoyHairCoroutine()
+    {
+        UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/Tienda/" + JsonContainer.instance.Pcharacter.IdUsuaio, "POST");
+
+        byte[] body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(
+            "{" +
+            "\"Sexo\":\"H\",\"Parte\":\"pelo\",\"index\":\"" + Enumerable.Range(0, pelucas.Count).First(cara => caras[cara].activeSelf).ToString() +
+            "\"}"));
+
+        request.uploadHandler = new UploadHandlerRaw(body);
+
+        request.downloadHandler = new DownloadHandlerBuffer();
+
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.isNetworkError)
+            Debug.Log(request.error);
+        else
+        {
+            Debug.Log("Set hair in inventory: " + request.responseCode);
+
+            buyBtn.interactable = true;
+
+            closeBtn.interactable = true;
+
+            semillasPanel.SetActive(false);
         }
     }
 
@@ -227,7 +332,7 @@ public class selectionCharacter : MonoBehaviour
 
             accesorios[numeroAccesorio].SetActive(true);
 
-            NumeroAccesorio = (numeroAccesorio < 3) ? numeroAccesorio : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.accesorios, numeroAccesorio]) ? numeroAccesorio : NumeroAccesorio);
+            NumeroAccesorio = (numeroAccesorio < 3) ? numeroAccesorio : ((restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.accesorios, numeroAccesorio]) ? numeroAccesorio : NumeroAccesorio);
 
             if (NumeroAccesorio != numeroAccesorio)
                 accesorioBlock.SetActive(true);
@@ -260,7 +365,7 @@ public class selectionCharacter : MonoBehaviour
 
             accesorios[numeroAccesorio].SetActive(true);
 
-            NumeroAccesorio = (numeroAccesorio < 3) ? numeroAccesorio : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.accesorios, numeroAccesorio]) ? numeroAccesorio : NumeroAccesorio);
+            NumeroAccesorio = (numeroAccesorio < 3) ? numeroAccesorio : ((restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.accesorios, numeroAccesorio]) ? numeroAccesorio : NumeroAccesorio);
 
             if (NumeroAccesorio != numeroAccesorio)
                 accesorioBlock.SetActive(true);
@@ -274,7 +379,7 @@ public class selectionCharacter : MonoBehaviour
 
             accesorios[accesorios.Count - 1].SetActive(true);
 
-            if (restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.accesorios, numeroAccesorio])
+            if (restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.accesorios, numeroAccesorio])
                 NumeroAccesorio = accesorios.Count - 1;
             else
                 accesorioBlock.SetActive(true);
@@ -293,7 +398,7 @@ public class selectionCharacter : MonoBehaviour
 
             caras[numeroCara].SetActive(true);
 
-            NumeroCara = (numeroCara < 3) ? numeroCara : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.cara, numeroCara]) ? numeroCara : NumeroCara);
+            NumeroCara = (numeroCara < 3) ? numeroCara : ((restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.cara, numeroCara]) ? numeroCara : NumeroCara);
 
             if (NumeroCara != numeroCara)
                 caraBlock.SetActive(true);
@@ -326,7 +431,7 @@ public class selectionCharacter : MonoBehaviour
 
             caras[numeroCara].SetActive(true);
 
-            NumeroCara = (numeroCara < 3) ? numeroCara : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.cara, numeroCara]) ? numeroCara : NumeroCara);
+            NumeroCara = (numeroCara < 3) ? numeroCara : ((restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.cara, numeroCara]) ? numeroCara : NumeroCara);
 
             if (NumeroCara != numeroCara)
                 caraBlock.SetActive(true);
@@ -339,7 +444,7 @@ public class selectionCharacter : MonoBehaviour
 
             caras[caras.Count - 1].SetActive(true);
 
-            if (restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.cara, numeroCara])
+            if (restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.cara, numeroCara])
                 NumeroCara = caras.Count - 1;
             else
                 caraBlock.SetActive(true);
@@ -358,7 +463,7 @@ public class selectionCharacter : MonoBehaviour
 
             camisas[numeroCamisa].SetActive(true);
 
-            NumeroCamisa = (numeroCamisa < 3) ? numeroCamisa : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.camisa, numeroCamisa]) ? numeroCamisa : NumeroCamisa);
+            NumeroCamisa = (numeroCamisa < 3) ? numeroCamisa : ((restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.camisa, numeroCamisa]) ? numeroCamisa : NumeroCamisa);
 
             if (NumeroCamisa != numeroCamisa)
                 camisaBlock.SetActive(true);
@@ -392,7 +497,7 @@ public class selectionCharacter : MonoBehaviour
 
             camisas[numeroCamisa].SetActive(true);
 
-            NumeroCamisa = (numeroCamisa < 3) ? numeroCamisa : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.camisa, numeroCamisa]) ? numeroCamisa : NumeroCamisa);
+            NumeroCamisa = (numeroCamisa < 3) ? numeroCamisa : ((restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.camisa, numeroCamisa]) ? numeroCamisa : NumeroCamisa);
 
             if (NumeroCamisa != numeroCamisa)
                 camisaBlock.SetActive(true);
@@ -405,7 +510,7 @@ public class selectionCharacter : MonoBehaviour
 
             camisas[camisas.Count - 1].SetActive(true);
 
-            if (restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.camisa, numeroCamisa])
+            if (restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.camisa, numeroCamisa])
                 NumeroCamisa = camisas.Count - 1;
             else
                 camisaBlock.SetActive(true);
@@ -423,7 +528,7 @@ public class selectionCharacter : MonoBehaviour
 
             pantalones[numeroPantalon].SetActive(true);
 
-            NumeroPantalon = (numeroPantalon < 3) ? numeroPantalon : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.pantalon, numeroPantalon]) ? numeroPantalon : NumeroPantalon);
+            NumeroPantalon = (numeroPantalon < 3) ? numeroPantalon : ((restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.pantalon, numeroPantalon]) ? numeroPantalon : NumeroPantalon);
 
             if (NumeroPantalon != numeroPantalon)
                 pantalonBlock.SetActive(true);
@@ -456,7 +561,7 @@ public class selectionCharacter : MonoBehaviour
 
             pantalones[numeroPantalon].SetActive(true);
 
-            NumeroPantalon = (numeroPantalon < 3) ? numeroPantalon : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.pantalon, numeroPantalon]) ? numeroPantalon : NumeroPantalon);
+            NumeroPantalon = (numeroPantalon < 3) ? numeroPantalon : ((restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.pantalon, numeroPantalon]) ? numeroPantalon : NumeroPantalon);
 
             if (NumeroPantalon != numeroPantalon)
                 pantalonBlock.SetActive(true);
@@ -469,7 +574,7 @@ public class selectionCharacter : MonoBehaviour
 
             pantalones[pantalones.Count - 1].SetActive(true);
 
-            if (restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.pantalon, numeroPantalon])
+            if (restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.pantalon, numeroPantalon])
                 NumeroPantalon = pantalones.Count - 1;
             else
                 pantalonBlock.SetActive(true);
@@ -487,7 +592,7 @@ public class selectionCharacter : MonoBehaviour
 
             zapatos[numeroZapato].SetActive(true);
 
-            NumeroZapato = (numeroZapato < 3) ? numeroZapato : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.zapatos, numeroZapato]) ? numeroZapato : NumeroZapato);
+            NumeroZapato = (numeroZapato < 3) ? numeroZapato : ((restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.zapatos, numeroZapato]) ? numeroZapato : NumeroZapato);
 
             if (NumeroZapato != numeroZapato)
                 zapatoBlock.SetActive(true);
@@ -520,7 +625,7 @@ public class selectionCharacter : MonoBehaviour
 
             zapatos[numeroZapato].SetActive(true);
 
-            NumeroZapato = (numeroZapato < 3) ? numeroZapato : ((restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.zapatos, numeroZapato]) ? numeroZapato : NumeroZapato);
+            NumeroZapato = (numeroZapato < 3) ? numeroZapato : ((restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.zapatos, numeroZapato]) ? numeroZapato : NumeroZapato);
 
             if (NumeroZapato != numeroZapato)
                 zapatoBlock.SetActive(true);
@@ -533,10 +638,17 @@ public class selectionCharacter : MonoBehaviour
 
             zapatos[zapatos.Count - 1].SetActive(true);
 
-            if (restrictions[Personalization.Restrictions.Sex.male, Personalization.Restrictions.Type.zapatos, numeroZapato])
+            if (restrictions[Personalization.Restrictions.Sex.H, Personalization.Restrictions.Type.zapatos, numeroZapato])
                 NumeroZapato = zapatos.Count - 1;
             else
                 zapatoBlock.SetActive(true);
         }
+    }
+
+    public void Close()
+    {
+        buy = null;
+
+        semillasPanel.SetActive(false);
     }
 }

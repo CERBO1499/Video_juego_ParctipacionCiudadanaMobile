@@ -92,6 +92,11 @@ public class Scenemanager : MonoBehaviour
     {
         SceneManager.LoadScene("Uno 1", LoadSceneMode.Single);
     }
+
+    public void ToRompecabezas()
+    {
+        SceneManager.LoadScene("Rompecabezas", LoadSceneMode.Single);
+    }
     public void ToMainMenuWithSemilla()
     {
         ControlSemilla.SumarSemilla(10, () =>

@@ -59,4 +59,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/prueba/minijuegos/Uno 1.unity
     guid: d606d11cf1a598145963748ec90034a9
+  - enabled: 1
+    path: Assets/Scenes/prueba/minijuegos/Rompecabezas.unity
+    guid: 75c87afbbce51ad448e52e5091ab605d
   m_configObjects: {}

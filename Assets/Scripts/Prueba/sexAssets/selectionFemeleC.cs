@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class selectionFemeleC : MonoBehaviour
 {
@@ -30,8 +33,13 @@ public class selectionFemeleC : MonoBehaviour
     [SerializeField] GameObject zapato;
     [SerializeField] GameObject zapatoBlock;
     [Space]
+    [SerializeField] GameObject semillasPanel;
+    [SerializeField] TMPro.TextMeshProUGUI semillasTxt;
+    [SerializeField] TMPro.TextMeshProUGUI totalSemillasTxt;
+    [SerializeField] UnityEngine.UI.Button buyBtn;
+    [SerializeField] UnityEngine.UI.Button closeBtn;
+    [Space]
     [SerializeField] Personalization.Restrictions restrictions;
-
 
     List<GameObject> pelucas = new List<GameObject>();
     List<GameObject> accesorios = new List<GameObject>();
@@ -51,6 +59,16 @@ public class selectionFemeleC : MonoBehaviour
 
     private void Awake()
     {
+        if (JsonContainer.instance.Pcharacter.IdPersonaje == "")
+        {
+            peloBlock.GetComponent<RectTransform>().GetChild(0).gameObject.SetActive(false);
+            accesorioBlock.GetComponent<RectTransform>().GetChild(0).gameObject.SetActive(false);
+            caraBlock.GetComponent<RectTransform>().GetChild(0).gameObject.SetActive(false);
+            camisaBlock.GetComponent<RectTransform>().GetChild(0).gameObject.SetActive(false);
+            pantalonBlock.GetComponent<RectTransform>().GetChild(0).gameObject.SetActive(false);
+            zapatoBlock.GetComponent<RectTransform>().GetChild(0).gameObject.SetActive(false);
+        }
+
         foreach (Transform child in pelo.transform)
         {
             pelucas.Add(child.gameObject);
@@ -148,6 +166,29 @@ public class selectionFemeleC : MonoBehaviour
 
     }
 
+    public IEnumerator GetInventoryCoroutine(System.Action output = null)
+    {
+        UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/Tienda/" + JsonContainer.instance.Pcharacter.IdUsuaio, "Get");
+
+        request.downloadHandler = new DownloadHandlerBuffer();
+
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.isNetworkError)
+            Debug.Log(request.error);
+        else
+        {
+            Debug.Log("Get inventory: " + request.responseCode);
+
+            if (PlayerPrefs.HasKey("internal_buy"))
+                restrictions.items = JsonConvert.DeserializeObject<Personalization.Items>(request.downloadHandler.text);
+        }
+
+        output?.Invoke();
+    }
+
     public void NextHair()
     {
         int numeroPelo = Enumerable.Range(0, pelucas.Count).First(pelo => pelucas[pelo].activeSelf);
@@ -212,6 +253,33 @@ public class selectionFemeleC : MonoBehaviour
             else
                 peloBlock.SetActive(true);
         }
+    }
+
+    public void BuyHair()
+    {
+        semillasTxt.text = JsonContainer.instance.Pcharacter.Semillas;
+
+        totalSemillasTxt.text = (int.Parse(JsonContainer.instance.Pcharacter.Semillas) - selectionCharacter.price).ToString();
+
+        buyBtn.interactable = true;
+
+        if (int.Parse(totalSemillasTxt.text) <= 0)
+        {
+            buyBtn.interactable = false;
+
+            totalSemillasTxt.color = Color.red;
+        }
+        else
+            selectionCharacter.buy = () =>
+            {
+                buyBtn.interactable = false;
+
+                closeBtn.interactable = false;
+
+                StartCoroutine(BoyBuyCoroutine(peloBlock, "pelo", Enumerable.Range(0, pelucas.Count).First(pelo => pelucas[pelo].activeSelf)));
+            };
+
+        semillasPanel.SetActive(true);
     }
 
     public void NextAccesorio()
@@ -280,6 +348,33 @@ public class selectionFemeleC : MonoBehaviour
         }
     }
 
+    public void BuyAccesorio()
+    {
+        semillasTxt.text = JsonContainer.instance.Pcharacter.Semillas;
+
+        totalSemillasTxt.text = (int.Parse(JsonContainer.instance.Pcharacter.Semillas) - selectionCharacter.price).ToString();
+
+        buyBtn.interactable = true;
+
+        if (int.Parse(totalSemillasTxt.text) <= 0)
+        {
+            buyBtn.interactable = false;
+
+            totalSemillasTxt.color = Color.red;
+        }
+        else
+            selectionCharacter.buy = () =>
+            {
+                buyBtn.interactable = false;
+
+                closeBtn.interactable = false;
+
+                StartCoroutine(BoyBuyCoroutine(accesorioBlock, "accesorios", Enumerable.Range(0, accesorios.Count).First(accesorio => accesorios[accesorio].activeSelf)));
+            };
+
+        semillasPanel.SetActive(true);
+    }
+
     public void NextFace()
     {
         int numeroCara = Enumerable.Range(0, caras.Count).First(cara => caras[cara].activeSelf);
@@ -343,6 +438,33 @@ public class selectionFemeleC : MonoBehaviour
             else
                 caraBlock.SetActive(true);
         }
+    }
+
+    public void BuyCara()
+    {
+        semillasTxt.text = JsonContainer.instance.Pcharacter.Semillas;
+
+        totalSemillasTxt.text = (int.Parse(JsonContainer.instance.Pcharacter.Semillas) - selectionCharacter.price).ToString();
+
+        buyBtn.interactable = true;
+
+        if (int.Parse(totalSemillasTxt.text) <= 0)
+        {
+            buyBtn.interactable = false;
+
+            totalSemillasTxt.color = Color.red;
+        }
+        else
+            selectionCharacter.buy = () =>
+            {
+                buyBtn.interactable = false;
+
+                closeBtn.interactable = false;
+
+                StartCoroutine(BoyBuyCoroutine(caraBlock, "cara", Enumerable.Range(0, caras.Count).First(cara => caras[cara].activeSelf)));
+            };
+
+        semillasPanel.SetActive(true);
     }
 
     public void NextCamisa()
@@ -410,6 +532,34 @@ public class selectionFemeleC : MonoBehaviour
                 camisaBlock.SetActive(true);
         }
     }
+
+    public void BuyCamisa()
+    {
+        semillasTxt.text = JsonContainer.instance.Pcharacter.Semillas;
+
+        totalSemillasTxt.text = (int.Parse(JsonContainer.instance.Pcharacter.Semillas) - selectionCharacter.price).ToString();
+
+        buyBtn.interactable = true;
+
+        if (int.Parse(totalSemillasTxt.text) <= 0)
+        {
+            buyBtn.interactable = false;
+
+            totalSemillasTxt.color = Color.red;
+        }
+        else
+            selectionCharacter.buy = () =>
+            {
+                buyBtn.interactable = false;
+
+                closeBtn.interactable = false;
+
+                StartCoroutine(BoyBuyCoroutine(camisaBlock, "camisa", Enumerable.Range(0, camisas.Count).First(camisa => camisas[camisa].activeSelf)));
+            };
+
+        semillasPanel.SetActive(true);
+    }
+
     public void NextPantalon()
     {
         int numeroPantalon = Enumerable.Range(0, pantalones.Count).First(pantalon => pantalones[pantalon].activeSelf);
@@ -474,6 +624,34 @@ public class selectionFemeleC : MonoBehaviour
                 pantalonBlock.SetActive(true);
         }
     }
+
+    public void BuyPantalon()
+    {
+        semillasTxt.text = JsonContainer.instance.Pcharacter.Semillas;
+
+        totalSemillasTxt.text = (int.Parse(JsonContainer.instance.Pcharacter.Semillas) - selectionCharacter.price).ToString();
+
+        buyBtn.interactable = true;
+
+        if (int.Parse(totalSemillasTxt.text) <= 0)
+        {
+            buyBtn.interactable = false;
+
+            totalSemillasTxt.color = Color.red;
+        }
+        else
+            selectionCharacter.buy = () =>
+            {
+                buyBtn.interactable = false;
+
+                closeBtn.interactable = false;
+
+                StartCoroutine(BoyBuyCoroutine(pantalonBlock, "pantalon", Enumerable.Range(0, pantalones.Count).First(pantalon => pantalones[pantalon].activeSelf)));
+            };
+
+        semillasPanel.SetActive(true);
+    }
+
     public void NextZapato()
     {
         int numeroZapato = Enumerable.Range(0, zapatos.Count).First(zapato => zapatos[zapato].activeSelf);
@@ -537,5 +715,109 @@ public class selectionFemeleC : MonoBehaviour
             else
                 zapatoBlock.SetActive(true);
         }
+    }
+
+    public void BuyZapatos()
+    {
+        semillasTxt.text = JsonContainer.instance.Pcharacter.Semillas;
+
+        totalSemillasTxt.text = (int.Parse(JsonContainer.instance.Pcharacter.Semillas) - selectionCharacter.price).ToString();
+
+        buyBtn.interactable = true;
+
+        if (int.Parse(totalSemillasTxt.text) <= 0)
+        {
+            buyBtn.interactable = false;
+
+            totalSemillasTxt.color = Color.red;
+        }
+        else
+            selectionCharacter.buy = () =>
+            {
+                buyBtn.interactable = false;
+
+                closeBtn.interactable = false;
+
+                StartCoroutine(BoyBuyCoroutine(zapatoBlock, "zapatos", Enumerable.Range(0, pantalones.Count).First(zapato => zapatos[zapato].activeSelf)));
+            };
+
+        semillasPanel.SetActive(true);
+    }
+
+    IEnumerator BoyBuyCoroutine(GameObject locker, string part, int index)
+    {
+        UnityWebRequest request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/Tienda/" + JsonContainer.instance.Pcharacter.IdUsuaio, (!PlayerPrefs.HasKey("internal_buy")) ? "POST" : "PUT");
+
+        byte[] body = Encoding.UTF8.GetBytes(
+            "{" +
+            "\"Sexo\":\"M\",\"Parte\":\"" + part + "\",\"index\":\"" + index.ToString() +
+            "\"}");
+
+        request.uploadHandler = new UploadHandlerRaw(body);
+
+        request.downloadHandler = new DownloadHandlerBuffer();
+
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.isNetworkError)
+            Debug.Log(request.error);
+        else
+        {
+            Debug.Log("Set in inventory: " + request.responseCode);
+
+            if (request.responseCode == 200)
+            {
+                PlayerPrefs.SetString("internal_buy", "setter");
+
+                JsonContainer.instance.Pcharacter.Semillas = (int.Parse(JsonContainer.instance.Pcharacter.Semillas) - selectionCharacter.price).ToString();
+
+                request = new UnityWebRequest("https://www.polygon.us/apiEscuelaspp/public/Personaje", "PUT");
+
+                body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(JsonContainer.instance.Pcharacter));
+
+                request.uploadHandler = new UploadHandlerRaw(body);
+
+                request.downloadHandler = new DownloadHandlerBuffer();
+
+                request.SetRequestHeader("Content-Type", "application/json");
+
+                yield return request.SendWebRequest();
+
+                if (request.isNetworkError)
+                    Debug.Log(request.error);
+                else
+                {
+                    Debug.Log("Set Character: " + request.responseCode);
+
+                    StartCoroutine(GetInventoryCoroutine(() =>
+                    {
+                        locker.SetActive(false);
+
+                        buyBtn.interactable = true;
+
+                        closeBtn.interactable = true;
+
+                        semillasPanel.SetActive(false);
+                    }));
+
+                    yield break;
+                }
+            }
+
+            buyBtn.interactable = true;
+
+            closeBtn.interactable = true;
+
+            semillasPanel.SetActive(false);
+        }
+    }
+
+    public void Close()
+    {
+        selectionCharacter.buy = null;
+
+        semillasPanel.SetActive(false);
     }
 }

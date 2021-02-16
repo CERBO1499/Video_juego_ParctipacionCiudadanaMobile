@@ -482,7 +482,17 @@ PrefabInstance:
     - target: {fileID: 8555395922351017048, guid: 402ef47d69edf33468f4945296ccab14,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToMainGame
+      value: ToMainMenuWithSemilla
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555395922351017048, guid: 402ef47d69edf33468f4945296ccab14,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555395922351017048, guid: 402ef47d69edf33468f4945296ccab14,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8555395922351017051, guid: 402ef47d69edf33468f4945296ccab14,
         type: 3}

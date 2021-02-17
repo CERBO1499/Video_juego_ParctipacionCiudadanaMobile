@@ -50,6 +50,7 @@ namespace Uno
         [SerializeField] ParticleSystem takeCardIndicator;
         [SerializeField] Image unoFeedback;
         [SerializeField] Button cardsDeckBtn;
+        [SerializeField] Transform finalPrizeData;
 
         string actualColor = "";
         string actualNumber = "";
@@ -72,6 +73,7 @@ namespace Uno
         public bool PlayerTurn { get => playerTurn; set => playerTurn = value; }
         public List<Card> CardsToMachineInitial { get => cardsToMachineInitial; set => cardsToMachineInitial = value; }
         public List<Card> CardsUsed { get => cardsUsed; set => cardsUsed = value; }
+        bool PgameOver { get => gameOver; }
         #endregion
         #endregion
 
@@ -121,7 +123,7 @@ namespace Uno
                 myCard.gameObject.SetActive(true);
             }
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 1; i++)
             {
                 Card myCard = cardsToDistributeInitial[UnityEngine.Random.Range(0, cardsToDistributeInitial.Count)];
 
@@ -145,6 +147,7 @@ namespace Uno
             if (cardsToPlayerInitial.Count <= 0 || CardsToMachineInitial.Count <= 0)
             {
                 gameOver = true;
+                finalPrizeData.localPosition = new Vector3(gameOver == true? 1 : 0, finalPrizeData.localPosition.y, finalPrizeData.localPosition.z);
                 winnerPanel.gameObject.SetActive(true);
                 winnerPanel.GetComponentInChildren<Button>().GetComponentInChildren<TextMeshProUGUI>().text =
                         "Menú";

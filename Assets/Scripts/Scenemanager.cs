@@ -112,4 +112,23 @@ public class Scenemanager : MonoBehaviour
             SceneManager.LoadScene("main", LoadSceneMode.Single);
         });
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="data">
+    /// X: isPlayerWinner? 1 : 0
+    /// Y: Prize recived for loosing
+    /// Z: Prize recived for winning
+    /// </param>
+    public void ToMainMenuWithSemilla(Transform data)
+    {
+        if (data.localPosition.x == 0 ||
+            data.localPosition.x == 1) { 
+            ControlSemilla.SumarSemilla((int)(data.localPosition.x == 0 ? data.localPosition.y : data.localPosition.z), () =>
+            {
+                SceneManager.LoadScene("main", LoadSceneMode.Single);
+            });
+        }
+    }
 }

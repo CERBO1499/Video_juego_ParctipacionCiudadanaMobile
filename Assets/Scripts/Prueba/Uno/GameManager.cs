@@ -87,6 +87,7 @@ namespace Uno
 
             cardsUsed = new List<Card>();
 
+            finalPrizeData.localPosition = new Vector3(2f, finalPrizeData.localPosition.y, finalPrizeData.localPosition.z);
             questionIndex = 0;
 
             unoFeedback.gameObject.SetActive(false);
@@ -123,7 +124,7 @@ namespace Uno
                 myCard.gameObject.SetActive(true);
             }
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 7; i++)
             {
                 Card myCard = cardsToDistributeInitial[UnityEngine.Random.Range(0, cardsToDistributeInitial.Count)];
 
@@ -146,13 +147,15 @@ namespace Uno
         {
             if (cardsToPlayerInitial.Count <= 0 || CardsToMachineInitial.Count <= 0)
             {
+                bool playerIsWinner = cardsToPlayerInitial.Count <= 0;
                 gameOver = true;
-                finalPrizeData.localPosition = new Vector3(gameOver == true? 1 : 0, finalPrizeData.localPosition.y, finalPrizeData.localPosition.z);
+                finalPrizeData.localPosition = new Vector3(playerIsWinner == true ? 1 : 0, finalPrizeData.localPosition.y, finalPrizeData.localPosition.z);
+
                 winnerPanel.gameObject.SetActive(true);
                 winnerPanel.GetComponentInChildren<Button>().GetComponentInChildren<TextMeshProUGUI>().text =
                         "Menú";
-                winnerPanel.GetComponentInChildren<TextMeshProUGUI>().text = 
-                    cardsToPlayerInitial.Count <= 0 ? 
+                winnerPanel.GetComponentInChildren<TextMeshProUGUI>().text =
+                    playerIsWinner == true ? 
                         "Felicitaciones Gamer, has ganado esta partida." : "No te rindas Gamer, vuelve a intentarlo.";
             }
 
@@ -306,7 +309,7 @@ namespace Uno
 
         IEnumerator ChangeTurnCoroutine()
         {
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return new WaitForSecondsRealtime(cardsToPlayerInitial.Count == 1 ? 1.5f : 0.5f);
 
             RectTransform feedBack;
 
@@ -328,14 +331,15 @@ namespace Uno
             {
                 takeCardIndicator.Stop();
 
-                if (cardsToPlayerInitial.Count == 1 && uno == false)
+                bool hasTwoCards = cardsToPlayerInitial.Count == 2;
+                if ((cardsToPlayerInitial.Count == 1 && uno == false) || hasTwoCards == true)
                 {
                     winnerPanel.gameObject.SetActive(true);
                     winnerPanel.GetComponentInChildren<Button>().GetComponentInChildren<TextMeshProUGUI>().text = 
                         "Cerrar";
                     winnerPanel.GetComponentInChildren<TextMeshProUGUI>().text = 
                         "Usa el botón UNO antes de que empiece el otro turno.";
-                    TakeFourCards();
+                    if(hasTwoCards == false) TakeFourCards();
                 }
             }
 
@@ -394,7 +398,7 @@ namespace Uno
 
         public IEnumerator MachinePlayCoroutine()
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(1.5f, 3f));
 
             Card card = machine.PickCard();
 
@@ -502,7 +506,7 @@ namespace Uno
             {
                 StartCoroutine(UnoCoroutine());
                 uno = true;
-                Invoke("ResetUnoBtn", 1f);
+                Invoke("ResetUnoBtn", 2f);
             }
         }
 
